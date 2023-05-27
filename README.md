@@ -1,1 +1,1 @@
-rumixiat.github.io
+rumixist.github.io
