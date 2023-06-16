@@ -25,7 +25,7 @@
         }
         
         header {
-            background-color: rgb(10,10,10);
+            background-color: rgb(0, 0, 0);
             position: relative;
             top: 0;
             left: 0;
@@ -51,9 +51,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-wrap: wrap;
         }
         
         header ul input {
+            position: absolute;
             background-color: black;
             border: none;
             outline: 2px solid rgb(10,35,50);
@@ -61,14 +63,17 @@
             box-shadow: none;
             color: white;
             width: 250px;
-            height: 27px;
+            height: 29px;
             border-radius: 2px;
-            margin-right: 20px;
+            left: 15%;
+            flex-grow: 1;
+            max-width: 500px;
         }
         
         header ul li {
             list-style: none;
-            margin-left: 20px;
+            width: 72px;
+            margin: 0 4px;
         }
         
         header ul li a {
@@ -76,9 +81,15 @@
             padding: 6px 15px;
             color: white;
             border-radius: 5px;
+            
         }
         
         header ul li a:hover {
+            background: white;
+            color: navy;
+        }
+
+        header ul .SearchButton:hover {
             background: white;
             color: navy;
         }
@@ -93,6 +104,28 @@
             display: block;
             margin: 0 auto;
         }
+
+        header ul .SearchButton {
+            display: none; /* Başlangıçta butonu gizle */
+            font-size: 0.8em;
+            background-color: black;
+            border: none;
+            outline: 2px solid rgb(10,35,50);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 5px;
+            margin-right: 25px;
+        }
+
+        @media screen and (max-width: 650px) {
+            header ul input {
+                display: none; /* Ekran genişliği 600px veya daha az ise arama çubuğunu gizle */
+            }
+            
+            header ul .SearchButton {
+                display: block; /* Ekran genişliği 600px veya daha az ise butonu göster */
+            }
+        }
 		  
 		 
 		</style>
@@ -103,6 +136,7 @@
 	    <header>
 	        <a href="index.html" class="logo">LOGO</a>
 	        <ul>
+                <button class="SearchButton">Search</button>
 	            <input placeholder="Search">
 	            </input>
 	            <li><a href="index.html" class="Active">Home</a></li>
@@ -118,7 +152,3 @@
 	    </section>
 	</body>
 </html>
-
-
-
-
