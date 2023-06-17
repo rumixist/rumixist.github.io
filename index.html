@@ -94,6 +94,12 @@
             color: navy;
         }
         
+        header ul .MenuButton:hover {
+            background: white;
+    		outline: 2px solid white;
+            color: navy;
+        }
+        
         .title1 {
             font-size: 72px;
             font-weight: 1000;
@@ -111,10 +117,23 @@
             background-color: black;
             border: none;
             outline: 2px solid rgb(10,35,50);
+          	width: 60px;
             color: white;
-            padding: 6px 15px;
+            padding: 6px 6px;
             border-radius: 5px;
             margin-right: 25px;
+        }
+        header ul .MenuButton {
+            display: none; /* Başlangıçta butonu gizle */
+            font-size: 0.8em;
+            background-color: black;
+            border: none;
+            outline: 2px solid rgb(200,200,200);
+          	width: 60px;
+            color: white;
+            padding: 6px 6px;
+            border-radius: 5px;
+            margin-right: 0px;
         }
 
         @media screen and (max-width: 650px) {
@@ -126,6 +145,16 @@
                 display: block; /* Ekran genişliği 600px veya daha az ise butonu göster */
             }
         }
+          
+        @media screen and (max-width: 500px) {
+            header li {
+                display: none; /* Ekran genişliği 600px veya daha az ise arama çubuğunu gizle */
+            }
+            
+            header ul .MenuButton {
+                display: block; /* Ekran genişliği 600px veya daha az ise butonu göster */
+            }
+        
 		  
 		 
 		</style>
@@ -137,6 +166,7 @@
 	        <a href="index.html" class="logo">LOGO</a>
 	        <ul>
                 <button class="SearchButton">Search</button>
+              	<button class="MenuButton">Menu</button>
 	            <input placeholder="Search">
 	            </input>
 	            <li><a href="index.html" class="Active">Home</a></li>
