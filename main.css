@@ -1,0 +1,147 @@
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    cursor: none;
+}
+
+body {
+    cursor: none;
+    font-family: monospace;
+    margin: 0;
+    padding: 0;
+   
+    
+    background-color: rgb(255, 255, 255);
+}
+
+.custom-cursor {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: url('cursor.png') no-repeat; /* İstediğiniz fare imleci resmi */
+    background-size: cover;
+    pointer-events: none; /* Fare imleci tıklamalara yanıt vermez */
+    z-index: 9999; /* İmleci diğer elemanların üzerine yerleştirir */
+}
+
+.logo {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    width: 800px;
+    background: #ff0000;
+    color: white;
+    font-size: 40px;
+}
+
+nav {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 35px;
+    width: 800px;
+    background: #033c5369;
+}
+
+
+nav ul {
+    
+    float: right;
+    margin-right: 0px;
+}
+
+nav li {
+    
+    display: inline-block;
+    margin: 0 8px;
+    line-height: 40px;
+    margin-top: 0px;
+}
+
+nav a {
+    color: white;
+    font-size: 18px;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    padding: 5px 20px;
+    
+}
+
+a:hover {
+    color: red;
+}
+
+.search {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 800px; /* Adjust the width as needed */
+    font-size: 24px; /* Adjust the font size as needed */
+}
+
+@media screen and (max-width: 800px) {
+    .logo {
+        width: 100%;
+    }
+    
+    nav {
+        width: 100%;
+    }
+
+    nav a {
+        padding: 5px 6px;        
+    }
+    .search {
+        width: 75%;
+        font-size: 16px;
+    }
+    .search button {
+        margin-top: 4px;
+        padding: 7px 14px;
+        font-size: 15px; /* Adjust the font size as needed */
+    }
+}
+
+.page-bottom {
+    position: absolute;
+    top: 120%;
+    left: 50%;
+    height: 150px;/* İçeriği görmek için bir yükseklik belirleyebilirsiniz */
+    width: 100%;
+    background-color: #920303; /* İçerik alanının arka plan rengi */
+    transform: translate(-50%, -100%);
+}
+
+.red-box {
+    position: absolute;
+    width: 100%; /* Kırmızı kutunun genişliği */
+    height: 95%; /* Kırmızı kutunun yüksekliği */
+    background-color: red; /* Kırmızı kutunun rengi */
+    top: 50%; /* Dikey hizalama: ortaya yerleştirme */
+    left: 50%; /* Yatay hizalama: ortaya yerleştirme */
+    transform: translate(-50%, -25%); /* Kutuyu tam ortaya hizalar */
+}
+
+.version-text {
+    position: relative;
+    color: white;
+    font-size: 12px;
+    top: 100%;
+    transform: translate(0%, -100%);
+}

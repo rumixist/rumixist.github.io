@@ -1,0 +1,26 @@
+.search input[type="text"],
+.search button {
+    padding: 10px 20px;
+    font-size: 18px; /* Adjust the font size as needed */
+}
+
+.search input[type="text"] {
+    width: 70%; /* Adjust the width of the input field as needed */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search button {
+    background-color: #ffffff;
+    color: rgb(255, 0, 0);
+    border-color: red;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search button:hover {
+    background-color: red;
+    color: white;
+    cursor: none;
+}
+
