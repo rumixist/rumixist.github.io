@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Sentence Generator</title>
+
+    <link rel="stylesheet" href="main.css">
+
+    <style>
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            margin: 50px;
+        }
+
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin: 50px;
+        }
+
+        textarea {
+            width: 85%;
+            height: 75px;
+            font-size: 20px;
+            margin: 0px;            
+        }
+
+    </style>
+   
+</head>
+<body>
+
+    <div class="custom-cursor"></div>
+    <script src="script.js"></script>
+
+    <nav class="logo">logo</nav>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="games.html">Games</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="help.html">Help</a></li>
+            <li><a href="settings.html">Settings</a></li>
+
+        </ul>
+    </nav>
+
+
+    <div class="container">
+        <h1>Random Sentence Generator v0.1</h1>
+        <button id="generateButton">Generate Random Sentence</button>
+        <textarea id="outputText" rows="10" cols="50" readonly></textarea>
+    </div>
+
+
+    <p id="wastedTime" style="margin-left: 10px; color: blue;">total wasted time here: <span id="elapsedTime">0 seconds</span></p>
+
+    <br>
+
+    <p style="margin-left: 10px;">Very Important Warning: You may encounter empty sentences that's a bug try to click again if you are able to click that ultimate button</p>
+
+    <br> <br>
+    <div style="margin-left: 10px;">
+        <h5 style="font-size: 25px;">Requirements to use</h5>
+        <br>
+        <p>- Exist</p>
+        <p>- Use a device to access the internet</p>
+        <p>- Know how to read to understand these super logical sentences</p>
+        <p>- Be able to click a button</p>
+    </div>
+
+
+    <br> <br> <br> <br>
+    <p style="margin-left: 10px;">scroll down for more info (coming soon with source code)</p>
+
+
+    <script src="rsg.js"></script>
+
+    <script>
+        // Sayfa yüklendiğinde başlangıç zamanını al
+        const startTime = new Date();
+
+        // Zamanı güncelleyen fonksiyon
+        function updateElapsedTime() {
+            const currentTime = new Date();
+            const elapsedTime = Math.round((currentTime - startTime) / 1000); // Saniyeye çevir
+            let status;
+            if (elapsedTime >= 0 && elapsedTime < 50) {
+                status = " (pls use this epic machine more)";
+            } else if (elapsedTime >= 50 && elapsedTime < 100) {
+                status = " (wait more to level up)";
+            } else if (elapsedTime >= 100 && elapsedTime < 200) {
+                status = " (you are wasting time like pro)";
+            } else if (elapsedTime >= 200 && elapsedTime < 300) {
+                status = " (ok stop now)";
+            } else if (elapsedTime >= 300 && elapsedTime < 400) {
+                status = " (i see you are expert at time wasting but you need to stop now)";
+            } else if (elapsedTime >= 400 && elapsedTime < 500) {
+                status = " (do your responsibilities)";
+            } else {
+                status = " (you took that thing too seriously)";
+            }
+            document.getElementById("elapsedTime").textContent = elapsedTime + " seconds " + status;
+        }
+
+        // Her saniyede bir zamanı güncelle
+        setInterval(updateElapsedTime, 1000);
+    </script>
+
+</body>
+</html>

@@ -10,6 +10,26 @@
 
    <link rel="stylesheet" href="main.css">
    <link rel="stylesheet" href="home.css">
+
+   <style>
+    .ad-container {
+        position: absolute;
+        bottom: 20px;
+        display: flex;
+        justify-content: center; /* Resimleri yatayda ortala */
+        width: 100%; /* Tam genişlikte olmasını sağla */
+    }
+
+    .ad-container > * {
+        margin: 0 7.5px; /* Reklamlar arasında 15px boşluk bırak */
+    }
+
+    .ad-image {
+        width: 320px;
+        height: auto;
+    }
+    </style>
+
    
 
 </head>
@@ -34,6 +54,16 @@
     <div class="search">
         <input type="text" placeholder="Search">
         <button>Search</button>
+    </div>
+
+    <div class="ad-container">
+        <a href="random-sentence-generator.html">
+            <img class="ad-image" src="images/ad1.png" alt="Advertisement">
+        </a>
+        <a href="random-sentence-generator.html">
+            <img class="ad-image" src="images/ad2.png" alt="Advertisement">
+        </a>
+        <!-- İhtiyacınıza göre daha fazla reklam ekleyebilirsiniz -->
     </div>
 
     <div class="page-bottom">
