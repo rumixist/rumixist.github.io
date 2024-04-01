@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Announcement</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #f0f0f0; /* Initial background color */
+      transition: background-color 2s ease; /* Smooth transition effect */
+      animation: changeColor 5s infinite alternate; /* Animation to change background color */
+    }
+
+    h1 {
+      color: red;
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    #video-container {
+      width: 640px;
+      height: 360px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+    }
+
+    @keyframes changeColor {
+      0% {
+        background-color: #f0f0f0;
+      }
+      50% {
+        background-color: #fff; /* Target background color */
+      }
+      100% {
+        background-color: #f0f0f0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>1 Nisan!</h1>
+  <div id="video-container">
+    <iframe width="640" height="360" src="https://www.youtube.com/watch?v=yild91jrXr4&ab_channel=RadioactiveMoose05" frameborder="0" allowfullscreen></iframe>
+  </div>
+</body>
+</html>
