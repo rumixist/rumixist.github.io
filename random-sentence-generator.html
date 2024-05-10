@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="description" content="Generate random ridiculus but funny sentences">
+    <meta name="keywords" content="random sentence generator, rumi, random, sentence, sentence generator">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Sentence Generator</title>
+    <title data-i18n="project2">Random Sentence Generator</title>
 
     <link rel="stylesheet" href="main.css">
 
@@ -19,7 +21,7 @@
         button {
             font-size: 20px;
             padding: 10px 20px;
-            margin: 50px;
+            margin: 30px;
         }
 
         textarea {
@@ -29,6 +31,17 @@
             margin: 0px;            
         }
 
+        .timewastecontainer {
+            overflow: auto;
+        }
+
+        .timewastecontainer p {
+            display: inline-block;
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+        
+
     </style>
    
 </head>
@@ -37,46 +50,78 @@
     <div class="custom-cursor"></div>
     <script src="script.js"></script>
 
-    <nav class="logo">logo</nav>
+    <a href="index.html" class="logo">rumi</a>
 
     <nav>
         <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="games.html">Games</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="help.html">Help</a></li>
-            <li><a href="settings.html">Settings</a></li>
+            <li><a data-i18n="nav_home" href="index.html">Home</a></li>
+            <li><a data-i18n="nav_things" href="things.html">Things</a></li>
+            <li><a data-i18n="nav_projects" href="projects.html">Projects</a></li>
+            <li><a data-i18n="nav_help" href="help.html">Help</a></li>
+            <li><a data-i18n="nav_settings" href="settings.html">Settings</a></li>
+
 
         </ul>
     </nav>
 
 
     <div class="container">
-        <h1>Random Sentence Generator v0.1</h1>
-        <button id="generateButton">Generate Random Sentence</button>
+        <h1 data-i18n="rsg_version">Random Sentence Generator v0.1</h1>
+        <h5 data-i18n="only_english">[only english sentences]]</h5>
+        <button id="generateButton" data-i18n="rsg_grs">Generate Random Sentence</button>
         <textarea id="outputText" rows="10" cols="50" readonly></textarea>
     </div>
 
-
-    <p id="wastedTime" style="margin-left: 10px; color: blue;">total wasted time here: <span id="elapsedTime">0 seconds</span></p>
-
+    <div class="timewastecontainer" style="margin-left: 10px; color: teal;">
+        <p id="wastedTime" data-i18n="rsg_timewaste">total wasted time here:</p>
+        <p id="elapsedTime">0</p>
+        <p data-i18n="rsg_seconds">seconds</p>
+    </div>
+    
     <br>
 
-    <p style="margin-left: 10px;">Very Important Warning: You may encounter empty sentences that's a bug try to click again if you are able to click that ultimate button</p>
+    <p style="margin-left: 10px; color: red;" data-i18n="rsg_warning1">Warning: You may encounter empty sentences</p>
 
     <br> <br>
     <div style="margin-left: 10px;">
-        <h5 style="font-size: 25px;">Requirements to use</h5>
+        <h5 style="font-size: 25px;" data-i18n="rsg_terms">Requirements to use & Terms of use</h5>
         <br>
-        <p>- Exist</p>
-        <p>- Use a device to access the internet</p>
-        <p>- Know how to read to understand these super logical sentences</p>
-        <p>- Be able to click a button</p>
+        <p data-i18n="rsg_t1">- Exist</p>
+        <p data-i18n="rsg_t2">- DO NOT CHANGE THE SIZE OF TEXT BOX!</p>
+        <p data-i18n="rsg_t3">- Do not use this while you are entering a supermassive black hole</p>
+        <p data-i18n="rsg_t4">- You agree not to blame the developers for any sudden urges to reevaluate your life choices or contemplate the meaning of existence that may arise while navigating through quantum realms.</p>
     </div>
 
 
     <br> <br> <br> <br>
-    <p style="margin-left: 10px;">scroll down for more info (coming soon with source code)</p>
+    <a href="https://github.com/rumixist/Random-Sentence-Generator"  target="_blank" style="margin-left: 10px;" data-i18n="rsg_sourcecode">click here for source code</a>
+
+        <div class="page-bottom">
+            <div class="footer-content">
+                <p data-i18n="footer_version" class="version-text">Version: v3 (May 2024)</p>
+                <div class="footer-links">
+                    <div class="language-selector">
+                        <select onchange="changeLanguage(this.value)">
+                            <option value="az">Azərbaycanca</option>
+                            <option value="cz">Čeština</option>
+                            <option value="da">Dansk </option>
+                            <option value="de">Deutsch</option>
+                            <option value="en">English</option>
+                            <option value="es">Español</option>
+                            <option value="fr">Français</option>
+                            <option value="it">Italiano</option>
+                            <option value="pl">Polski</option>  
+                            <option value="ro">Română</option>
+                            <option value="tr">Türkçe</option>
+                            <option value="ar">العربية</option>
+                            <!-- Add more language options as needed -->
+                        </select>
+                    </div>
+                    <a data-i18n="footer_tou" href="#" class="terms-of-use">Terms of Use</a>
+                    <a data-i18n="footer_pp" href="#" class="privacy-policy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
 
 
     <script src="rsg.js"></script>
@@ -91,26 +136,27 @@
             const elapsedTime = Math.round((currentTime - startTime) / 1000); // Saniyeye çevir
             let status;
             if (elapsedTime >= 0 && elapsedTime < 50) {
-                status = " (pls use this epic machine more)";
+                status = " ";
             } else if (elapsedTime >= 50 && elapsedTime < 100) {
-                status = " (wait more to level up)";
+                status = " ";
             } else if (elapsedTime >= 100 && elapsedTime < 200) {
                 status = " (you are wasting time like pro)";
             } else if (elapsedTime >= 200 && elapsedTime < 300) {
-                status = " (ok stop now)";
+                status = " ";
             } else if (elapsedTime >= 300 && elapsedTime < 400) {
-                status = " (i see you are expert at time wasting but you need to stop now)";
+                status = " ";
             } else if (elapsedTime >= 400 && elapsedTime < 500) {
-                status = " (do your responsibilities)";
+                status = " ";
             } else {
-                status = " (you took that thing too seriously)";
+                status = " (it seems you are expert at time wasting) ";
             }
-            document.getElementById("elapsedTime").textContent = elapsedTime + " seconds " + status;
+            document.getElementById("elapsedTime").textContent = elapsedTime;
         }
 
         // Her saniyede bir zamanı güncelle
         setInterval(updateElapsedTime, 1000);
     </script>
 
+    <script src="languege_test.js"></script>
 </body>
 </html>

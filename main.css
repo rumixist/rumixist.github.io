@@ -13,7 +13,7 @@ body {
     padding: 0;
    
     
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(233, 233, 233);
 }
 
 .custom-cursor {
@@ -40,6 +40,10 @@ body {
     background: #ff0000;
     color: white;
     font-size: 40px;
+}
+
+.logo:hover {
+    color: white; /* Maintain the same color as the default state */
 }
 
 nav {
@@ -89,13 +93,13 @@ a:hover {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -100%);
     text-align: center;
     width: 800px; /* Adjust the width as needed */
     font-size: 24px; /* Adjust the font size as needed */
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 740px) {
     .logo {
         width: 100%;
     }
@@ -105,10 +109,11 @@ a:hover {
     }
 
     nav a {
-        padding: 5px 6px;        
+        padding: 5px 6px;
+        font-size: 13px;        
     }
     .search {
-        width: 75%;
+        width: 90%;
         font-size: 16px;
     }
     .search button {
@@ -120,28 +125,63 @@ a:hover {
 
 .page-bottom {
     position: absolute;
-    top: 120%;
-    left: 50%;
-    height: 150px;/* İçeriği görmek için bir yükseklik belirleyebilirsiniz */
+    bottom: -100px;
+    left: 0;
     width: 100%;
-    background-color: #920303; /* İçerik alanının arka plan rengi */
-    transform: translate(-50%, -100%);
-}
-
-.red-box {
-    position: absolute;
-    width: 100%; /* Kırmızı kutunun genişliği */
-    height: 95%; /* Kırmızı kutunun yüksekliği */
-    background-color: red; /* Kırmızı kutunun rengi */
-    top: 50%; /* Dikey hizalama: ortaya yerleştirme */
-    left: 50%; /* Yatay hizalama: ortaya yerleştirme */
-    transform: translate(-50%, -25%); /* Kutuyu tam ortaya hizalar */
+    height: 120px;
+    background-color: rgb(111, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.5);
 }
 
 .version-text {
-    position: relative;
     color: white;
-    font-size: 12px;
-    top: 100%;
-    transform: translate(0%, -100%);
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
 }
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.version-text {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    font-size: 12px;
+}
+
+.footer-links {
+    display: flex;
+    align-items: center;
+}
+
+.language-selector {
+    margin-right: 10px;
+}
+
+.language-selector select {
+    margin-right: 10px;
+    padding: 5px;
+    font-size: 18px;
+    border: none;
+    background-color: rgba(181, 66, 66, 0.799);
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+
