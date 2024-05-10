@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Çok Önemli! Dikkat!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .announcement-container {
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: red;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: orange;
+    }
+  </style>
+</head>
+<body>
+  <div class="announcement-container">
+    <h1>Çok Önemli Bir Haber!</h1>
+    <button id="announcement-btn">Tıkla</button>
+  </div>
+
+  <script>
+    document.getElementById('announcement-btn').addEventListener('click', function() {
+      window.location.href = 'announcement.html';
+    });
+  </script>
+</body>
+</html>
