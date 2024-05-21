@@ -3,7 +3,7 @@ let ngramMap = {};
 
 // ngram_data.txt dosyasını yükler ve ngramMap'i doldurur
 async function loadNGrams() {
-    const response = await fetch('ngram_data.txt');
+    const response = await fetch('vslm-1.1ngram_file.txt');
     const data = await response.text();
     const lines = data.split('\n');
 
