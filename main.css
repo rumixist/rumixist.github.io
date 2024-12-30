@@ -113,6 +113,11 @@ a:hover {
         padding: 7px 14px;
         font-size: 15px;
     }
+
+    [data-i18n="nav_home"] {
+        display: none;
+        pointer-events: none;
+    }
 }
 
 .page-bottom {
