@@ -1,86 +1,39 @@
-// N-gram modelini tutacak obje
-let ngramMap = {};
+const fetch = window.fetch;
 
-// ngram_data.txt dosyasını yükler ve ngramMap'i doldurur
-async function loadNGrams() {
-    const response = await fetch('vslm-1.1ngram_file.txt');
-    const data = await response.text();
-    const lines = data.split('\n');
+// Element references
+const wordsInput = document.getElementById('words');
+const wordCountInput = document.getElementById('wordCount');
+const submitButton = document.getElementById('submitbutton'); // More descriptive name
+const resultText = document.getElementById('result');
 
-    for (const line of lines) {
-        const parts = line.trim().split(' ');
-        if (parts.length < 3) continue;
+// Generate N-gram sentence on button click
+submitButton.addEventListener('click', () => {
+  const words = wordsInput.value.trim().split(' ');
+  const wordCount = parseInt(wordCountInput.value);
 
-        const word1 = parts[0];
-        const word2 = parts[1];
-        const key = `${word1} ${word2}`;
-        ngramMap[key] = ngramMap[key] || {};
+  if (words.length < 4) {
+    resultText.textContent = 'Please enter at least four words for n-gram generation.';
+    return;
+  }
 
-        for (let i = 2; i < parts.length; i += 2) {
-            const nextWord = parts[i];
-            const count = parseInt(parts[i + 1], 10);
-            ngramMap[key][nextWord] = (ngramMap[key][nextWord] || 0) + count;
-        }
+  // HTTPS request with URL and body parameters for n-gram generation
+  fetch('https://rumixist.pythonanywhere.com/generateNgram', { // More descriptive URL
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: `words=${words.join(' ')}&wordCount=${wordCount}`
+  })
+  .then(response => response.json())
+  .then(data => {
+    resultText.textContent = data.sentence;
+  })
+  .catch(error => {
+    console.error('Error fetching n-gram sentence:', error);
+    if (error.response && error.response.status === 400) {  // Example check for bad request
+      resultText.textContent = 'Invalid request. Please check your input.';
+    } else {
+      resultText.textContent = 'Error generating sentence.';
     }
-}
-
-// Verilen ağırlıklara göre rastgele bir kelime seçer
-function getRandomNextWord(nextWords) {
-    const totalWeight = Object.values(nextWords).reduce((acc, val) => acc + val, 0);
-    const randomWeight = Math.floor(Math.random() * totalWeight);
-
-    let runningTotal = 0;
-    for (const [word, weight] of Object.entries(nextWords)) {
-        runningTotal += weight;
-        if (randomWeight < runningTotal) {
-            return word;
-        }
-    }
-
-    return ''; // Default return, aslında buraya ulaşmamalı
-}
-
-// İki kelimeye göre tahmin yapar
-function generateSentence(first, second, wordCount) {
-    let currentFirst = first.toLowerCase();
-    let currentSecond = second.toLowerCase();
-    let sentence = `${currentFirst} ${currentSecond}`;
-
-    for (let i = 0; i < wordCount; ++i) {
-        const key = `${currentFirst} ${currentSecond}`;
-        if (!ngramMap[key]) {
-            break;
-        }
-
-        const nextWord = getRandomNextWord(ngramMap[key]);
-        sentence += ` ${nextWord}`;
-        currentFirst = currentSecond;
-        currentSecond = nextWord;
-    }
-
-    return sentence;
-}
-
-// Form gönderildiğinde cümle üretir
-document.getElementById('ngram-form').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const wordsInput = document.getElementById('words').value.trim();
-    const wordCount = parseInt(document.getElementById('wordCount').value, 10);
-
-    let word1, word2;
-    const words = wordsInput.split(' ');
-    if (words.length < 2) {
-        alert('Please enter at least two words.');
-        return;
-    } else if (words.length >= 2) {
-        word1 = words[words.length - 2];
-        word2 = words[words.length - 1];
-    }
-
-    if (Object.keys(ngramMap).length === 0) {
-        await loadNGrams();
-    }
-
-    const sentence = generateSentence(word1, word2, wordCount);
-    document.getElementById('result').textContent = sentence;
+  });
 });

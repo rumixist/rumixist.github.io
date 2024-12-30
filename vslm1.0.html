@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Generate random ridiculus but funny sentences">
-    <meta name="keywords" content="random sentence generator, rumi, VSML, sentence, languege model, vsml-1.0, VSML1.0, VSML-1.0">
+    <meta name="keywords" content="random sentence generator, rumi, VSLM, sentence, languege model, vslm-1.0, VSLM1.0, VSLM-1.0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VSML-1.0</title>
+    <title>VSLM-1.0</title>
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
 
     <link rel="stylesheet" href="main.css">
 
@@ -99,13 +100,13 @@
     </nav>
 
 
-    <h1>VSML-1.0</h1>
+    <h1>VSLM-1.0</h1>
     <form id="ngram-form">
-        <label for="words">First Two Words:</label>
+        <label for="words">First Forr Words:</label>
         <input type="text" id="words" required>
         <label for="wordCount">Number of Words:</label>
         <input type="number" id="wordCount" required>
-        <button type="submit">Generate</button>
+        <button type="submit" id="submitbutton">Generate</button>
     </form>
     <p class="result" id="result"></p>
     <script src="ngram.js"></script>
@@ -113,7 +114,7 @@
 
         <div class="page-bottom">
             <div class="footer-content">
-                <p data-i18n="footer_version" class="version-text">Version: v3 (May 2024)</p>
+                <p data-i18n="footer_version" class="version-text">Version: v4 (December 2024)</p>
                 <div class="footer-links">
                     <div class="language-selector">
                         <select onchange="changeLanguage(this.value)">
