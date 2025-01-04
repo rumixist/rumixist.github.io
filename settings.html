@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="This is the official rumixist website. This website is not real.">
+    <meta name="keywords" content="rumixist, rumi, 404">
+    <meta name="author" content="rumixist">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="settings_title">Settings</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+
+    <script type="module" src="auth.js"></script>
+    <script src="logout.js"></script>
+
+    <style>
+        .login-form {
+            margin: 100px auto;
+            width: 400px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media screen and (max-width: 500px) {
+            .login-form {
+            width: 300px;
+            }
+            .text-content h1 {
+            font-size: 18px;
+            }
+            .text-content p {
+                font-size: 13px;
+            }
+        }
+    </style>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+        import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+
+        // Firebase yapılandırması
+        const firebaseConfig = {
+            apiKey: "AIzaSyD7UpFdfkR7zVRgGHraIBX5mhacz1Wf7Xk",
+            authDomain: "rumiaut.firebaseapp.com",
+            projectId: "rumiaut",
+            storageBucket: "rumiaut.firebasestorage.app",
+            messagingSenderId: "459174728615",
+            appId: "1:459174728615:web:5322adc03216b552481c82",
+            measurementId: "G-9F41C1D4MV"
+        };
+
+        // Firebase'i başlat
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            const userToken = localStorage.getItem('userToken');
+
+            if (userToken) {
+                try {
+                    const userDocRef = doc(db, 'users', userToken);
+                    const userDoc = await getDoc(userDocRef);
+
+                    if (userDoc.exists()) {
+                        const userData = userDoc.data();
+                        document.getElementById('username-display').innerText = userData.username;
+                    } else {
+                        localStorage.removeItem('userToken');
+                        window.location.href = 'login.html';
+                    }
+                } catch (error) {
+                    console.error("Error fetching username: ", error);
+                    window.location.href = 'login.html';
+                }
+            } else {
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+
+</head>
+<body>
+
+    <div class="custom-cursor"></div>
+    <script src="script.js"></script>
+
+    <a href="index.html" class="logo">rumi</a>
+
+    <nav>
+        <ul>
+            <li><a data-i18n="nav_home" href="index.html">Home</a></li>
+            <li><a data-i18n="nav_things" href="things.html">Things</a></li>
+            <li><a data-i18n="nav_projects" href="projects.html">Projects</a></li>
+            <li><a data-i18n="nav_help" href="help.html">Help</a></li>
+            <li><a data-i18n="nav_settings" href="settings.html">Settings</a></li>
+        </ul>
+    </nav>
+
+    <div class="login-form">
+        <h2 data-i18n="nav_settings">Settings</h2>
+        <br> <br>
+        <div class="user-info">
+            Username: <span id="username-display">[Username]</span>
+        </div>
+        <br>
+        <div class="logout-button">
+                <button id="logoutButton" type="button">Log Out</button>
+            </div>
+        </div>
+        
+    </div>
+
+    
+
+
+    <div class="page-bottom">
+        <div class="footer-content">
+            <p data-i18n="footer_version" class="version-text">Version: v4 (December 2024)</p>
+            <div class="footer-links">
+                <div class="language-selector">
+                    <select onchange="changeLanguage(this.value)">
+                        <option value="az">Azərbaycanca</option>
+                        <option value="cz">Čeština</option>
+                        <option value="da">Dansk </option>
+                        <option value="de">Deutsch</option>
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                        <option value="it">Italiano</option>
+                        <option value="pl">Polski</option>  
+                        <option value="ro">Română</option>
+                        <option value="tr">Türkçe</option>
+                        <option value="ar">العربية</option>
+                        <!-- Add more language options as needed -->
+                    </select>
+                </div>
+                <a data-i18n="termsofuse" href="termsofuse.html" class="terms-of-use">Terms of Use</a>
+                <a data-i18n="privacypolicy" href="privacypolicy.html" class="privacy-policy">Privacy Policy</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="languege_test.js"></script>
+</body>
+</html>

@@ -12,6 +12,13 @@
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="home.css">
 
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+        import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+    </script>
+
+    <script type="module" src="login.js"></script>
+
     <!-- Add any additional CSS for login/signup forms -->
     <style>
         /* Add your custom styles here */
@@ -46,6 +53,17 @@
             display: inline-block;
             margin: 0; /* Remove default margin */
             padding: 0; /* Remove default padding */
+        }
+        @media screen and (max-width: 500px) {
+            .login-form {
+            width: 300px;
+            }
+            .text-content h1 {
+            font-size: 18px;
+            }
+            .text-content p {
+                font-size: 13px;
+            }
         }
     </style>
 </head>
@@ -97,8 +115,8 @@
                         <!-- Add more language options as needed -->
                     </select>
                 </div>
-                <a data-i18n="footer_tou" href="#" class="terms-of-use">Terms of Use</a>
-                <a data-i18n="footer_pp" href="#" class="privacy-policy">Privacy Policy</a>
+                <a data-i18n="termsofuse" href="termsofuse.html" class="terms-of-use">Terms of Use</a>
+                <a data-i18n="privacypolicy" href="privacypolicy.html" class="privacy-policy">Privacy Policy</a>
             </div>
         </div>
     </div>

@@ -12,6 +12,15 @@
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="home.css">
 
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+        import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+    </script>
+      
+
+    <script type="module" src="signup.js"></script>
+
+
     <!-- Add any additional CSS for login/signup forms -->
     <style>
         /* Add your custom styles here */
@@ -49,6 +58,18 @@
 
         .agreecontainer a {
             text-decoration: underline; /* Add underline to the links */
+        }
+
+        @media screen and (max-width: 500px) {
+            .login-form {
+            width: 300px;
+            }
+            .text-content h1 {
+            font-size: 18px;
+            }
+            .text-content p {
+                font-size: 13px;
+            }
         }
         
     </style>
@@ -191,7 +212,7 @@
             <br> <br>
             <div class="agreecontainer">
                 <p data-i18n="s_agree">By clicking the Sign Up button, you accept and agree to the</p>
-                <a data-i18n="s_tou" href="tou.html">Terms of Use</a>
+                <a data-i18n="s_tou" href="termsofuse.html">Terms of Use</a>
                 <p data-i18n="s_and">and</p>
                 <a data-i18n="s_pp" href="privacypolicy.html">Privacy Policy</a>
                 <p data-i18n="s_after"></p>
@@ -223,8 +244,8 @@
                         <!-- Add more language options as needed -->
                     </select>
                 </div>
-                <a data-i18n="footer_tou" href="#" class="terms-of-use">Terms of Use</a>
-                <a data-i18n="footer_pp" href="#" class="privacy-policy">Privacy Policy</a>
+                <a data-i18n="termsofuse" href="termsofuse.html" class="terms-of-use">Terms of Use</a>
+                <a data-i18n="privacypolicy" href="privacypolicy.html" class="privacy-policy">Privacy Policy</a>
             </div>
         </div>
     </div>
