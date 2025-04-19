@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <style>
+        /* Basit stil */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .admin-panel {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: none; /* Admin olmadığı sürece gizli */
+        }
+        .error-message {
+            color: red;
+            font-weight: bold;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        input {
+            padding: 8px;
+            margin-top: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Admin Paneline Hoşgeldiniz</h1>
+
+    <!-- Admin paneli içeriği -->
+    <div class="admin-panel">
+        <h2>Yönetim Paneli</h2>
+        <p>Burada yönetimsel işlemler yapılabilir.</p>
+
+        <!-- Password Change Form -->
+        <h3>Şifre Değiştir</h3>
+        <div class="form-group">
+            <label for="username">Kullanıcı Adı:</label>
+            <input type="text" id="username" placeholder="Kullanıcı adı girin">
+        </div>
+        <div class="form-group">
+            <label for="newPassword">Yeni Şifre:</label>
+            <input type="password" id="newPassword" placeholder="Yeni şifre girin">
+        </div>
+        <button id="changePasswordBtn">Şifreyi Değiştir</button>
+    </div>
+
+    <!-- Hata mesajı -->
+    <div class="error-message" id="errorMessage"></div>
+
+    <script>
+        // Token'ı almak
+        const token = localStorage.getItem("token");
+
+        // Admin olup olmadığını kontrol etmek
+        function checkAdmin() {
+            if (!token) {
+                // Eğer token yoksa, kullanıcı giriş yapmamış demektir.
+                document.getElementById('errorMessage').innerText = "Giriş yapmanız gerekmektedir.";
+                return;
+            }
+
+            // Token'ı doğrula
+            fetch('https://rumixist.pythonanywhere.com/verify', {  // Backend URL'ini güncelledim
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    // HTTP error varsa bunu logla
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.valid) {
+                    // Admin kontrolü
+                    if (data.is_admin) {
+                        // Adminse, admin panelini göster
+                        document.querySelector('.admin-panel').style.display = 'block';
+                        document.getElementById('errorMessage').innerText = '';
+                    } else {
+                        // Admin değilse, 403 sayfasına yönlendir
+                        window.location.href = "403.html";
+                    }
+                } else {
+                    document.getElementById('errorMessage').innerText = "Geçersiz token veya oturum süresi dolmuş.";
+                }
+            })
+            .catch(error => {
+                console.error('Hata:', error);
+                document.getElementById('errorMessage').innerText = "Bir hata oluştu: " + error.message;
+            });
+        }
+
+        // Şifre değiştirme işlemi
+        document.getElementById('changePasswordBtn').addEventListener('click', () => {
+            const username = document.getElementById('username').value;
+            const newPassword = document.getElementById('newPassword').value;
+
+            if (!username || !newPassword) {
+                document.getElementById('errorMessage').innerText = "Kullanıcı adı ve yeni şifre gereklidir.";
+                return;
+            }
+
+            // Şifre değiştirme isteği gönder
+            fetch('https://rumixist.pythonanywhere.com/change-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    username: username,
+                    new_password: newPassword
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('errorMessage').innerText = data.error;
+                } else {
+                    document.getElementById('errorMessage').innerText = data.message;
+                }
+            })
+            .catch(error => {
+                document.getElementById('errorMessage').innerText = "Bir hata oluştu: " + error.message;
+            });
+        });
+
+        // Admin kontrolünü başlat
+        checkAdmin();
+    </script>
+
+</body>
+</html>

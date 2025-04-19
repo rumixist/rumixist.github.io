@@ -12,6 +12,8 @@
 
     <script type="module" src="auth.js"></script>
     <script src="logout.js"></script>
+    <script src="settings.js"></script>
+    <script src="settings2.js"></script>
 
     <style>
         .login-form {
@@ -22,6 +24,99 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
+                /* Modal genel stil */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        /* Başlık stili */
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        /* Form input ve checkbox düzenlemeleri */
+        input[type="password"] {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        /* Checkbox düzenlemeleri */
+        .checkbox-container {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-container label {
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2); /* Checkbox'ı biraz büyütüyoruz */
+        }
+
+        /* Buton düzenlemeleri */
+        .modal button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        #submitPassword {
+            background-color: red;
+            color: white;
+            width: 100%;
+        }
+
+        #submitPassword:hover {
+            background-color: darkred;
+        }
+
+        #cancelModal {
+            background-color: #ccc;
+            color: #333;
+            width: 100%;
+        }
+
+        #cancelModal:hover {
+            background-color: #bbb;
+        }
+
+        /* Butonlar arasındaki mesafe */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
 
         @media screen and (max-width: 500px) {
             .login-form {
@@ -35,50 +130,6 @@
             }
         }
     </style>
-
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
-        import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
-
-        // Firebase yapılandırması
-        const firebaseConfig = {
-            apiKey: "AIzaSyD7UpFdfkR7zVRgGHraIBX5mhacz1Wf7Xk",
-            authDomain: "rumiaut.firebaseapp.com",
-            projectId: "rumiaut",
-            storageBucket: "rumiaut.firebasestorage.app",
-            messagingSenderId: "459174728615",
-            appId: "1:459174728615:web:5322adc03216b552481c82",
-            measurementId: "G-9F41C1D4MV"
-        };
-
-        // Firebase'i başlat
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        document.addEventListener('DOMContentLoaded', async function () {
-            const userToken = localStorage.getItem('userToken');
-
-            if (userToken) {
-                try {
-                    const userDocRef = doc(db, 'users', userToken);
-                    const userDoc = await getDoc(userDocRef);
-
-                    if (userDoc.exists()) {
-                        const userData = userDoc.data();
-                        document.getElementById('username-display').innerText = userData.username;
-                    } else {
-                        localStorage.removeItem('userToken');
-                        window.location.href = 'login.html';
-                    }
-                } catch (error) {
-                    console.error("Error fetching username: ", error);
-                    window.location.href = 'login.html';
-                }
-            } else {
-                window.location.href = 'login.html';
-            }
-        });
-    </script>
 
 </head>
 <body>
@@ -102,15 +153,41 @@
         <h2 data-i18n="nav_settings">Settings</h2>
         <br> <br>
         <div class="user-info">
+            User ID: <span id="id-display">[UserID]</span> <!-- ID'yi burada gösterebilirsiniz -->
+            <br>
             Username: <span id="username-display">[Username]</span>
         </div>
+        
         <br>
         <div class="logout-button">
                 <button id="logoutButton" type="button">Log Out</button>
+                <br>
+                <br>
+                <button id="clearTokensButton" type="button">Delete Session Tokens</button>
             </div>
         </div>
         
     </div>
+
+    <div id="passwordModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>Confirm Password</h2>
+            <form id="passwordForm">
+                <input type="password" id="password" placeholder="Şifrenizi Girin" required />
+                <div class="checkbox-container">
+                    <label>
+                        <input type="checkbox" id="deleteCurrentToken" checked />
+                        Geçerli Token'ı Sil
+                    </label>
+                </div>
+                <div class="button-container">
+                    <button type="submit" id="submitPassword">Onayla</button>
+                    <button type="button" id="cancelModal">İptal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
 
     
 
