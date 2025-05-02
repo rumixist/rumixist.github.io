@@ -1,4 +1,4 @@
-const PYTHONANYWHERE_API_BASE_URL = "http://rumixist.pythonanywhere.com"; // <-- BURAYI KENDİ ADRESİNİZLE DEĞİŞTİRİN
+const PYTHONANYWHERE_API_BASE_URL = "https://rumixist.pythonanywhere.com"; // <-- BURAYI KENDİ ADRESİNİZLE DEĞİŞTİRİN
 
 // API endpointleri
 const API_ENDPOINTS = {
