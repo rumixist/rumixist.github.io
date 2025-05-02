@@ -6,51 +6,20 @@
     <meta name="keywords" content="rumixist, rumi">
     <meta name="author" content="rumixist">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="nav_home">Home</title>
+    <title data-i18n="nav_home">MARDA</title>
     <link rel="icon" href="/images/favicon.png" type="image/x-icon">
 
     <link rel="stylesheet" href="main.css">
-    <link rel="stylesheet" href="home.css">
-
-    <script type="module" src="auth.js"></script>    
+    <link rel="stylesheet" href="marda.css">
 
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
-
-   <style>
-    .ad-container {
-        position: relative;
-        margin-top: 479px;
-        bottom: 20px;
-        display: flex;
-        justify-content: center; /* Resimleri yatayda ortala */
-        width: 100%; /* Tam genişlikte olmasını sağla */
-    }
-
-    .ad-container > * {
-        margin: 0 7.5px; /* Reklamlar arasında 15px boşluk bırak */
-    }
-
-    .ad-image {
-        width: 270px;
-        height: auto;
-    }
-    @media (max-width: 767px) {
-        .ad-container {
-            display: none; /* Hide the entire ad container */
-        }
-    }
-    @media (max-height: 844px) {
-        .ad-container {
-            display: none; /* Hide the entire ad container */
-        }
-    }
-    </style>
 
 </head>
 <body>
         
     <div class="custom-cursor"></div>
     <script src="script.js"></script>
+    <script src="marda.js"></script>
     <script src="home.js"></script>
 
     <a href="index.html" class="logo">rumi</a>
@@ -66,22 +35,42 @@
         </ul>
     </nav>
 
-    <div class="greeting-message" id="greeting-message">Merhaba rumi</div>
+    <div class="main-content">
+        <h1>Marmara Bölgesi Deprem Trafiği Analizi</h1>
 
-    <div class="search">
-        <input type="text" placeholder=">">
-        <button data-i18n="SearchButton">Search</button>
-        <br>
+        <p id="last-updated-timestamp" class="last-updated">Son güncelleme: yükleniyor...</p>
 
-    </div>
+        <div id="rate-analysis" class="analysis-section">
+            <h2>Sismik Aktivite Hızı Analizi</h2>
+            <p class="loading">Yükleniyor...</p>
+            <div class="analysis-content">
+                </div>
+             <p class="error" style="display:none; color: red;"></p> </div>
 
-    <div class="ad-container">
-        <a href="random-sentence-generator.html">
-            <img class="ad-image" src="images/ad1.png" alt="Advertisement">
-        </a>
-        
-       
-        <!-- İhtiyacınıza göre daha fazla reklam ekleyebilirsiniz -->
+        <div id="clustering-analysis" class="analysis-section">
+            <h2>Mekansal Kümeleme Analizi</h2>
+             <p class="loading">Yükleniyor...</p>
+            <div class="analysis-content">
+                </div>
+             <p class="error" style="display:none; color: red;"></p>
+        </div>
+
+         <div id="magnitude-analysis" class="analysis-section">
+            <h2>Büyüklük Dağılımı Analizi</h2>
+             <p class="loading">Yükleniyor...</p>
+            <div class="analysis-content">
+                </div>
+             <p class="error" style="display:none; color: red;"></p>
+        </div>
+
+         <div id="bvalue-analysis" class="analysis-section">
+            <h2>B-Değeri Analizi</h2>
+             <p class="loading">Yükleniyor...</p>
+            <div class="analysis-content">
+                </div>
+             <p class="error" style="display:none; color: red;"></p>
+        </div>
+
     </div>
 
     <div class="page-bottom">

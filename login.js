@@ -20,14 +20,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (response.ok) {
                 // Login başarılıysa, bir "token" veya oturum verisi varsa burada işlenebilir
-                localStorage.setItem('token', result.token); // Şimdilik username saklıyoruz, gerçek token sonra
-                window.location.href = 'home.html';
+                localStorage.setItem('token', result.token);
+
+                // Yönlendirmeden önce 1 saniye bekle
+                setTimeout(() => {
+                    window.location.href = 'home.html';
+                }, 1000); // 1000 milisaniye = 1 saniye
+
             } else {
+                // Login başarısızsa sunucudan gelen hata mesajını göster
                 alert(result.error || 'Login failed');
             }
         } catch (error) {
+            // Fetch isteği sırasında bir hata oluşursa
             console.error('Login error:', error);
-            alert('An unexpected error occurred.');
+            alert('An unexpected error occurred. Please try again later.');
         }
     });
 });

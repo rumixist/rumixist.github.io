@@ -46,7 +46,7 @@
 </head>
 <body>
 
-    <h1>Admin Paneline Hoşgeldiniz</h1>
+    <h1 id="header1">checking...</h1>
 
     <!-- Admin paneli içeriği -->
     <div class="admin-panel">
@@ -102,6 +102,7 @@
                         // Adminse, admin panelini göster
                         document.querySelector('.admin-panel').style.display = 'block';
                         document.getElementById('errorMessage').innerText = '';
+                        document.getElementById('header1').innerText = 'Admin paneline hoş geldiniz';
                     } else {
                         // Admin değilse, 403 sayfasına yönlendir
                         window.location.href = "403.html";
