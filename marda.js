@@ -40,46 +40,105 @@ const displayLastUpdated = (timestamp) => {
     }
 };
 
+// Helper function to convert period keys (like "7_days", "24_hours") to a comparable value (in hours)
+const getPeriodInHours = (periodKey) => {
+    if (!periodKey) return 0;
+
+    // Handle keys that might include a period part (e.g., '1_hour_vs_30_days', 'daily_30_days')
+    // We primarily want to sort by the *duration* mentioned in the key.
+    let keyToParse = periodKey;
+    if (periodKey.includes('_vs_')) {
+        keyToParse = periodKey.split('_vs_')[0]; // Use the first part for sorting ratios
+    } else if (periodKey.startsWith('daily_') || periodKey.startsWith('hourly_')) {
+        // Extract the duration part like '30_days'
+        const parts = periodKey.split('_');
+        if (parts.length >= 2) {
+            keyToParse = parts.slice(1).join('_'); // Rejoin from the second part
+        } else {
+             keyToParse = periodKey; // Fallback if unexpected format
+        }
+    }
+
+    const parts = keyToParse.split('_');
+    if (parts.length < 2) return 0; // Not a standard period key format
+
+    const value = parseInt(parts[0], 10);
+    const unit = parts[1]; // Expected "hour", "hours", "day", "days"
+
+    if (isNaN(value)) return 0; // Value is not a number
+
+    if (unit.startsWith('hour')) {
+        return value; // Already in hours
+    } else if (unit.startsWith('day')) {
+        return value * 24; // Convert days to hours
+    }
+
+    return 0; // Unknown unit or format
+};
+
+
 // Analiz sonuçlarını HTML'e render eden fonksiyonlar
 const renderRateAnalysis = (data, elementId) => {
     const analysisContentDiv = getElement(elementId).querySelector('.analysis-content');
     let html = '';
 
     if (data && Object.keys(data).length > 0) { // Data doluysa render et
-        // Son güncelleme zamanı varsa burada da işlenebilir veya ayrı çağrı kullanılabilir.
-        // Ayrı çağrı daha temiz olacak.
 
-        html += '<h3>Deprem Sayıları (Son Dönemler)</h3>';
-        html += `<ul>`;
-        // Object.entries kullanarak sırayı korumak daha iyi olabilir
-        Object.entries(data.period_counts || {}).forEach(([periodKey, count]) => {
-             const periodLabel = periodKey.replace('_hours', ' Saat').replace('_days', ' Gün'); // Türkçe etiketler
-             html += `<li><strong>Son ${periodLabel}:</strong> ${count} deprem</li>`;
-        });
-        html += `</ul>`;
-
-        html += '<h3>Uzun Vadeli Ortalamalar (Son 30 Gün)</h3>';
-        html += `<ul>`;
-         Object.entries(data.long_term_averages || {}).forEach(([key, value]) => {
-             const label = key.replace('daily_', 'Günlük ').replace('hourly_', 'Saatlik ').replace('30_days', ' (30 Gün)'); // Türkçe etiketler
-             html += `<li><strong>${label.charAt(0).toUpperCase() + label.slice(1)} Ortalama:</strong> ${value !== undefined ? value.toFixed(2) : 'N/A'} deprem</li>`;
-         });
-        html += `</ul>`;
-
-        if (data.rate_ratios && Object.keys(data.rate_ratios).length > 0) {
-             html += '<h3>Hız Oranları (30 Günlük Ortalamaya Göre)</h3>';
+        // period_counts verisini süreye göre küçükten büyüğe sırala
+        if (data.period_counts && Object.keys(data.period_counts).length > 0) {
+             html += '<h3>Deprem Sayıları (Son Dönemler)</h3>';
              html += `<ul>`;
-             Object.entries(data.rate_ratios).forEach(([ratioKey, ratioValue]) => {
-                 const periodLabel = ratioKey.split('_vs_')[0].replace('_hours', ' Saat').replace('_days', ' Gün'); // Türkçe etiketler
-                 html += `<li><strong>Son ${periodLabel}:</strong> ${ratioValue !== undefined ? ratioValue.toFixed(2) : 'N/A'} katı</li>`;
+             const sortedPeriodKeys = Object.keys(data.period_counts).sort((a, b) => getPeriodInHours(a) - getPeriodInHours(b));
+
+             sortedPeriodKeys.forEach(periodKey => {
+                 const count = data.period_counts[periodKey];
+                 const periodLabel = periodKey.replace('_hours', ' Saat').replace('_days', ' Gün'); // Türkçe etiketler
+                 html += `<li><strong>Son ${periodLabel}:</strong> ${count} deprem</li>`;
              });
              html += `</ul>`;
         }
 
 
-        html += '<h3>İstatistiksel Anomali Göstergesi (Son 24 Saat)</h3>';
-        html += `<ul>`;
-         if (data.statistical_anomaly) {
+        // long_term_averages verisini sırala (örneğin saatlik ortalama önce)
+        if (data.long_term_averages && Object.keys(data.long_term_averages).length > 0) {
+             html += '<h3>Uzun Vadeli Ortalamalar (Son 30 Gün)</h3>';
+             html += `<ul>`;
+             // Burada özel bir sıralama yapabiliriz, örneğin "hourly" önce gelsin
+             const sortedAverageKeys = Object.keys(data.long_term_averages).sort((a, b) => {
+                  if (a.startsWith('hourly') && !b.startsWith('hourly')) return -1;
+                  if (!a.startsWith('hourly') && b.startsWith('hourly')) return 1;
+                  // Eğer ikisi de hourly veya daily ise kendi içlerinde alfabetik sırala
+                  return a.localeCompare(b);
+             });
+
+             sortedAverageKeys.forEach(key => {
+                 const value = data.long_term_averages[key];
+                 const label = key.replace('daily_', 'Günlük ').replace('hourly_', 'Saatlik ').replace('30_days', ' (30 Gün)'); // Türkçe etiketler
+                 html += `<li><strong>${label.charAt(0).toUpperCase() + label.slice(1)} Ortalama:</strong> ${value !== undefined ? value.toFixed(2) : 'N/A'} deprem</li>`;
+             });
+             html += `</ul>`;
+        }
+
+
+        // rate_ratios verisini süreye göre küçükten büyüğe sırala (oranlanan döneme göre)
+        if (data.rate_ratios && Object.keys(data.rate_ratios).length > 0) {
+             html += '<h3>Hız Oranları (30 Günlük Ortalamaya Göre)</h3>';
+             html += `<ul>`;
+             const sortedRatioKeys = Object.keys(data.rate_ratios).sort((a, b) => getPeriodInHours(a) - getPeriodInHours(b));
+
+             sortedRatioKeys.forEach(ratioKey => {
+                  const ratioValue = data.rate_ratios[ratioKey];
+                  const periodLabel = ratioKey.split('_vs_')[0].replace('_hours', ' Saat').replace('_days', ' Gün'); // Türkçe etiketler
+                  html += `<li><strong>Son ${periodLabel}:</strong> ${ratioValue !== undefined ? ratioValue.toFixed(2) : 'N/A'} katı</li>`;
+             });
+             html += `</ul>`;
+        }
+
+
+        if (data.statistical_anomaly) {
+             html += '<h3>İstatistiksel Anomali Göstergesi (Son 24 Saat)</h3>';
+             html += `<ul>`;
+             // Anomali verileri genellikle tek bir dönem içindir, sıralama gerekli değil
              html += `<li><strong>Ortalama Günlük (30 gün):</strong> ${data.statistical_anomaly.mean_daily_30_days !== undefined ? data.statistical_anomaly.mean_daily_30_days.toFixed(2) : 'N/A'}</li>`;
              html += `<li><strong>Standart Sapma (30 gün):</strong> ${data.statistical_anomaly.stdev_daily_30_days !== undefined ? data.statistical_anomaly.stdev_daily_30_days.toFixed(2) : 'N/A'}</li>`;
              if (data.statistical_anomaly['24_hour_z_score'] !== null && data.statistical_anomaly['24_hour_z_score'] !== undefined) {
@@ -88,10 +147,11 @@ const renderRateAnalysis = (data, elementId) => {
                   html += `<li><strong>Son 24 Saat Z-Skoru:</strong> Hesaplamadı (Yeterli veri yok/varyasyon düşük)</li>`;
              }
              html += `<li><strong>Yorum:</strong> ${data.statistical_anomaly.comment || 'N/A'}</li>`;
-         } else {
-              html += '<li>İstatistiksel anomali verisi bulunamadı.</li>';
-         }
-        html += `</ul>`;
+             html += `</ul>`;
+        } else {
+             html += '<h3>İstatistiksel Anomali Göstergesi (Son 24 Saat)</h3>';
+             html += '<p>İstatistiksel anomali verisi bulunamadı.</p>';
+        }
 
 
         if (data.comment) {
@@ -110,6 +170,12 @@ const renderClusteringAnalysis = (data, elementId) => {
     const analysisContentDiv = getElement(elementId).querySelector('.analysis-content');
     let html = '';
 
+    // Kümeleme analizinde ana veriler kümelerin kendisidir, dönemlere göre gruplama yoktur.
+    // Dolayısıyla burada bir sıralama ihtiyacı genelde olmaz. Kümeler genellikle boyutlarına
+    // veya başka bir kritere göre API tarafından sıralanmış olarak gelebilir.
+    // Eğer spesifik bir küme sıralaması istenirse, cluster.size gibi bir alana göre sıralanabilir.
+    // Şu an için API'den geldiği sırayla gösteriliyor.
+
     if (data && data.clusters && data.clusters.length > 0) {
         html += `<p>Toplam ${data.total_clusters_found} adet mekansal küme tespit edildi (Son ${data.clustering_parameters.time_window_hours} saat, Eşik: ${data.clustering_parameters.distance_threshold_km} km, Min Boyut: ${data.clustering_parameters.min_cluster_size}).</p>`;
         html += '<ul>';
@@ -121,7 +187,7 @@ const renderClusteringAnalysis = (data, elementId) => {
                 const maxEq = cluster.max_magnitude_earthquake;
                 // Tarih formatını daha okunur hale getirebilirsiniz
                 const date = new Date(maxEq.date);
-                 const formattedDate = isNaN(date.getTime()) ? maxEq.date : date.toLocaleString('tr-TR', { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                const formattedDate = isNaN(date.getTime()) ? maxEq.date : date.toLocaleString('tr-TR', { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
                 html += `<p>En Büyük Deprem: Tarih ${formattedDate}, Büyüklük ${maxEq.magnitude.toFixed(1)}, Derinlik ${maxEq.depth_km} km${maxEq.location_text ? ', Yer: ' + maxEq.location_text : ''}</p>`;
             } else {
@@ -150,12 +216,26 @@ const renderMagnitudeAnalysis = (data, elementId) => {
     if (data && data.counts_by_period_and_magnitude) {
         html += '<h3>Deprem Sayıları (Büyüklük Eşiklerine Göre)</h3>';
 
-        // Object.entries kullanarak sırayı korumak daha iyi olabilir (Python'daki sıralama korunur)
-        Object.entries(data.counts_by_period_and_magnitude).forEach(([periodKey, counts]) => {
+        // Dönem anahtarlarını al ve süreye göre küçükten büyüğe sırala
+        const periodKeys = Object.keys(data.counts_by_period_and_magnitude);
+        const sortedPeriodKeys = periodKeys.sort((a, b) => getPeriodInHours(a) - getPeriodInHours(b));
+
+
+        sortedPeriodKeys.forEach(periodKey => {
+             const counts = data.counts_by_period_and_magnitude[periodKey];
              const periodLabel = periodKey.replace('_hours', ' Saat').replace('_days', ' Gün'); // Türkçe etiketler
              html += `<h4>Son ${periodLabel}</h4>`;
              html += `<ul>`;
-             Object.entries(counts).forEach(([thresholdKey, count]) => {
+             // Büyüklük eşiklerini sırala (genellikle API'den sıralı gelir ama emin olmak için)
+             const sortedMagnitudeThresholdKeys = Object.keys(counts).sort((a, b) => {
+                 // 'geq_M2.5' -> 2.5 gibi sayısal değere çevirip sırala
+                 const numA = parseFloat(a.replace('geq_M', ''));
+                 const numB = parseFloat(b.replace('geq_M', ''));
+                 return numA - numB;
+             });
+
+             sortedMagnitudeThresholdKeys.forEach(thresholdKey => {
+                  const count = counts[thresholdKey];
                   const magnitudeLabel = thresholdKey.replace('geq_', '≥ '); // Türkçe etiket
                   html += `<li><strong>${magnitudeLabel}:</strong> ${count} deprem</li>`;
              });
@@ -183,9 +263,14 @@ const renderBValueAnalysis = (data, elementId) => {
     if (data && data.b_values_by_period) {
         html += '<h3>B-Değeri Hesaplamaları</h3>';
         html += '<ul>';
-         // Object.entries kullanarak sırayı korumak daha iyi olabilir (Python'daki sıralama korunur)
-         Object.entries(data.b_values_by_period).forEach(([periodKey, bValueData]) => {
-             const periodLabel = periodKey.replace('_days', ' Gün'); // Türkçe etiket
+        // Dönem anahtarlarını al ve süreye göre küçükten büyüğe sırala
+        const periodKeys = Object.keys(data.b_values_by_period);
+        const sortedPeriodKeys = periodKeys.sort((a, b) => getPeriodInHours(a) - getPeriodInHours(b));
+
+
+        sortedPeriodKeys.forEach(periodKey => {
+             const bValueData = data.b_values_by_period[periodKey];
+             const periodLabel = periodKey.replace('_days', ' Gün').replace('_hours', ' Saat'); // Türkçe etiket (hem gün hem saat olabilir)
              let line = `<li><strong>Son ${periodLabel}:</strong> `;
              if (bValueData.b_value !== null) {
                   line += `b-değeri: ${bValueData.b_value !== undefined ? bValueData.b_value.toFixed(2) : 'N/A'}, Mc: ${bValueData.mc !== undefined ? bValueData.mc.toFixed(2) : 'N/A'}, Deprem Sayısı: ${bValueData.earthquake_count !== undefined ? bValueData.earthquake_count : 'N/A'}`;
@@ -194,7 +279,7 @@ const renderBValueAnalysis = (data, elementId) => {
              }
              line += `</li>`;
              html += line;
-         });
+        });
         html += `</ul>`;
 
         if (data.percentage_change_7d_vs_30d !== null && data.percentage_change_7d_vs_30d !== undefined) {
@@ -226,7 +311,7 @@ const fetchAnalysis = async (endpointUrl, elementId, renderFunction) => {
     const errorElement = section.querySelector('.error');
     const contentDiv = section.querySelector('.analysis-content');
 
-     // Yükleniyor ve hata elementleri bulunamazsa devam et
+    // Yükleniyor ve hata elementleri bulunamazsa devam et
     if (!loading || !errorElement || !contentDiv) {
          console.error(`Analiz bölümü içindeki elementler bulunamadı: #${elementId}`);
          return;
@@ -274,8 +359,8 @@ const fetchAnalysis = async (endpointUrl, elementId, renderFunction) => {
 const fetchLastUpdatedTimestamp = async () => {
     const timestampElement = getElement('last-updated-timestamp');
      if (!timestampElement) {
-        console.error("Son güncelleme tarihi elementi bulunamadı.");
-        return;
+         console.error("Son güncelleme tarihi elementi bulunamadı.");
+         return;
      }
 
     timestampElement.textContent = "Son Güncelleme: Yükleniyor..."; // Türkçe yükleniyor mesajı
@@ -291,9 +376,9 @@ const fetchLastUpdatedTimestamp = async () => {
         const data = await response.json();
 
         if (data && data.latest_earthquake_time) {
-            displayLastUpdated(data.latest_earthquake_time);
+             displayLastUpdated(data.latest_earthquake_time);
         } else {
-            displayLastUpdated(null); // Veri yoksa null gönder
+             displayLastUpdated(null); // Veri yoksa null gönder
              console.warn("API'den son deprem zamanı verisi alınamadı veya boş döndü.");
         }
 
@@ -303,13 +388,12 @@ const fetchLastUpdatedTimestamp = async () => {
     }
 };
 
-
 // Sayfa yüklendiğinde analizleri ve son güncelleme tarihini çek
 document.addEventListener('DOMContentLoaded', () => {
     // API adresinin güncellenip güncellenmediğini kontrol et
-    if (PYTHONANYWHERE_API_BASE_URL === "http://placeholder.pythonanywhere.com" || PYTHONANYWHERE_API_BASE_URL.includes("[kullaniciadiniz]")) {
-        // alert("Lütfen script.js dosyasındaki PYTHONANYWHERE_API_BASE_URL değişkenini kendi adresinizle güncelleyin!"); // Pop-up yerine konsola yazabilir
-        console.error("API adresi güncellenmemiş! Lütfen marda.js dosyasını kontrol edin.");
+    // Placeholder veya varsayılan kullanıcı adı kontrolü
+    if (PYTHONANYWHERE_API_BASE_URL === "http://placeholder.pythonanywhere.com") {
+        console.error("API adresi güncellenmemiş! Lütfen PYTHONANYWHERE_API_BASE_URL değişkenini kendi adresinizle güncelleyin.");
         // Hata mesajlarını gösterelim ilgili bölümlerde
         document.querySelectorAll('.analysis-section').forEach(section => {
              const loadingElement = section.querySelector('.loading');
@@ -323,10 +407,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
          const timestampElement = getElement('last-updated-timestamp');
          if(timestampElement) {
-            timestampElement.textContent = "Son Güncelleme: API adresi ayarlanmamış."; // Türkçe hata mesajı
+             timestampElement.textContent = "Son Güncelleme: API adresi ayarlanmamış."; // Türkçe hata mesajı
          }
         return; // Adres güncellenmemişse devam etme
     }
+
 
     // API'den verileri çek ve ilgili bölümlere yerleştir
     fetchAnalysis(API_ENDPOINTS.rate, 'rate-analysis', renderRateAnalysis);
