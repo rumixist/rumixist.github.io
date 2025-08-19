@@ -1,5 +1,5 @@
 // assets/js/login.js
-const BASE = "https://sgqlutjpejcusnfyajkm.functions.supabase.co";
+const BASE = "https://cklqydolfzwskptbmvpb.functions.supabase.co";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginForm");
@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const res = await fetch(`${BASE}/login`, {
         method: "POST",
-        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password })
       });
@@ -34,15 +33,20 @@ document.addEventListener("DOMContentLoaded", () => {
       try { payload = await res.json(); } catch { payload = { error: await res.text().catch(()=> "Unknown") }; }
 
       if (!res.ok) {
-        alert("Login failed: " + (payload?.error || "Unknown"));
+        alert("Giriş başarısız: " + (payload?.error || "Unknown"));
         return;
       }
 
+      // Token'ı localStorage'a kaydet
+      if (payload?.token) {
+        localStorage.setItem("session_token", payload.token);
+      }
+
       alert("Giriş başarılı!");
-      window.location.href = "/index.html";
+      window.location.href = "/index.html"; // veya ana sayfanızın adresi
     } catch (err) {
       console.error(err);
-      alert("Giriş sırasında hata oluştu.");
+      alert("Giriş sırasında bir hata oluştu. Konsolu kontrol edin.");
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = orig;

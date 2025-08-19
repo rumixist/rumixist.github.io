@@ -1,5 +1,5 @@
 // assets/js/home.js
-const BASE = "https://sgqlutjpejcusnfyajkm.functions.supabase.co";
+const BASE = "https://cklqydolfzwskptbmvpb.functions.supabase.co";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const greeting = document.getElementById("greetingtext");
@@ -7,20 +7,31 @@ document.addEventListener("DOMContentLoaded", async () => {
   const navUl = document.querySelector("nav ul");
 
   if (greeting) greeting.style.display = "none";
+  const token = localStorage.getItem("session_token");
+
+  if (!token) {
+    // Token yoksa giriş butonu görünür olsun
+    if (loginBtnLi) loginBtnLi.style.display = "";
+    return;
+  }
 
   try {
     const res = await fetch(`${BASE}/me`, {
       method: "GET",
-      credentials: "include"
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
     });
 
     if (!res.ok) {
+      localStorage.removeItem("session_token"); // Geçersiz token'ı temizle
       if (loginBtnLi) loginBtnLi.style.display = "";
       return;
     }
 
     const data = await res.json();
     const username = data?.user?.username;
+
     if (username) {
       if (greeting) {
         greeting.textContent = `Welcome, ${username}`;
@@ -44,15 +55,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         logoutLi.innerHTML = `<a href="#" id="logout-link">Logout</a>`;
         navUl.appendChild(logoutLi);
 
-        document.getElementById("logout-link").addEventListener("click", async (e) => {
+        document.getElementById("logout-link").addEventListener("click", (e) => {
           e.preventDefault();
-          await fetch(`${BASE}/logout`, { method: "POST", credentials: "include" });
+          localStorage.removeItem("session_token");
           window.location.reload();
         });
       }
     }
   } catch (err) {
     console.error("Error fetching /me:", err);
+    localStorage.removeItem("session_token"); // Hata durumunda token'ı temizle
     if (loginBtnLi) loginBtnLi.style.display = "";
   }
 });

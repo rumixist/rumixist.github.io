@@ -1,5 +1,5 @@
 // assets/js/signup.js
-const BASE = "https://sgqlutjpejcusnfyajkm.functions.supabase.co";
+const BASE = "https://cklqydolfzwskptbmvpb.functions.supabase.co";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginForm");
@@ -18,6 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Lütfen kullanıcı adı ve şifre girin.");
       return;
     }
+    if (password.length < 6) {
+        alert("Şifre en az 6 karakter olmalıdır.");
+        return;
+    }
     if (password !== confirmPassword) {
       alert("Şifreler uyuşmuyor.");
       return;
@@ -27,14 +31,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const orig = submitBtn.textContent;
     submitBtn.textContent = "Signing up...";
 
-    // timeout için AbortController
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 10000);
 
     try {
       const res = await fetch(`${BASE}/signup`, {
         method: "POST",
-        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
         signal: controller.signal
@@ -43,16 +45,21 @@ document.addEventListener("DOMContentLoaded", () => {
       clearTimeout(timeout);
 
       let payload;
-      try { payload = await res.json(); } catch (e) { payload = { error: await res.text().catch(()=>"Unknown") }; }
+      try { payload = await res.json(); } catch (e) { payload = { error: await res.text().catch(() => "Unknown") }; }
 
       if (!res.ok) {
-        alert("Signup failed: " + (payload?.error || "Unknown"));
+        alert("Kayıt başarısız: " + (payload?.error || "Unknown"));
         return;
+      }
+
+      // Token'ı localStorage'a kaydet
+      if (payload?.token) {
+        localStorage.setItem("session_token", payload.token);
       }
 
       alert("Kayıt başarılı — giriş yapıldı.");
       form.reset();
-      window.location.href = "/index.html";
+      window.location.href = "/index.html"; // veya ana sayfanızın adresi
     } catch (err) {
       if (err.name === "AbortError") {
         alert("İstek zaman aşımına uğradı. Tekrar deneyin.");
