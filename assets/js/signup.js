@@ -1,4 +1,4 @@
-// assets/js/signup.js (güncellenmiş, dayanıklı)
+// assets/js/signup.js
 const BASE = "https://sgqlutjpejcusnfyajkm.functions.supabase.co";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -24,12 +24,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     submitBtn.disabled = true;
-    const originalText = submitBtn.textContent;
+    const orig = submitBtn.textContent;
     submitBtn.textContent = "Signing up...";
 
-    // timeout wrapper
+    // timeout için AbortController
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s
+    const timeout = setTimeout(() => controller.abort(), 10000);
 
     try {
       const res = await fetch(`${BASE}/signup`, {
@@ -40,33 +40,30 @@ document.addEventListener("DOMContentLoaded", () => {
         signal: controller.signal
       });
 
-      clearTimeout(timeoutId);
+      clearTimeout(timeout);
 
-      // Eğer CORS hatası varsa fetch ya hata fırlatır (caught’a düşer) veya res.ok false olur
       let payload;
-      try { payload = await res.json(); } catch (e) { payload = { error: await res.text().catch(()=> String(e)) }; }
+      try { payload = await res.json(); } catch (e) { payload = { error: await res.text().catch(()=>"Unknown") }; }
 
       if (!res.ok) {
-        // 401, 400, 409 vs durumları buradan yönet
-        const message = payload?.error || payload?.message || `Signup failed (status ${res.status})`;
-        alert(message);
+        alert("Signup failed: " + (payload?.error || "Unknown"));
         return;
       }
 
-      alert("Signup başarılı — otomatik olarak giriş yapıldı.");
+      alert("Kayıt başarılı — giriş yapıldı.");
       form.reset();
       window.location.href = "/index.html";
     } catch (err) {
       if (err.name === "AbortError") {
-        alert("Sunucu yanıt vermedi (timeout). Ağ bağlantını veya fonksiyon loglarını kontrol et.");
+        alert("İstek zaman aşımına uğradı. Tekrar deneyin.");
       } else {
-        console.error("Signup fetch error:", err);
-        alert("Bir hata oluştu. Konsolu kontrol et (DevTools).");
+        console.error(err);
+        alert("Bir hata oluştu. Konsolu kontrol et.");
       }
     } finally {
-      clearTimeout(timeoutId);
+      clearTimeout(timeout);
       submitBtn.disabled = false;
-      submitBtn.textContent = originalText;
+      submitBtn.textContent = orig;
     }
   });
 });

@@ -14,11 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = document.getElementById("password").value;
 
     if (!username || !password) {
-      alert("Please fill in both fields.");
+      alert("Lütfen tüm alanları doldurun.");
       return;
     }
 
     submitBtn.disabled = true;
+    const orig = submitBtn.textContent;
     submitBtn.textContent = "Logging in...";
 
     try {
@@ -29,25 +30,22 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify({ username, password })
       });
 
-      // Yanıtı önce JSON olarak almaya çalış, olmazsa metin oku
       let payload;
-      try { payload = await res.json(); } catch { payload = { error: await res.text().catch(()=> "Unknown error") }; }
+      try { payload = await res.json(); } catch { payload = { error: await res.text().catch(()=> "Unknown") }; }
 
       if (!res.ok) {
-        const msg = payload?.error || payload?.message || "Login failed";
-        alert("Login failed: " + msg);
+        alert("Login failed: " + (payload?.error || "Unknown"));
         return;
       }
 
-      alert("Login successful!");
-      // Yönlendir
+      alert("Giriş başarılı!");
       window.location.href = "/index.html";
     } catch (err) {
-      console.error("Login error:", err);
-      alert("An unexpected error occurred during login.");
+      console.error(err);
+      alert("Giriş sırasında hata oluştu.");
     } finally {
       submitBtn.disabled = false;
-      submitBtn.textContent = "Login";
+      submitBtn.textContent = orig;
     }
   });
 });

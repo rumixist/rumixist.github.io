@@ -3,10 +3,10 @@ const BASE = "https://sgqlutjpejcusnfyajkm.functions.supabase.co";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const greeting = document.getElementById("greetingtext");
-  if (!greeting) return;
+  const loginBtnLi = document.querySelector("li.login-button");
+  const navUl = document.querySelector("nav ul");
 
-  // Başta gizle, sonra duruma göre göster
-  greeting.style.display = "none";
+  if (greeting) greeting.style.display = "none";
 
   try {
     const res = await fetch(`${BASE}/me`, {
@@ -15,24 +15,44 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     if (!res.ok) {
-      // Oturum yok veya unauthorized
-      greeting.style.display = "none";
+      if (loginBtnLi) loginBtnLi.style.display = "";
       return;
     }
 
-    // JSON parse dene
-    let data;
-    try { data = await res.json(); } catch { data = null; }
-
+    const data = await res.json();
     const username = data?.user?.username;
     if (username) {
-      greeting.textContent = `Welcome, ${username}`;
-      greeting.style.display = "block";
-    } else {
-      greeting.style.display = "none";
+      if (greeting) {
+        greeting.textContent = `Welcome, ${username}`;
+        greeting.style.display = "block";
+      }
+      if (loginBtnLi) loginBtnLi.style.display = "none";
+
+      if (navUl && !document.getElementById("nav-profile")) {
+        const profileLi = document.createElement("li");
+        profileLi.id = "nav-profile";
+        profileLi.innerHTML = `<a href="/profile.html">Profile</a>`;
+        navUl.appendChild(profileLi);
+
+        const settingsLi = document.createElement("li");
+        settingsLi.id = "nav-settings";
+        settingsLi.innerHTML = `<a href="/settings.html">Settings</a>`;
+        navUl.appendChild(settingsLi);
+
+        const logoutLi = document.createElement("li");
+        logoutLi.id = "nav-logout";
+        logoutLi.innerHTML = `<a href="#" id="logout-link">Logout</a>`;
+        navUl.appendChild(logoutLi);
+
+        document.getElementById("logout-link").addEventListener("click", async (e) => {
+          e.preventDefault();
+          await fetch(`${BASE}/logout`, { method: "POST", credentials: "include" });
+          window.location.reload();
+        });
+      }
     }
   } catch (err) {
     console.error("Error fetching /me:", err);
-    greeting.style.display = "none";
+    if (loginBtnLi) loginBtnLi.style.display = "";
   }
 });
