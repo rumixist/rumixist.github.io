@@ -1,28 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="This is experiemental website.">
-    <meta name="keywords" content="rumixist, rumi">
-    <meta name="author" content="rumixist">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="3OUm9tjOm7FDpO2k4yRI0aJd_-6cJgMWlR3YtRtRhE8" />
-    <title>...</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-   <link rel="stylesheet" href="main.css">
-   <link rel="stylesheet" href="home.css">
+    <title>Home - rumixist</title>
+    <meta name="description" content="This is rumixist website.">
+    <meta name="keywords" content="rumi, rumixist">
+    <meta name="author" content="rumixist">
+    
+    <meta name="robots" content="index, follow">
 
-   <script type="module" src="auth.js"></script>
+    <meta property="og:title" content="rumixist website name">
+    <meta property="og:description" content="This is rumixist website.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rumixist.github.io/">
+    <meta property="og:image" content="https://rumixist.github.io/assets/img/favicon">
 
-   <script type="text/javascript">
-    window.location.href = "home.html";
-  </script>   
+    <link rel="icon" href="assets/img/favicon.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="assets/img/favicon.png">
 
-</head>
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/home.css">
+
+    <script defer src="assets/js/global.js"></script>
+    <script defer src="assets/js/home.js"></script>
+
+    </head>
 <body>
-        
-    <div class="custom-cursor"></div>
-    <script src="script.js"></script>
-</body>
-</html>
+  <a href="index.html" class="logo">rumi</a>
 
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Things</a></li>
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Help</a></li>
+            <li><a href="#">Settings</a></li>
+            <li class="login-button"><a href="login">Login</a></li>
+
+        </ul>
+    </nav>
+
+    <div class="search-container">
+        <div class="search-box">
+            <span class="prompt-char">~</span>
+            <input type="text" placeholder="Arama...">
+            <button>Search</button>
+        </div>
+    </div>
+
+    <div class="page-layout">
+        <aside class="left-sidebar">
+            <h2>Navigation</h2>
+            <p>________________</pp>
+            <ul>
+                <br>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Friends</a></li>
+                <li><a href="#">Messages</a></li>
+                <li><a href="#">Groups</a></li>
+                <li><a href="#">Newsroom</a></li>
+                <br> <br>
+                <li><a href="#">Rumiakademi</a></li>
+                <li><a href="#">Rumilabs</a></li>
+                <li><a href="#">Rumilibrary</a></li>
+                <li><a href="#">Rumiarchive</a></li>
+                <li><a href="#">Rumiforum</a></li>
+                <br> <br>
+                <li><a href="#">Status</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content-area">
+            <section class="content">
+                <h1 id="greetingtext">Hello, [username]</h1>
+                <br>
+                <p>[Friends]</p>
+                <br>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </section>
+        </main>
+        </div>
+
+    </body>
+</html>
