@@ -1,0 +1,195 @@
+html, body {
+    cursor: none;
+}
+
+/* Önceki sitenin fontu, tarayıcıda varsa kullanılır, yoksa fallback */
+@font-face {
+    font-family: 'OriginalRetroFont';
+    src: local('Courier New'), local('Courier'), monospace;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    cursor: none;
+}
+
+body {
+    font-family: monospace;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(233, 233, 233);
+    display: flex;
+    flex-direction: column;
+    min-height: 111vh; /* Make sure the body takes at least full height */
+}
+
+.logo {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    width: 96%;
+    background: #ff0000;
+    color: white;
+    font-size: 40px;
+    margin-top: 10px;
+}
+
+.logo:hover {
+    color: white;
+}
+
+nav {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+    width: 96%;
+    background: #033c5369;
+}
+
+nav ul {
+    display: flex; /* Flexbox kullanarak elemanları yatayda düzenle */
+    justify-content: flex-start; /* Elemanları sola yasla */
+    width: 100%; /* Navigasyon kutusunun tamamını kapla */
+}
+
+nav li {
+    display: inline-block;
+    margin: 0 8px;
+    line-height: 35px; /* Nav yüksekliğine uygun olacak şekilde güncelledim */
+    margin-top: 0;
+}
+
+/* "Login" düğmesi için özel stil */
+.login-button {
+    margin-left: auto; /* Düğmeyi en sağa yaslamak için otomatik boşluk */
+    border-radius: 4px;
+}
+
+.login-button a {
+   border: 1px solid white; /* Beyaz kenarlık */
+   padding: 4px 20px;
+   background-color: #033c532d; /* Arka plan rengi */
+   color: white; /* Yazı rengi */
+   border-radius: 4px;
+}
+
+.login-button a:hover {
+    background-color: #055f7a65; /* Hover efekti için farklı bir renk */
+    color: white;
+}
+
+nav a {
+    color: white;
+    font-size: 18px;
+    border: 1px solid transparent;
+    padding: 5px 20px;
+}
+
+nav a:hover {
+    color: red;
+}
+
+.page-layout {
+    display: flex;
+    justify-content: left;
+    width: 96%;
+    max-width: 92% - 200px;
+    margin: 8px 2%; /* ortala */
+    gap: 20px; /* sidebar ile içerik arası boşluk */
+}
+
+/* Sidebar sabit genişlikte */
+.left-sidebar {
+    flex: 0 0 200px; /* hep 200px genişlik */
+    padding: 10px;
+    border: 0px solid #000;
+    background-color: #dfdede;
+}
+
+/* Sidebar'daki tüm linkleri hedef alır */
+.left-sidebar a {
+    display: block;
+    padding: 8px 15px;
+    color: #000;
+    text-decoration: none;
+    border: none;
+    background: none;
+    box-shadow: none;
+    font-size: 16px;
+    cursor: none;  /* Fare imlecinin ok olarak kalmasını sağlar */
+    transition: background-color 0.3s ease, color 0.1s ease; /* Yumuşak bir geçiş efekti ekler */
+}
+
+/* Fareyle üzerine gelindiğinde yapılacak değişiklikler */
+.left-sidebar a:hover {
+    background-color: #e9e9e9;  /* Hafif gri bir arka plan rengi ekler */
+    color: #ff0000;                /* Metin rengini biraz koyulaştırır */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Hafif bir gölge ekleyerek 3D hissi verir */
+    border-radius: 4px;         /* Köşeleri hafifçe yuvarlar */
+}
+
+/* İçerik geri kalan alanı kaplasın */
+.main-content-area {
+    flex: 1; /* kalan alanı kapla */
+    border: 0px solid #000;
+    padding: 20px;
+}
+
+
+/* Arama çubuğu için ana konteyner */
+.search-container {
+    width: 96%;
+    margin: 4px auto; /* Ortala ve üstten boşluk bırak */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ccc;
+}
+
+/* Arama kutusu */
+.search-box {
+    display: flex;
+    align-items: center;
+    /* Kenar çizgisini 1px olarak bıraktık */
+    border: 1px solid #a0a0a0;
+    padding: 0;
+    width: 500px; /* Sabit genişlik */
+    margin: 3px; /* Konteyner içinde boşluk bırakmak için */
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 1em;
+    background: transparent;
+    flex-grow: 1;
+    padding: 3px 5px;
+}
+
+.search-box button {
+    font-family: inherit;
+    border: 1px solid #a0a0a0;
+    background-color: #e0e0e0;
+    cursor: pointer;
+    padding: 3px 8px;
+}
+
+.prompt-char {
+    font-weight: bold;
+    color: #ff0000;
+    padding-left: 5px;
+}
