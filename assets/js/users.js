@@ -1,12 +1,20 @@
 const BASE_URL = "https://jneuwkadlgoxekhcbvdh.supabase.co/functions/v1";
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Önce URL'den kullanıcı ID'sini al
-    const pathSegments = window.location.pathname.split('/');
-    const userId = pathSegments[pathSegments.length - 1];
+    // localStorage'dan yönlendirilen kullanıcı ID'sini al
+    const userId = localStorage.getItem('redirect_to_user_id');
+    localStorage.removeItem('redirect_to_user_id'); // ID'yi kullandıktan sonra temizle
 
-    if (userId && !isNaN(userId)) { // userId'nin bir sayı olduğundan emin ol
-        fetchUserProfile(userId);
+    // Eğer ID yoksa, URL'den almayı dene (yerel testler için veya direkt erişim için)
+    const pathSegments = window.location.pathname.split('/');
+    const urlId = pathSegments[pathSegments.length - 1];
+
+    const finalUserId = userId || urlId;
+
+    console.log("Alınan Kullanıcı ID'si:", finalUserId);
+
+    if (finalUserId && !isNaN(finalUserId)) {
+        fetchUserProfile(finalUserId);
     } else {
         document.getElementById('profile-username').textContent = 'Geçersiz kullanıcı ID\'si.';
     }
@@ -25,8 +33,11 @@ async function fetchUserProfile(userId) {
         
         document.getElementById('profile-username').textContent = userData.username;
         document.getElementById('profile-email').textContent = userData.email;
-        // Diğer bilgileri de ekleyebilirsiniz
-        
+        // Diğer verileri de ekleyebilirsiniz (örn. bio)
+        if (userData.bio) {
+             document.getElementById('profile-bio').textContent = userData.bio;
+        }
+
     } catch (err) {
         console.error(err);
         document.getElementById('profile-username').textContent = 'Kullanıcı bulunamadı veya bir hata oluştu.';

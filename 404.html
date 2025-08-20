@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>404</title>
+    <title>Sayfa Bulunamadı</title>
 </head>
 <body>
     <script>
-        // URL'yi al
         const currentPath = window.location.pathname;
+        const searchParams = window.location.search;
 
-        // URL'nin /users/ ile başladığını kontrol et
         if (currentPath.startsWith('/users/')) {
-            // Kullanıcı profil sayfasına yönlendir
-            window.location.replace('/users/');
+            const userId = currentPath.split('/').pop(); // URL'deki son parçayı al (örneğin '1')
+            // Orijinal URL'yi saklamak için localStorage kullan
+            localStorage.setItem('redirect_to_user_id', userId);
+            window.location.replace('/users/'); // Ana profil sayfasına yönlendir
         } else {
-            // Diğer 404 sayfaları için mesaj göster
             document.body.innerHTML = '<h1>404 - Sayfa Bulunamadı</h1><p>Aradığınız sayfa mevcut değil.</p><a href="/">Ana Sayfaya Dön</a>';
         }
     </script>
