@@ -3,50 +3,41 @@ const BASE = "https://jneuwkadlgoxekhcbvdh.supabase.co/functions/v1";
 
 document.addEventListener("DOMContentLoaded", async () => {
     const greeting = document.getElementById("greetingtext");
-    const navLoginBtnLi = document.querySelector("li.login-button"); // Updated to use class
+    const navLoginBtnLi = document.querySelector("li.login-button");
     const navUl = document.querySelector("nav ul");
 
     const token = localStorage.getItem("token");
-    if (navLoginBtnLi) navLoginBtnLi.style.display = "none"; // Hide login button by default
-    if (!token) {
+    const localUsername = localStorage.getItem("currentUsername");
+
+    if (navLoginBtnLi) navLoginBtnLi.style.display = "none";
+
+    // Token ve kullanıcı adı varsa selamlama metnini göster
+    if (token && localUsername) {
+        if (greeting) {
+            greeting.textContent = getGreetingMessage(localUsername);
+            greeting.style.display = "block";
+        }
+    } else {
+        // Token veya kullanıcı adı yoksa giriş düğmesini göster
         if (navLoginBtnLi) navLoginBtnLi.style.display = "block";
         if (greeting) greeting.style.display = "none";
-        return;
-    }
-
-    try {
-        const res = await fetch(`${BASE}/me`, {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        });
-
-        if (!res.ok) {
-            localStorage.removeItem("token");
-            if (navLoginBtnLi) navLoginBtnLi.style.display = "block";
-            if (greeting) greeting.style.display = "none";
-            handleRedirects(); // Redirects if token is invalid
-            return;
-        }
-
-        const userData = await res.json();
-        const username = userData?.username;
-
-        if (username) {
-            if (greeting) {
-                greeting.textContent = `Hoşgeldiniz, ${username}!`;
-                greeting.style.display = "block";
-            }
-            if (navLoginBtnLi) navLoginBtnLi.style.display = "none";
-            
-        }
-
-    } catch (err) {
-        console.error("Error fetching /me:", err);
-        localStorage.removeItem("token");
-        if (navLoginBtnLi) navLoginBtnLi.style.display = "block";
-        if (greeting) greeting.style.display = "none";
-        handleRedirects();
     }
 });
+
+// Günün saatine göre selamlama metni oluşturan fonksiyon
+function getGreetingMessage(username) {
+    const hour = new Date().getHours();
+    let message = "Hoşgeldiniz";
+
+    if (hour >= 5 && hour < 12) {
+        message = "Günaydın";
+    } else if (hour >= 12 && hour < 17) {
+        message = "Tünaydın";
+    } else if (hour >= 17 && hour < 21) {
+        message = "İyi akşamlar";
+    } else {
+        message = "İyi geceler";
+    }
+
+    return `${message}, ${username}!`;
+}

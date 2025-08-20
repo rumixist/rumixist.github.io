@@ -50,9 +50,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // JWT'yi localStorage'a kaydet
+            // ⭐ Düzeltilen kısım
             if (payload?.token) {
                 localStorage.setItem("token", payload.token);
+                
+                // Backend'in döndürdüğü 'userId' anahtarını kullanıyoruz.
+                if (payload?.userId) {
+                    localStorage.setItem("currentUserId", payload.userId);
+                }
+                if (payload?.username) {
+                    localStorage.setItem("currentUsername", payload.username);
+                }
             }
 
             const successMessage = "Giriş başarılı! Yönlendiriliyorsunuz...";

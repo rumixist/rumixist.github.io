@@ -1,32 +1,46 @@
-/* Profil sayfası stilleri */
+/* Profil sayfası ana container */
 #user-profile-container {
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: #fff;
+    max-width: 1100px;
+    margin: auto;
+    padding: 0rem;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    font-family: sans-serif;
+    font-family: monospace;
 }
 
+/* Üst kısım */
 .profile-header {
     display: flex;
-    align-items: center;
+    justify-content: space-between;  
     gap: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     margin-bottom: 1rem;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background-color: #efefef;
 }
 
+/* Avatar */
 .profile-avatar {
     width: 100px;
-    aspect-ratio: 1 / 1;   /* her zaman kare */
+    aspect-ratio: 1 / 1;
     background: #e0e0e0;
     border-radius: 8px;
+    flex-shrink: 0;
+}
+
+/* Profil detayları (isim, rozet, stats) */
+.profile-details {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #888;
-    font-size: 14px;
-    flex-shrink: 0;        /* küçülmesin, hep kare kalsın */
+    flex-direction: column;
+    justify-content: space-between;  /* üstte info, altta stats */
+    flex-grow: 1;
+}
+
+/* Kullanıcı adı + rozet (yukarı hizalı) */
+.profile-info {
+    display: flex;
+    align-items: flex-start; 
+    gap: 1rem;
 }
 
 .profile-info h1 {
@@ -35,7 +49,6 @@
 }
 
 .badges {
-    margin-top: 0.5rem;
     display: flex;
     gap: 0.5rem;
 }
@@ -47,13 +60,62 @@
     border-radius: 6px;
     font-weight: bold;
     color: #fff;
+    line-height: 1;
 }
 
 .badge.admin {
-    background: #d32f2f; /* kırmızı rozet */
+    background: #d32f2f;
 }
 
+/* Sosyal istatistikler (aşağıya yapışık) */
+.social-stats {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: auto; /* profil-info yukarıda kalır, bu aşağıya iner */
+}
+
+/* Sağ taraf (butonlar, aşağı hizalı) */
+.social-actions {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.8rem;
+}
+
+/* Buton stilleri */
+.add-friend, .send-message {
+    background: #e1d2d2;
+    color: #181818;
+    border: 1px solid #ff0000;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 16px;
+    width: 140px;
+    transition: all 0.25s ease-in-out; /* animasyon */
+}
+
+/* Hover efekti */
+.add-friend:hover, .send-message:hover {
+    background: #ff0000;
+    color: #fff;
+    transform: translateY(-1px); /* hafif yukarı zıplatma efekti */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* hover gölgesi */
+}
+
+
+/* Alt bilgi */
 .profile-meta {
+    display: flex;
+    justify-content: space-between;  
+    gap: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background-color: #efefef;
+
     margin-top: 1.5rem;
     font-size: 0.95rem;
     color: #444;

@@ -70,9 +70,40 @@ async function fetchUserProfile(userId) {
             document.getElementById("profile-created").textContent = "—";
         }
 
+        // ⭐ Yeni eklenen kısım: Son aktiflik durumunu hesaplama ve gösterme
+        if (userData.last_online) {
+            document.getElementById("last-online").textContent = formatTimeAgo(userData.last_online);
+        } else {
+            document.getElementById("last-online").textContent = "Bilinmiyor";
+        }
+
     } catch (err) {
         console.error("fetchUserProfile hatası:", err);
         document.getElementById("profile-username").textContent =
             "Kullanıcı bulunamadı veya bir hata oluştu.";
+    }
+}
+
+// ⭐ Yeni eklenen fonksiyon: Tarihi kullanıcı dostu bir formata çevirir
+function formatTimeAgo(dateString) {
+    const now = new Date();
+    const past = new Date(dateString);
+    const diffInSeconds = Math.floor((now - past) / 1000);
+
+    const minutes = Math.floor(diffInSeconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (diffInSeconds < 60) {
+        return "Now Online";
+    } else if (minutes < 60) {
+        return `${minutes} minutes ago`;
+    } else if (hours < 24) {
+        return `${hours} hours ago`;
+    } else if (days < 30) {
+        return `${days} days ago`;
+    } else {
+        const formattedDate = past.toLocaleDateString("tr-TR", { year: 'numeric', month: 'long', day: 'numeric' });
+        return `En son: ${formattedDate}`;
     }
 }

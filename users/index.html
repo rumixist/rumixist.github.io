@@ -76,19 +76,33 @@
         </aside>
 
         <main class="main-content-area">
-          <div id="user-profile-container">
-              <div class="profile-header">
-                  <div class="profile-avatar"></div>
-                  <div class="profile-info">
-                      <h1 id="profile-username">Username</h1>
-                      <div id="profile-badges" class="badges"></div>
-                  </div>
-              </div>
-              <div class="profile-meta">
-                  <p>Join Date: <span id="profile-created">—</span></p>
-              </div>
-          </div>
-      </main>
+            <div id="user-profile-container">
+                <div class="profile-header">
+                    <div class="profile-avatar"></div>
+                    <div class="profile-details">
+                        <div class="profile-info">
+                            <h1 id="profile-username">username</h1>
+                            <div id="profile-badges" class="badges">
+                                <span class="badge admin">Admin</span>
+                            </div>
+                        </div>
+                        <div class="social-stats">
+                            <p class="friends" id="friends">0 Friends</p>
+                            <p class="followers" id="followers">0 Followers</p>
+                            <p class="following" id="following">0 Following</p>
+                        </div>
+                    </div>
+                    <div class="social-actions">
+                        <button class="add-friend" id="add-friend">Send Request</button>
+                        <button class="send-message" id="send-message">Message</button>
+                    </div>
+                </div>
+                <div class="profile-meta">
+                    <p>Join Date: <span id="profile-created">00.00.0000</span></p>
+                    <p>Last Online: <span id="last-online">0 days ago</span></p>
+                </div>
+            </div>
+        </main>
 
     </div>
 
