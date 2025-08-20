@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Sayfa Bulunamadı</title>
+    <title>404</title>
 </head>
 <body>
     <script>
@@ -10,7 +10,9 @@
         const searchParams = window.location.search;
 
         if (currentPath.startsWith('/users/')) {
-            const userId = currentPath.split('/').pop();
+            // URL'deki son kısmı al, bu kullanıcı ID'si olmalı
+            const userId = currentPath.split('/').filter(Boolean).pop();
+            
             if (userId) {
                 // Yönlendirme URL'sine kullanıcı ID'sini sorgu parametresi olarak ekle
                 window.location.replace('/users/?id=' + userId + searchParams);
