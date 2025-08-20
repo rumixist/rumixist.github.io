@@ -10,10 +10,13 @@
         const searchParams = window.location.search;
 
         if (currentPath.startsWith('/users/')) {
-            const userId = currentPath.split('/').pop(); // URL'deki son parçayı al (örneğin '1')
-            // Orijinal URL'yi saklamak için localStorage kullan
-            localStorage.setItem('redirect_to_user_id', userId);
-            window.location.replace('/users/'); // Ana profil sayfasına yönlendir
+            const userId = currentPath.split('/').pop();
+            if (userId) {
+                // Yönlendirme URL'sine kullanıcı ID'sini sorgu parametresi olarak ekle
+                window.location.replace('/users/?id=' + userId + searchParams);
+            } else {
+                window.location.replace('/users/');
+            }
         } else {
             document.body.innerHTML = '<h1>404 - Sayfa Bulunamadı</h1><p>Aradığınız sayfa mevcut değil.</p><a href="/">Ana Sayfaya Dön</a>';
         }
