@@ -1,0 +1,60 @@
+/* Profil sayfası stilleri */
+#user-profile-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    font-family: sans-serif;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.profile-avatar {
+    width: 100px;
+    aspect-ratio: 1 / 1;   /* her zaman kare */
+    background: #e0e0e0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-size: 14px;
+    flex-shrink: 0;        /* küçülmesin, hep kare kalsın */
+}
+
+.profile-info h1 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.badges {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+    border-radius: 6px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.badge.admin {
+    background: #d32f2f; /* kırmızı rozet */
+}
+
+.profile-meta {
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    color: #444;
+}
