@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>404</title>
+</head>
+<body>
+    <script>
+        // URL'yi al
+        const currentPath = window.location.pathname;
+
+        // URL'nin /users/ ile başladığını kontrol et
+        if (currentPath.startsWith('/users/')) {
+            // Kullanıcı profil sayfasına yönlendir
+            window.location.replace('/users/');
+        } else {
+            // Diğer 404 sayfaları için mesaj göster
+            document.body.innerHTML = '<h1>404 - Sayfa Bulunamadı</h1><p>Aradığınız sayfa mevcut değil.</p><a href="/">Ana Sayfaya Dön</a>';
+        }
+    </script>
+</body>
+</html>
