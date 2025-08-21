@@ -1,0 +1,10 @@
+# Tüm arama motoru botları için geçerli kurallar
+User-agent: *
+
+# Arama motorlarının indekslemesini istemediğiniz sayfalar veya dizinler
+# Örneğin, sunucu hata sayfaları genellikle indekslenmez.
+Disallow: /403.html
+Disallow: /404.html
+
+# Sitenizin sitemap.xml dosyasının konumu
+Sitemap: https://rumixist.github.io/sitemap.xml

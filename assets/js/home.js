@@ -27,16 +27,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 // Günün saatine göre selamlama metni oluşturan fonksiyon
 function getGreetingMessage(username) {
     const hour = new Date().getHours();
-    let message = "Hoşgeldiniz";
+    let message = "Welcome";
 
     if (hour >= 5 && hour < 12) {
-        message = "Günaydın";
+        message = "Good Morning";
     } else if (hour >= 12 && hour < 17) {
-        message = "Tünaydın";
+        message = "Good Afternoon";
     } else if (hour >= 17 && hour < 21) {
-        message = "İyi akşamlar";
+        message = "Good Evening";
     } else {
-        message = "İyi geceler";
+        message = "Good Night";
     }
 
     return `${message}, ${username}!`;
