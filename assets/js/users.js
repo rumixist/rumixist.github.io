@@ -1,6 +1,13 @@
 const BASE_URL = "https://jneuwkadlgoxekhcbvdh.supabase.co/functions/v1";
 
 document.addEventListener("DOMContentLoaded", () => {
+    const profileHeader = document.querySelector(".profile-header");
+    const profileMeta = document.querySelector(".profile-meta");
+
+    // Başlangıçta gizle (CSS'de de gizli, burası ekstra garantidir)
+    if (profileHeader) profileHeader.style.display = "none";
+    if (profileMeta) profileMeta.style.display = "none";
+
     const urlParams = new URLSearchParams(window.location.search);
     let userId = urlParams.get("id");
 
@@ -15,11 +22,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (userId) {
         fetchUserProfile(userId);
     } else {
-        document.getElementById("profile-username").textContent = "Kullanıcı ID'si gerekli.";
+        // Kullanıcı ID yoksa hata mesajını göster ve header/meta'yı görünür yap
+        const usernameEl = document.getElementById("profile-username");
+        if (usernameEl) usernameEl.textContent = "Kullanıcı ID'si gerekli.";
+        if (profileHeader) profileHeader.style.display = "flex";
+        if (profileMeta) profileMeta.style.display = "flex";
     }
 });
 
 async function fetchUserProfile(userId) {
+    const profileHeader = document.querySelector(".profile-header");
+    const profileMeta = document.querySelector(".profile-meta");
+
     try {
         const res = await fetch(`${BASE_URL}/profile?userId=${userId}`);
 
@@ -41,46 +55,63 @@ async function fetchUserProfile(userId) {
         console.log("Alınan userData:", userData);
         console.log("admin_role tipi ve değeri:", typeof userData.admin_role, userData.admin_role);
 
+        // Burada veriler başarıyla geldiği için header/meta'yı göster
+        if (profileHeader) profileHeader.style.display = "flex";
+        if (profileMeta) profileMeta.style.display = "flex";
+
         // Kullanıcı adı
-        document.getElementById("profile-username").textContent = userData.username || "—";
+        const profileUsernameEl = document.getElementById("profile-username");
+        if (profileUsernameEl) profileUsernameEl.textContent = userData.username || "—";
 
         // Rozetler (admin kontrolü: 0/1 veya "0"/"1")
         const badgeContainer = document.getElementById("profile-badges");
-        badgeContainer.innerHTML = ""; // önce temizle
-        const isAdmin = userData.admin_role === 1 || userData.admin_role === "1";
-        console.log("isAdmin boolean:", isAdmin);
+        if (badgeContainer) {
+            badgeContainer.innerHTML = ""; // önce temizle
+            const isAdmin = userData.admin_role === 1 || userData.admin_role === "1";
+            console.log("isAdmin boolean:", isAdmin);
 
-        if (isAdmin) {
-            const badge = document.createElement("span");
-            badge.className = "badge admin";
-            badge.textContent = "Admin";
-            badgeContainer.appendChild(badge);
+            if (isAdmin) {
+                const badge = document.createElement("span");
+                badge.className = "badge admin";
+                badge.textContent = "Admin";
+                badgeContainer.appendChild(badge);
+            }
         }
 
         // Hesap oluşturulma tarihi
-        if (userData.created_at) {
-            const date = new Date(userData.created_at);
-            const formatted = date.toLocaleDateString("tr-TR", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-            });
-            document.getElementById("profile-created").textContent = formatted;
-        } else {
-            document.getElementById("profile-created").textContent = "—";
+        const createdEl = document.getElementById("profile-created");
+        if (createdEl) {
+            if (userData.created_at) {
+                const date = new Date(userData.created_at);
+                const formatted = date.toLocaleDateString("tr-TR", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                });
+                createdEl.textContent = formatted;
+            } else {
+                createdEl.textContent = "—";
+            }
         }
 
         // ⭐ Yeni eklenen kısım: Son aktiflik durumunu hesaplama ve gösterme
-        if (userData.last_online) {
-            document.getElementById("last-online").textContent = formatTimeAgo(userData.last_online);
-        } else {
-            document.getElementById("last-online").textContent = "Bilinmiyor";
+        const lastOnlineEl = document.getElementById("last-online");
+        if (lastOnlineEl) {
+            if (userData.last_online) {
+                lastOnlineEl.textContent = formatTimeAgo(userData.last_online);
+            } else {
+                lastOnlineEl.textContent = "Bilinmiyor";
+            }
         }
 
     } catch (err) {
         console.error("fetchUserProfile hatası:", err);
-        document.getElementById("profile-username").textContent =
+        // Hata durumunda kullanıcıya mesaj göster, ve header/meta'yı aç
+        const profileUsernameEl = document.getElementById("profile-username");
+        if (profileUsernameEl) profileUsernameEl.textContent =
             "Kullanıcı bulunamadı veya bir hata oluştu.";
+        if (profileHeader) profileHeader.style.display = "flex";
+        if (profileMeta) profileMeta.style.display = "flex";
     }
 }
 

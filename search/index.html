@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Signup - rumixist</title>
-    <meta name="description" content="Create an account on rumi website.">
+    <title>Login - rumixist</title>
+    <meta name="description" content="Login to your account on rumi website.">
     <meta name="keywords" content="rumi, rumixist">
     <meta name="author" content="rumixist">
     
@@ -18,17 +18,16 @@
     <meta property="og:url" content="https://rumixist.github.io/">
     <meta property="og:image" content="https://rumixist.github.io/assets/img/favicon">
 
-    <link rel="icon" href="/assets/img/favicon.png" type="image/x-icon">
-    <link rel="apple-touch-icon" href="/assets/img/favicon.png">
+    <link rel="icon" href="../assets/img/favicon.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../assets/img/favicon.png">
 
     <link rel="stylesheet" href="/assets/css/global.css">
-    <link rel="stylesheet" href="/assets/css/signup.css">
+    <link rel="stylesheet" href="/assets/css/search.css">
 
     <script defer src="/assets/js/global.js"></script>
-    <script defer src="/assets/js/signup.js"></script>
 
     </head>
-<body>
+<body onload="renderSearchResults()">
   <a href="/" class="logo">rumi</a>
 
     <nav>
@@ -51,29 +50,39 @@
         </form>
     </div>
 
-    <div class="login-container">
-        <div class="login-box">
-            <h1>Sİgnup</h1>
-            <form id="loginForm">
-                <label for="username">Username</label>
-                <input type="text" id="username" placeholder=">" required>
-
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder=">" required>
+    <div class="page-layout">
+        <aside class="left-sidebar">
+            <h2>Navigation</h2>
+            <p>________________</pp>
+            <ul>
                 <br>
-                <label for="password">Confirm Password</label>
-                <input type="password" id="confirm_password" placeholder=">" required>
-                <br>
+                <li><a href="/">Home</a></li>
+                <li><a href="/users/">Profile</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Friends</a></li>
+                <li><a href="#">Messages</a></li>
+                <li><a href="#">Groups</a></li>
+                <li><a href="#">Newsroom</a></li>
+                <br> <br>
+                <li><a href="#">Rumiakademi</a></li>
+                <li><a href="#">Rumilabs</a></li>
+                <li><a href="#">Rumilibrary</a></li>
+                <li><a href="#">Rumiarchive</a></li>
+                <li><a href="#">Rumiforum</a></li>
+                <br> <br>
+                <li><a href="#">Status</a></li>
+            </ul>
+        </aside>
 
-                <button type="submit">Signup</button>
-                <p id="message"></p>
-            </form>
-            <br>
-            <p class="signup-text">
-                Already heave an account? <a href="/login/">Login</a>
-            </p>
+        <main class="main-content-area">
+            <section class="content">
+                <h2>Search Results (users)</h2> <br>
+                <div id="search-results"></div>
+            </section>
+        </main>
         </div>
-    </div>
+
+
     
 
     </body>

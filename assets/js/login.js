@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         submitBtn.disabled = true;
         const orig = submitBtn.textContent;
-        submitBtn.textContent = "Giriş yapılıyor...";
+        submitBtn.textContent = "Logging in...";
 
         try {
             const res = await fetch(`${BASE}/login`, {
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
-            const successMessage = "Giriş başarılı! Yönlendiriliyorsunuz...";
+            const successMessage = "Login succesfull, please wait...";
             if (messageBox) {
                 messageBox.textContent = successMessage;
             } else {
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } catch (err) {
             console.error(err);
-            const errorMessage = "Giriş sırasında bir hata oluştu. Konsolu kontrol edin.";
+            const errorMessage = "Error occurred while logging in. Check the console for details.";
             if (messageBox) {
                 messageBox.textContent = errorMessage;
             } else {

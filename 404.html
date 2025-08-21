@@ -2,25 +2,98 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <title>404</title>
+    <meta name="description" content="Page not found error.">
+    <meta name="keywords" content="rumi, rumixist">
+    <meta name="author" content="rumixist">
+    
+    <meta name="robots" content="noindex, nofollow">
+
+    <meta property="og:title" content="rumixist website name">
+    <meta property="og:description" content="This is rumixist website.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rumixist.github.io/">
+    <meta property="og:image" content="https://rumixist.github.io/assets/img/favicon">
+
+    <link rel="icon" href="assets/img/favicon.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="assets/img/favicon.png">
+
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/404.css">
+
+    <script defer src="assets/js/global.js"></script>
 </head>
 <body>
+    <a href="/" class="logo">rumi</a>
+
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Things</a></li>
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Help</a></li>
+            <li><a href="#">Settings</a></li>
+            <li class="login-button"><a href="login">Login</a></li>
+
+        </ul>
+    </nav>
+
+    <div class="search-container">
+        <form class="search-box" onsubmit="return handleSearch(event)">
+            <span class="prompt-char">></span>
+            <input id="searchInput" type="text" placeholder="Search...">
+            <button type="submit">Enter</button>
+        </form>
+    </div>
+
+    <div class="page-layout">
+        <aside class="left-sidebar">
+            <h2>Navigation</h2>
+            <p>________________</pp>
+            <ul>
+                <br>
+                <li><a href="/">Home</a></li>
+                <li><a href="/users/">Profile</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Friends</a></li>
+                <li><a href="#">Messages</a></li>
+                <li><a href="#">Groups</a></li>
+                <li><a href="#">Newsroom</a></li>
+                <br> <br>
+                <li><a href="#">Rumiakademi</a></li>
+                <li><a href="#">Rumilabs</a></li>
+                <li><a href="#">Rumilibrary</a></li>
+                <li><a href="#">Rumiarchive</a></li>
+                <li><a href="#">Rumiforum</a></li>
+                <br> <br>
+                <li><a href="#">Status</a></li>
+            </ul>
+        </aside>
+        <main class="main-content-area">
+            <div id="content" class="content">
+                <div class="not-found-container">
+                    <h1 class="not-found-title">404</h1>
+                    <div class="text-content">
+                        <h2 class="not-found-subtitle">Page Not Found</h2>
+                        <p class="not-found-message">The page you're looking for doesn't exist.</p>
+                        <a href="/" class="return-home-button">Return to Homepage</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
     <script>
         const currentPath = window.location.pathname;
         const searchParams = window.location.search;
 
-        if (currentPath.startsWith('/users/')) {
-            // URL'deki son kısmı al, bu kullanıcı ID'si olmalı
+        if (currentPath.startsWith('/users/') && !currentPath.endsWith('/users/')) {
             const userId = currentPath.split('/').filter(Boolean).pop();
-            
-            if (userId) {
-                // Yönlendirme URL'sine kullanıcı ID'sini sorgu parametresi olarak ekle
-                window.location.replace('/users/?id=' + userId + searchParams);
-            } else {
-                window.location.replace('/users/');
-            }
-        } else {
-            document.body.innerHTML = '<h1>404 - Sayfa Bulunamadı</h1><p>Aradığınız sayfa mevcut değil.</p><a href="/">Ana Sayfaya Dön</a>';
+            window.location.replace(`/users/?id=${userId}${searchParams}`);
         }
     </script>
 </body>

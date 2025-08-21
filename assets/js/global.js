@@ -185,3 +185,58 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }, 60000);
 });
+
+function handleSearch(event) {
+    event.preventDefault();
+    const query = document.getElementById("searchInput").value.trim();
+    if (query) {
+        const encoded = encodeURIComponent(query);
+        window.location.href = `/search/?q=${encoded}`;
+    }
+    return false;
+}
+
+async function renderSearchResults() {
+    const params = new URLSearchParams(window.location.search);
+    const query = params.get("q");
+
+    if (!query) return;
+
+    const resultsContainer = document.getElementById("search-results");
+    resultsContainer.innerHTML = `<p>Searching for "<b>${query}</b>"...</p>`;
+
+    try {
+        const resp = await fetch(`${BASE_URL_G}/search-users`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ search: query })
+        });
+        const data = await resp.json();
+
+        if (data.error) {
+            resultsContainer.innerHTML = `<p style="color:red">Error: ${data.error}</p>`;
+            return;
+        }
+
+        if (data.results.length === 0) {
+            resultsContainer.innerHTML = `<p>No users found for "<b>${query}</b>"</p>`;
+        } else {
+            resultsContainer.innerHTML = `<p>Results for "<b>${query}</b>":</p>
+                <div class="cards-container">
+                    ${data.results.map(u => `
+                        <a href="/users/?id=${u.id}" class="user-card">
+                            <div class="avatar-placeholder"></div>
+                            <div class="user-info">
+                                <span class="username">${u.username}</span>
+                                <span class="userid">(${u.id})</span>
+                            </div>
+                        </a>
+                    `).join("")}
+                </div>`;
+        }
+    } catch (err) {
+        resultsContainer.innerHTML = `<p style="color:red">Failed to fetch results</p>`;
+    }
+}

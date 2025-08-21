@@ -113,16 +113,18 @@ nav a:hover {
 
 /* Sidebar sabit genişlikte */
 .left-sidebar {
-    flex: 0 0 200px; /* hep 200px genişlik */
-    padding: 10px;
+    flex: 0 0 180px; /* hep 200px genişlik */
+    padding: 4px;
     border: 0px solid #000;
     background-color: #dfdede;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
 }
 
 /* Sidebar'daki tüm linkleri hedef alır */
 .left-sidebar a {
     display: block;
-    padding: 8px 15px;
+    padding: 8px 4px;
     color: #000;
     text-decoration: none;
     border: none;
@@ -152,44 +154,55 @@ nav a:hover {
 /* Arama çubuğu için ana konteyner */
 .search-container {
     width: 96%;
-    margin: 4px auto; /* Ortala ve üstten boşluk bırak */
+    margin: 3px auto;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #ccc;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 
 /* Arama kutusu */
 .search-box {
     display: flex;
     align-items: center;
-    /* Kenar çizgisini 1px olarak bıraktık */
-    border: 1px solid #a0a0a0;
-    padding: 0;
-    width: 500px; /* Sabit genişlik */
-    margin: 3px; /* Konteyner içinde boşluk bırakmak için */
+    border: 1px solid #ff00006c;   /* kırmızı çerçeve */
+    border-radius: 2px;
+    overflow: hidden;
+    width: 500px;
+    background: #e8e4e4; /* beyaz arkaplan */
 }
 
+/* Yazı alanı */
 .search-box input {
     border: none;
     outline: none;
-    font-family: inherit;
+    font-family: monospace;
     font-size: 1em;
-    background: transparent;
     flex-grow: 1;
-    padding: 3px 5px;
+    padding: 6px 8px;
+    background: transparent;
 }
 
+/* Buton */
 .search-box button {
-    font-family: inherit;
-    border: 1px solid #a0a0a0;
-    background-color: #e0e0e0;
-    cursor: pointer;
-    padding: 3px 8px;
+    font-family: monospace;
+    border: none;
+    background-color: #e8e4e4;
+    color: #ff0000;
+    padding: 6px 14px;
+    transition: background 0.2s;
 }
 
+.search-box button:hover {
+    background-color: #ff0000; /* hover efekti */
+    color: #e8e4e4;
+}
+
+/* Prompt karakteri */
 .prompt-char {
     font-weight: bold;
     color: #ff0000;
-    padding-left: 5px;
+    padding: 0 6px;
 }

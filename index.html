@@ -44,12 +44,14 @@
     </nav>
 
     <div class="search-container">
-        <div class="search-box">
-            <span class="prompt-char">~</span>
-            <input type="text" placeholder="Arama...">
-            <button>Search</button>
-        </div>
+        <form class="search-box" onsubmit="return handleSearch(event)">
+            <span class="prompt-char">></span>
+            <input id="searchInput" type="text" placeholder="Search...">
+            <button type="submit">Enter</button>
+        </form>
     </div>
+
+
 
     <div class="page-layout">
         <aside class="left-sidebar">

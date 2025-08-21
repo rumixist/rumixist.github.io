@@ -7,6 +7,12 @@
     font-family: monospace;
 }
 
+/* Başlangıçta içerikler gizli, JS veri gelince gösterecek */
+.profile-header,
+.profile-meta {
+    display: none;
+}
+
 /* Üst kısım */
 .profile-header {
     display: flex;

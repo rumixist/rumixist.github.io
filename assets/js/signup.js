@@ -16,15 +16,15 @@ document.addEventListener("DOMContentLoaded", () => {
         messageBox.textContent = "";
 
         if (!username || !password || !confirmPassword) {
-            messageBox.textContent = "Lütfen tüm alanları doldurun.";
+            messageBox.textContent = "Fill all fields.";
             return;
         }
         if (password.length < 6) {
-            messageBox.textContent = "Şifre en az 6 karakter olmalıdır.";
+            messageBox.textContent = "Password must be at least 6 characters length.";
             return;
         }
         if (password !== confirmPassword) {
-            messageBox.textContent = "Şifreler uyuşmuyor.";
+            messageBox.textContent = "Passwords do not match.";
             return;
         }
 
@@ -44,17 +44,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const data = await res.json();
             if (!res.ok) {
-                messageBox.textContent = `Kayıt başarısız: ${data.error || "Bilinmeyen Hata"}`;
+                messageBox.textContent = `Signup unsuccesfull: ${data.error || "Bilinmeyen Hata"}`;
                 return;
             }
 
-            messageBox.textContent = "Kayıt başarılı! Yönlendiriliyorsunuz...";
+            messageBox.textContent = "Sign up succesfull! Redirecting...";
             setTimeout(() => {
-                window.location.href = "/login.html"; // Kullanıcıyı giriş sayfasına yönlendir
+                window.location.href = "/login"; // Kullanıcıyı giriş sayfasına yönlendir
             }, 1500);
         } catch (err) {
             console.error(err);
-            messageBox.textContent = "Bir hata oluştu. Konsolu kontrol edin.";
+            messageBox.textContent = "An error occurred while signing up. Check the console for details.";
         } finally {
             submitBtn.disabled = false;
             submitBtn.textContent = origText;
