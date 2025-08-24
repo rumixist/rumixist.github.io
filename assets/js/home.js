@@ -16,11 +16,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (greeting) {
             greeting.textContent = getGreetingMessage(localUsername);
             greeting.style.display = "block";
+
+            document.getElementById("home-main-text").textContent = "Welcome to the homepage! ";
+            document.getElementById("friends").textContent = "[Friends list will be added here]";
         }
     } else {
         // Token veya kullanıcı adı yoksa giriş düğmesini göster
         if (navLoginBtnLi) navLoginBtnLi.style.display = "block";
         if (greeting) greeting.style.display = "none";
+
+        document.getElementById("home-main-text").textContent = "You can log in to see some other features.";
     }
 });
 

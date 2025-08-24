@@ -206,3 +206,98 @@ nav a:hover {
     color: #ff0000;
     padding: 0 6px;
 }
+
+/* ========================================= */
+/* === YASAKLAMA PENCERESİ STİLLERİ BAŞLANGIÇ === */
+/* ========================================= */
+
+/* Pencereyi tüm ekranı kaplayan bir katman yapar */
+.ban-window {
+    position: fixed; /* Sayfa kaysa bile yerinde kalır */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Arkadaki içeriği karartan yarı saydam siyah */
+    display: flex; /* İçeriği dikey ve yatayda ortalamak için */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Diğer tüm öğelerin üzerinde görünmesini sağlar */
+}
+
+/* Asıl bilgilendirme kutusu */
+.ban-content {
+    background-color: #ffffff; /* Kutu arka planı: Beyaz */
+    padding: 25px 35px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border-top: 5px solid #d9534f; /* Üst kenarda kırmızı bir vurgu */
+    max-width: 500px; /* Geniş ekranlarda kutunun çok yayılmasını önler */
+    width: 90%; /* Mobil uyumluluk için */
+    text-align: left; /* İstenildiği gibi tüm metinleri sola dayalı yapar */
+}
+
+/* "Banned for 30 Days" başlığı */
+.ban-title {
+    color: #d9534f; /* Başlık rengi: Kırmızı */
+    font-size: 2em; /* 1em = 16px */
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* Bilgilendirme kutusundaki tüm paragraflar için genel stil */
+.ban-content p {
+    color: #333333; /* Metin rengi: Okunabilirlik için koyu gri */
+    line-height: 1.6; /* Satır aralığı */
+    margin: 12px 0;
+    font-size: 0.95em; /* 15px */
+}
+
+/* Önemli bilgileri (sebep, not vb.) vurgulamak için */
+.moderator-note, .ban-reason, .offensive-item {
+    background-color: #f2f2f2; /* Vurgu için açık gri arka plan */
+    border-left: 4px solid #d9534f; /* Solunda kırmızı bir şerit */
+    padding: 10px 15px;
+    margin: 15px 0;
+    border-radius: 4px;
+}
+
+/* İtiraz e-posta linki */
+.appeal a {
+    color: #007bff; /* Standart link rengi */
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.appeal a:hover {
+    text-decoration: underline;
+}
+
+/* "Logout" düğmesi */
+.ban-logout-button {
+    display: block; /* margin: auto'nun çalışması için gerekli */
+    width: fit-content; /* İçeriğe göre genişlik */
+    margin: 30px auto 0 auto; /* Üstten boşluk, soldan ve sağdan otomatik hizalama (ortalar) */
+    background-color: #ffffff; /* Düğme arka planı: Kırmızı */
+    color: #c9302c; /* Düğme metni: Beyaz */
+    border: 1.5px solid #c9302c; /* Kırmızı kenarlık */
+    padding: 8px 32px;
+    font-size: 1em; /* 16px */
+    border-radius: 4px;
+    transition: background-color 0.2s ease-in-out; /* Üzerine gelince renk geçişi efekti */
+}
+
+/* Düğmenin üzerine gelindiğindeki hali */
+.ban-logout-button:hover {
+    background-color: #c9302c; /* Daha koyu bir kırmızı */
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Hafif gölge efekti */
+}
+
+.ban-date {
+    color: #c9302c;
+}
+
+/* ======================================= */
+/* === YASAKLAMA PENCERESİ STİLLERİ SON === */
+/* ======================================= */

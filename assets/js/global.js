@@ -13,11 +13,11 @@ customCursor.id = "custom-cursor";
 customCursor.style.position = "fixed";
 customCursor.style.pointerEvents = "none";
 customCursor.style.zIndex = "9999";
-customCursor.style.width = "20x";   // PNG boyutuna göre ayarla
+customCursor.style.width = "20px";
 customCursor.style.height = "20px";
-customCursor.style.transform = ""; // Ortala
+customCursor.style.transform = ""; // Ortala (isteğe bağlı)
 customCursor.style.userSelect = "none";
-customCursor.style.imageRendering = "auto"; // Kalite için
+customCursor.style.imageRendering = "auto";
 
 document.body.appendChild(customCursor);
 
@@ -33,31 +33,56 @@ if ('ontouchstart' in window) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    // href="/users/" niteliğine sahip olan <a> etiketini seçeriz.
     const profileLink = document.querySelector('a[href="/users/"]');
-    
-    // localStorage'dan daha önce kaydettiğimiz kullanıcı ID'sini alırız.
     const userId = localStorage.getItem("currentUserId");
 
-    // Eğer hem profil linki hem de kullanıcı ID'si varsa...
     if (profileLink && userId) {
-        // ...linkin href özelliğini, kullanıcının ID'si ile güncelleriz.
         profileLink.href = `/users/?id=${userId}`;
         console.log("Profil linki başarıyla güncellendi:", profileLink.href);
     } else {
-        // Eğer kullanıcı ID'si yoksa (örneğin giriş yapılmamışsa)
-        // link varsayılan değerinde kalır, bu sayede hata oluşmaz.
         console.log("Kullanıcı ID'si bulunamadı veya profil linki yok.");
     }
 });
 
-// Her 60 saniyede bir kullanıcının last_online verisini güncelleyen fonksiyon
-async function updateLastOnline() {
-    const token = localStorage.getItem("token");
+/**
+ * Token'ı güvenli hale getirip döndüren yardımcı fonksiyon.
+ * - Etraftaki tırnakları temizler,
+ * - Trim yapar,
+ * - ASCII dışı karakterleri atar,
+ * - Basit JWT format kontrolü yapar.
+ * Geçersiz ise token'ı siler ve null döner.
+ */
+function getSafeToken() {
+    const raw = localStorage.getItem("token");
+    if (!raw) return null;
 
-    // Sadece token varsa API çağrısı yap
+    let token = raw;
+
+    if ((token.startsWith('"') && token.endsWith('"')) || (token.startsWith("'") && token.endsWith("'"))) {
+        token = token.slice(1, -1);
+    }
+
+    token = token.trim();
+
+    const ascii = token.replace(/[^\x20-\x7E]/g, '');
+    const hasTwoDots = (ascii.match(/\./g) || []).length >= 2;
+    const allowedPattern = /^[A-Za-z0-9\-_\.=]+$/;
+
+    if (!hasTwoDots || !allowedPattern.test(ascii)) {
+        console.warn("Token geçersiz görünüyor; temizleniyor:", raw);
+        localStorage.removeItem("token");
+        return null;
+    }
+
+    return ascii;
+}
+
+// Her 5 dakikada bir kullanıcının last_online verisini güncelleyen fonksiyon
+async function updateLastOnline() {
+    const token = getSafeToken();
+
     if (!token) {
-        console.log("Token bulunamadı, last_online güncellemesi atlanıyor.");
+        console.log("Token bulunamadı veya geçersiz, last_online güncellemesi atlanıyor.");
         return;
     }
 
@@ -70,24 +95,18 @@ async function updateLastOnline() {
         });
 
         if (res.ok) {
-            // Başarılı olursa logla (opsiyonel)
             console.log("Last online başarıyla güncellendi.");
         } else {
-            // Hata durumunda token'ı silme (daha önce login/me fonksiyonlarında halledildi)
-            // Sadece loglama yapıyoruz, hata durumunu anlamak için.
             console.error(`Last online güncelleme hatası: ${res.status} ${res.statusText}`);
         }
     } catch (err) {
-        // Ağ hatası gibi durumlarda loglama yap
         console.error("Last online güncelleme isteği başarısız oldu:", err);
     }
 }
 
 // Sayfa yüklendiğinde, last_online güncelleme işlemini başlat
 document.addEventListener("DOMContentLoaded", () => {
-    // 60 saniyelik aralıklarla fonksiyonu çağır
-    // 60000ms = 60 saniye
-    setInterval(updateLastOnline, 300000);
+    setInterval(updateLastOnline, 300000); // 5 dakika
 });
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -95,26 +114,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     const navLoginBtnLi = document.querySelector("li.login-button");
     const navUl = document.querySelector("nav ul");
 
-    const token = localStorage.getItem("token");
     const localUsername = localStorage.getItem("currentUsername");
 
-    // Varsayılan olarak login düğmesini gizle
     if (navLoginBtnLi) navLoginBtnLi.style.display = "none";
-    
-    // Hızlı bir şekilde localStorage'daki ismi göster
+
     if (localUsername && greeting) {
         greeting.textContent = getGreetingMessage(localUsername);
         greeting.style.display = "block";
     }
 
-    // Token yoksa login düğmesini göster ve işlemi bitir
+    const token = getSafeToken();
     if (!token) {
         if (navLoginBtnLi) navLoginBtnLi.style.display = "block";
         if (greeting) greeting.style.display = "none";
         return;
     }
 
-    // API çağrısı ile token'ı doğrula ve verileri al
     try {
         const res = await fetch(`${BASE_URL_G}/me`, {
             method: "GET",
@@ -123,18 +138,15 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         });
 
-        // 401 Unauthorized ise token'ı temizle ve çıkış yap
         if (res.status === 401) {
             localStorage.removeItem("token");
             localStorage.removeItem("currentUsername");
             localStorage.removeItem("currentUserId");
             if (navLoginBtnLi) navLoginBtnLi.style.display = "block";
             if (greeting) greeting.style.display = "none";
-            // İhtiyaç varsa yönlendirme fonksiyonunu çağırabilirsiniz
             return;
         }
 
-        // Başarısız diğer durumlarda token'ı kaldırmadan logla
         if (!res.ok) {
             console.error(`API hatası: ${res.status} ${res.statusText}`);
             if (navLoginBtnLi) navLoginBtnLi.style.display = "block";
@@ -146,8 +158,93 @@ document.addEventListener("DOMContentLoaded", async () => {
         const apiUsername = userData?.username;
         const apiUserId = userData?.id;
 
+        // --- BAN KONTROLÜ ve ban-window doldurma (yeni HTML yapısına göre) ---
+        if (userData?.banned) {
+            try {
+                const ban = userData.ban || {};
+                const banWindow = document.getElementById("ban-window");
+
+                console.log("user banned:", ban);
+
+                // Helper: güvenli tarih formatlama
+                const fmt = (d) => {
+                    if (!d) return "Süresiz";
+                    try {
+                        return new Date(d).toLocaleString("tr-TR");
+                    } catch (e) {
+                        return String(d);
+                    }
+                };
+
+                if (banWindow) {
+                    // Başlık (DB'de ban_title veya ban_type olabilir)
+                    const banTitle = ban?.ban_title || ban?.ban_type || ban?.title || "Account Terminated";
+                    const titleEl = banWindow.querySelector("#ban-title");
+                    if (titleEl) titleEl.textContent = banTitle;
+
+
+                    // Primary description (opsiyonel alan)
+                    const priDescEl = banWindow.querySelector(".pri-ban-desc");
+                    if (priDescEl) {
+                        priDescEl.textContent = ban?.primary_desc || ban?.pri_desc || "Our moderators have determined that your behaviour at this website has been in violation of our Terms of Use";
+                    }
+
+                    // Ban date (start_time veya startTime veya ban_date)
+                    const startTime = ban?.start_time || ban?.startTime || ban?.ban_date || ban?.created_at || null;
+                    const banDateSpan = banWindow.querySelector(".ban-date span");
+                    if (banDateSpan) banDateSpan.textContent = fmt(startTime);
+
+                    // Moderator note
+                    const modNoteEl = banWindow.querySelector(".moderator-note");
+                    if (modNoteEl) modNoteEl.textContent = `Moderator Note: ${ban?.moderator_note || ban?.moderatorNote || ""}`;
+
+                    // Reason
+                    const reasonEl = banWindow.querySelector(".ban-reason");
+                    if (reasonEl) reasonEl.textContent = `Reason: ${ban?.reason || ""}`;
+
+                    // Offensive item
+                    const offEl = banWindow.querySelector(".offensive-item");
+                    if (offEl) offEl.textContent = `Offensive Item: ${ban?.offensive_item || ban?.offensiveItem || ""}`;
+
+                    // Secondary description (optional)
+                    const secDescEl = banWindow.querySelector(".sec-ban-desc");
+                    if (secDescEl) secDescEl.textContent = ban?.secondary_desc || "Please abide by the community guidelines so that this website can be fun for users of all ages";
+
+                    // Reactivate date (end_time)
+                    const endTime = ban?.end_time || ban?.endTime || null;
+                    const reactivateSpan = banWindow.querySelector(".reactivate-date span");
+                    if (reactivateSpan) reactivateSpan.textContent = fmt(endTime);
+
+                    // Görünür yap
+                    banWindow.style.display = "flex";
+                } else {
+                    console.warn("Ban bilgisi var ama #ban-window bulunamadı.");
+                    alert("Hesabınız banlı. Lütfen yetkili ile iletişime geçin.");
+                }
+            } catch (e) {
+                console.error("Ban penceresi gösterilirken hata:", e);
+            }
+
+            // Banlıyken token ve local kullanıcı verilerini temizle
+            if (greeting) greeting.style.display = "none";
+
+            // Ban penceresindeki logout butonuna event bağla (varsa)
+            const logoutBtn = document.getElementById("ban-logout-button");
+            if (logoutBtn) {
+                logoutBtn.onclick = function() {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("currentUsername");
+                    localStorage.removeItem("currentUserId");
+                    // Yeniden yönlendirme veya sayfa yenileme
+                    location.reload();
+                };
+            }
+
+            return; // Banlı kullanıcı diğer UI işlemlerine devam etmez
+        }
+        // --- /BAN KONTROLÜ SONU ---
+
         if (apiUsername) {
-            // API'den gelen veriyi localStorage'daki ile doğrula ve güncelle
             if (localUsername !== apiUsername) {
                 localStorage.setItem("currentUsername", apiUsername);
             }
@@ -155,7 +252,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                  localStorage.setItem("currentUserId", apiUserId);
             }
 
-            // Karşılama mesajını API verisiyle güncelle
             if (greeting) {
                 greeting.textContent = getGreetingMessage(apiUsername);
                 greeting.style.display = "block";
@@ -164,24 +260,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     } catch (err) {
         console.error("Error fetching /me:", err);
-        // Ağ hatası durumunda yönlendirme yapabiliriz, token'ı kaldırmayız
     }
 
     // Her 60 saniyede bir last_online'ı güncelleyecek aralık başlat
-    // NOT: En iyi çözüm, last_online için ayrı bir hafif fonksiyon yazmaktır.
-    // Bu kod şimdilik /me'yi kullanmaya devam eder.
     setInterval(async () => {
-        const tokenForUpdate = localStorage.getItem("token");
-        if (tokenForUpdate) {
-            try {
-                // Burada /me yerine /update-last-online fonksiyonunu çağırın.
-                await fetch(`${BASE_URL_G}/me`, { 
-                    method: "GET", 
-                    headers: { "Authorization": `Bearer ${tokenForUpdate}` } 
-                });
-            } catch (e) {
-                console.error("Last online güncelleme hatası:", e);
-            }
+        try {
+            await updateLastOnline();
+        } catch (e) {
+            console.error("Last online güncelleme hatası:", e);
         }
     }, 60000);
 });
@@ -220,7 +306,7 @@ async function renderSearchResults() {
             return;
         }
 
-        if (data.results.length === 0) {
+        if (!Array.isArray(data.results) || data.results.length === 0) {
             resultsContainer.innerHTML = `<p>No users found for "<b>${query}</b>"</p>`;
         } else {
             resultsContainer.innerHTML = `<p>Results for "<b>${query}</b>":</p>
