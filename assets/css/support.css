@@ -1,0 +1,65 @@
+.support-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Login kutusu */
+.support-box {
+    background-color: #fff;
+    color: #000;
+    padding: 40px;
+    border-radius: 8px;
+    max-width: 540px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+/* Başlık */
+.support-box h1 {
+    margin-bottom: 30px;
+    color: #990000;
+}
+
+/* Form elemanları */
+.support-box input[type="text"],
+.support-box input[type="email"],
+.support-box input[type="confirm-email"],
+.support-box select[type="help-category"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0 20px 0;
+    border: 1px solid #990000;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.support-box textarea[type="describe"] {
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    margin: 10px 0 20px 0;
+    border: 1px solid #990000;
+    border-radius: 5px;
+    box-sizing: border-box;
+    resize: vertical;
+    overflow-y: auto;
+
+}
+
+/* Buton */
+.support-box button {
+    width: 100%;
+    padding: 12px;
+    background-color: #990000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.support-box button:hover {
+    background-color: #ff4d4d;
+}

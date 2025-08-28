@@ -298,6 +298,16 @@ nav a:hover {
     color: #c9302c;
 }
 
+.a-button-a {
+    color: #007bff; /* Standart link rengi */
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.a-button-a:hover {
+    text-decoration: underline;
+}
+
 /* ======================================= */
 /* === YASAKLAMA PENCERESİ STİLLERİ SON === */
 /* ======================================= */

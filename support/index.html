@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Login - rumixist</title>
+    <title>Support - rumi</title>
     <meta name="description" content="Login to your account on rumi website.">
     <meta name="keywords" content="rumi, rumixist">
     <meta name="author" content="rumixist">
@@ -22,10 +22,9 @@
     <link rel="apple-touch-icon" href="../assets/img/favicon.png">
 
     <link rel="stylesheet" href="/assets/css/global.css">
-    <link rel="stylesheet" href="/assets/css/login.css">
+    <link rel="stylesheet" href="/assets/css/support.css">
 
     <script defer src="/assets/js/global.js"></script>
-    <script defer src="/assets/js/login.js"></script>
 
     </head>
 <body>
@@ -51,27 +50,46 @@
         </form>
     </div>
 
-    <div class="login-container">
-        <div class="login-box">
-            <h1>Login</h1>
-            <form id="loginForm">
-                <label for="username">Username</label>
-                <input type="text" id="username" placeholder=">" required>
+    <div class="support-container">
+        <div class="support-box">
+            <h1>Support</h1>
+            <form id="supportForm">
+                <label for="username">Username (optional)</label>
+                <input type="text" id="username" placeholder=">">
 
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder=">" required>
+                <label for="email">E-mail Adress</label>
+                <input type="email" id="email" placeholder=">" required>
                 <br>
 
-                <button type="submit">Login</button>
+                <label for="confirm-email">Confirm E-mail Adress</label>
+                <input type="confirm-email" id="confirm-email" placeholder=">" required>
+                <br>
+
+                <label for="help-category">Select the help category</label>
+                <select type="help-category" id="help-category" required>
+                        <option value="hc0"> </option>
+                        <option value="hc1">Account Hacked or Can't Login</option>
+                        <option value="hc2">I Want To Delete My Account</option>
+                        <option value="hc3">Bug Report</option>
+                        <option value="hc4">Report a User</option>
+                        <option value="hc5">Suggestions & Ideas</option>
+                        <option value="hc6">How to</option>
+                        <option value="hc7">Other</option>
+                    </select>
+                <br>
+
+                <label for="describe">Describe</label>
+                <textarea  type="describe" id="describe" placeholder="Please describe the issue" required></textarea>
+                <br>
+
+                <button type="submit">Submit</button>
                 <p id="message"></p>
             </form>
             <br>
-            <p class="signup-text">
-                Don't have an account? <a href="/signup/">Sign Up</a>
-            </p>
         </div>
     </div>
     
+    <br> <br> <br>
 
     </body>
 </html>

@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>404</title>
-    <meta name="description" content="Page not found error.">
-    <meta name="keywords" content="rumi, rumixist">
+    <title>MARDA - rumi</title>
+    <meta name="description" content="Marmara bölgesindeki depremleri analiz eden bir araç. Size bu analiz sonuçlarıyla ilgili bazı istatistikler gösterecek. Erken geliştirilme aşamasında ve ileride tamamen yenilenecek.">
+    <meta name="keywords" content="rumi, rumixist, marda, deprem, earthquake, marmara, analysis, analiz, marmara depremi, istatistik, statistics, marmara bölgesi, earthquake analysis, deprem analizi, sismik, seismic, b-değeri, b-value, clustering, kümeleme, magnitude, büyüklük, rate, hız, seismicity, sismisite, aftershock, artç">
     <meta name="author" content="rumixist">
     
-    <meta name="robots" content="noindex, nofollow">
+    <meta name="robots" content="index, nofollow">
 
     <meta property="og:title" content="rumixist website name">
     <meta property="og:description" content="This is rumixist website.">
@@ -21,10 +21,11 @@
     <link rel="icon" href="assets/img/favicon.png" type="image/x-icon">
     <link rel="apple-touch-icon" href="assets/img/favicon.png">
 
-    <link rel="stylesheet" href="assets/css/global.css">
-    <link rel="stylesheet" href="assets/css/404.css">
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/marda.css">
 
-    <script defer src="assets/js/global.js"></script>
+    <script defer src="/assets/js/global.js"></script>
+    <script defer src="/assets/js/marda.js"></script>
 </head>
 <body>
     <a href="/" class="logo">rumi</a>
@@ -51,7 +52,7 @@
 
     <div class="page-layout">
         <aside class="left-sidebar">
-            <h2>Navigation</h2>
+            <h2 class="navigation">Navigation</h2>
             <p>________________</pp>
             <ul>
                 <br>
@@ -73,34 +74,48 @@
             </ul>
         </aside>
         <main class="main-content-area">
+            <p style="color: red;">Bu sayfa sadece Türkçe dilinde mevcut / This page is avaliable only in Turkish</p>
             <div id="content" class="content">
-                <div class="not-found-container">
-                    <h1 class="not-found-title">404</h1>
-                    <div class="text-content">
-                        <h2 class="not-found-subtitle">Page Not Found</h2>
-                        <p class="not-found-message">The page you're looking for doesn't exist.</p>
-                        <a href="/" class="return-home-button">Return to Homepage</a>
-                    </div>
+               
+                <h1>Marmara Bölgesi Deprem Trafiği Analizi</h1>
+
+                <p id="last-updated-timestamp" class="last-updated">Hesaba katılan son deprem: yükleniyor...</p>
+
+                <div id="rate-analysis" class="analysis-section">
+                    <h2>Sismik Aktivite Hızı Analizi</h2>
+                    <p class="loading">Yükleniyor...</p>
+                    <div class="analysis-content">
+                        </div>
+                    <p class="error" style="display:none; color: red;"></p> </div>
+
+                <div id="clustering-analysis" class="analysis-section">
+                    <h2>Mekansal Kümeleme Analizi</h2>
+                    <p class="loading">Yükleniyor...</p>
+                    <div class="analysis-content">
+                        </div>
+                    <p class="error" style="display:none; color: red;"></p>
                 </div>
+
+                <div id="magnitude-analysis" class="analysis-section">
+                    <h2>Büyüklük Dağılımı Analizi</h2>
+                    <p class="loading">Yükleniyor...</p>
+                    <div class="analysis-content">
+                        </div>
+                    <p class="error" style="display:none; color: red;"></p>
+                </div>
+
+                <div id="bvalue-analysis" class="analysis-section">
+                    <h2>B-Değeri Analizi</h2>
+                    <p class="loading">Yükleniyor...</p>
+                    <div class="analysis-content">
+                        </div>
+                    <p class="error" style="display:none; color: red;"></p>
+
+                </div>
+
             </div>
 
-            <div style="display: none;" id="ban-window" class="ban-window">
-                <div class="ban-content">
-                    <h2 id="ban-title" class="ban-title">Account Terminated</h2>
-                    <p class="pri-ban-desc">Our moderators have determined that your behaviour at this website has been in violation of our Terms of Use</p>
-                    <p class="ban-date">Ban Date: <span class="ban-date" id="ban-date">DD/MM/YYYY HH:MM:SS (TSİ)</span></p>
-                    <P class="moderator-note">Moderator Note: Please do not do lalalalalal lelelele read our rules again.</P>
-                    <br>
-                    <p class="ban-reason">Reason: </p>
-                    <p class="offensive-item">Offensive Item: </p>
-                    
-                    <p class="sec-ban-desc">Please abide by the community guidelines so that this website can be fun for users of all ages</p>
-                    <p class="reactivate-date">You can use your account after <span class="ban-date" id="ban-date">DD/MM/YYYY HH:MM:SS (TSİ)</span></p>
-                    <br>
-                    <p class="appeal">If you believe this action was taken in error, you can appeal by contacting us at <a href="#">support</a>.</p>
-                    <button id="ban-logout-button" class="ban-logout-button">Logout</button>
-                </div>
-            </div>
+
 
         </main>
 
