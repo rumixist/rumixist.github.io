@@ -217,9 +217,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                     // Görünür yap
                     banWindow.style.display = "flex";
+                    if ( document.URL.includes("users") || document.URL.includes("search") ) {
+                        window.location.href = "/";
+                    }
                 } else {
                     console.warn("Ban bilgisi var ama #ban-window bulunamadı.");
-                    alert("Hesabınız banlı. Lütfen yetkili ile iletişime geçin.");
+                    //alert("Reminder, your account has been banned.");
                 }
             } catch (e) {
                 console.error("Ban penceresi gösterilirken hata:", e);
