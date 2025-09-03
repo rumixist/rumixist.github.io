@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Profile</title>
+    <title>Settings</title>
     <meta name="description" content="This is rumixist website.">
     <meta name="keywords" content="rumi, rumixist">
     <meta name="author" content="rumixist">
@@ -22,10 +22,11 @@
     <link rel="apple-touch-icon" href="/assets/img/favicon.png">
 
     <link rel="stylesheet" href="/assets/css/global.css">
-    <link rel="stylesheet" href="/assets/css/users.css">
+    <link rel="stylesheet" href="/assets/css/settings.css">
 
     <script defer src="/assets/js/global.js"></script>
-    <script defer src="/assets/js/users.js"></script>
+    <script defer src="/assets/js/settings.js"></script>
+    <script defer src="/assets/js/logout.js"></script>
 
     </head>
 <body>
@@ -76,32 +77,59 @@
         </aside>
 
         <main class="main-content-area">
-            <div id="user-profile-container">
-                <div class="profile-header">
-                    <div class="profile-avatar"></div>
-                    <div class="profile-details">
-                        <div class="profile-info">
-                            <h1 id="profile-username">username</h1>
-                            <div id="profile-badges" class="badges">
-                                <span class="badge admin">Admin</span>
-                            </div>
-                        </div>
-                        <div class="social-stats">
-                            <p class="friends" id="friends">0 Friends</p>
-                            <p class="followers" id="followers">0 Followers</p>
-                            <p class="following" id="following">0 Following</p>
-                        </div>
-                    </div>
-                    <div class="social-actions">
-                        <button class="add-friend" id="add-friend">Send Request</button>
-                        <button class="send-message" id="send-message">Message</button>
-                    </div>
+            <div id="settings-container">
+                <h1>Settings</h1>
+
+                <div class="settings-item">
+                <span class="label">Username:</span>
+                <span class="value" id="username"></span>
+                <button class="edit-btn">You can't change your username</button>
                 </div>
-                <div class="profile-meta">
-                    <p>Join Date: <span id="profile-created">00.00.0000</span></p>
-                    <p>Last Online: <span id="last-online">0 days ago</span></p>
+
+                <div class="settings-item">
+                <span class="label">Password:</span>
+                <span class="value" id="password">********</span>
+                <button class="edit-btn">Edit</button>
+                </div>
+
+                <p style="color: red; padding-left: 4px;">Do not add your real email, our database may not be very secure</p>
+                <div class="settings-item">
+                <span class="label">Email:</span>
+                <span class="value" id="email"></span>
+                <button class="edit-btn">Edit</button>
+                </div>
+                
+
+                <div class="settings-item picture-item">
+                <span class="label">Avatar:</span>
+                <img src="/assets/img/default-profile.png" alt="Profile Picture" class="profile-pic">
+                <button class="edit-btn">Change</button>
+                </div>
+
+                <br> <br>
+                <button class="logout-btn" id="logout-button">Logout</button>
+            </div>
+
+            <!-- Password Change Modal -->
+            <div id="password-modal" class="modal">
+                <div class="modal-content">
+                    <h2>Change Password</h2>
+                    <form id="password-form">
+                    <label for="old-password">Old Password:</label>
+                    <input type="password" id="old-password" name="old-password" required>
+
+                    <label for="new-password">New Password:</label>
+                    <input type="password" id="new-password" name="new-password" required>
+
+                    <label for="confirm-password">Confirm New Password:</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
+
+                    <button type="submit" class="save-btn">Save</button>
+                    <button type="close" class="close-btn" id="close-password-modal">Cancel</button>
+                    </form>
                 </div>
             </div>
+
 
             <div style="display: none;" id="ban-window" class="ban-window">
                 <div class="ban-content">
