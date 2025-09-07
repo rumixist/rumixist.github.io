@@ -1,0 +1,105 @@
+.content {
+  display: flex;
+  flex-direction: column; /* İçerikleri sütun halinde sıralar */
+  align-items: flex-start; /* Sola hizalar */
+  min-height: 100vh;
+  padding-left: 0.5rem; /* Üstten ve yandan boşluk ekledim */
+  font-family: 'Orbitron', sans-serif;
+}
+
+
+/* Welcome to */
+.hero-text .welcome {
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: #222;
+  margin-bottom: 0.5rem; /* Aşağıdan boşluk ekledim */
+  margin-right: 0.5rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* rumilabs kutusu */
+.logo-box {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background: linear-gradient(135deg, #ff0000 0%, #e1a1a1 100%);
+  color: #fff;
+  font-size: 2.2rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transform: skew(-15deg); /* paralelkenar efekti */
+  border-radius: 10px; /* köşeler yumuşak */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  margin-bottom: 1.5rem; /* Açıklama ile arasına boşluk */
+}
+
+/* İç yazıyı düzeltmek için tekrar skew */
+.logo-box::before {
+  content: "rumilabs";
+  display: inline-block;
+  transform: skew(15deg);
+}
+
+/* Intro paragrafı */
+.intro-text {
+  margin-top: 0; /* Üstteki boşluğu sıfırladım */
+  font-size: 1rem;
+  color: #333;
+  font-family: monospace, 'Courier New', Courier;
+  max-width: 1400px;
+  margin-bottom: 2rem; /* Kart ile arasına boşluk */
+}
+
+/* Kartlar kapsayıcısı */
+.cards {
+  margin-top: 0; /* Üstteki boşluğu sıfırladım */
+  display: flex;
+  flex-direction: row; /* Kartları sütun halinde sıralar */
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+/* MARDA kartı */
+.marda-card {
+  flex: none; /* Flex özelliklerini kaldırdım */
+  width: 480px; /* Kart genişliğini sabitledim */
+  padding: 1.4rem;
+  background: #fff;
+  border: 2px solid #ff0000;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  font-family: 'Roboto', sans-serif;
+}
+
+.marda-card h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #ff0000;
+  margin-bottom: 0.2rem;
+  letter-spacing: 2px;
+}
+
+.marda-card p {
+  font-size: 0.8rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+/* Buton */
+.btn-marda {
+  display: inline-block;
+  padding: 0.7rem 2rem;
+  background: #ff0000;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: 0.3s ease;
+}
+
+.btn-marda:hover {
+    background: #cc0000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}

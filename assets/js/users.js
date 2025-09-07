@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         // Kullanıcı ID yoksa hata mesajını göster ve header/meta'yı görünür yap
         const usernameEl = document.getElementById("profile-username");
-        if (usernameEl) usernameEl.textContent = "Kullanıcı ID'si gerekli.";
+        if (usernameEl) usernameEl.textContent = "Login to view your profile.";
         if (profileHeader) profileHeader.style.display = "flex";
         if (profileMeta) profileMeta.style.display = "flex";
     }
@@ -109,7 +109,7 @@ async function fetchUserProfile(userId) {
         // Hata durumunda kullanıcıya mesaj göster, ve header/meta'yı aç
         const profileUsernameEl = document.getElementById("profile-username");
         if (profileUsernameEl) profileUsernameEl.textContent =
-            "Kullanıcı bulunamadı veya bir hata oluştu.";
+            "User not found or an error occurred.";
         if (profileHeader) profileHeader.style.display = "flex";
         if (profileMeta) profileMeta.style.display = "flex";
     }

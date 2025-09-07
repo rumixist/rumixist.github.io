@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+
   // Password edit butonunu label'e göre bul (daha güvenli)
   const items = Array.from(document.querySelectorAll("#settings-container .settings-item"));
   const passwordItem = items.find(it => {
@@ -21,6 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!username) {
     console.warn("No username found in localStorage (currentUsername).");
+    window.location.href = "/login"; // Giriş sayfasına yönlendir
+    return;
   }
 
   if (!passwordEditBtn) {
