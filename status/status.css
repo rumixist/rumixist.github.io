@@ -1,0 +1,156 @@
+/* General layout */
+.status-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: "Georgia", serif;
+  color: #222;
+  line-height: 1.6;
+}
+
+/* Title */
+.status-title {
+  text-align: center;
+  font-size: 2.6rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 3px solid #900;
+  padding-bottom: 0.4rem;
+}
+
+/* Progress */
+.progress {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.progress-bar {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  height: 22px;
+  background: #eee;
+  border: 1px solid #aaa;
+  margin: 0.5rem auto;
+  border-radius: 4px;
+  overflow: hidden;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #c00, #900);
+  color: #fff;
+  text-align: right;
+  padding-right: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.progress-note {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+/* Tasks section */
+.tasks {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.tasks h2 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 0.4rem;
+}
+
+.tasks ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tasks li {
+  margin: 0.6rem 0;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+/* Completed */
+.done {
+  flex: 1;
+  background: #f4fff4;
+  border: 1px solid #3a7a3a;
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+}
+
+.done li {
+  border-left: 4px solid #3a7a3a;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Planned */
+.todo {
+  flex: 1;
+  background: #fff4f4;
+  border: 1px solid #a33;
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+}
+
+.todo li {
+  border-left: 4px solid #a33;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Updates */
+.updates {
+  margin-top: 2rem;
+}
+
+.updates h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  border-bottom: 2px solid #900;
+  padding-bottom: 0.4rem;
+}
+
+.update-card {
+  background: #fff;
+  border: 1px solid #bc1d1d;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease;
+}
+
+.update-card:hover {
+  transform: translateY(-0.4px);
+}
+
+.update-date {
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: #900;
+  margin-bottom: 0.8rem;
+  text-align: left;
+}
+
+.update-body p {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}

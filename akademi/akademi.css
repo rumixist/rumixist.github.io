@@ -1,0 +1,110 @@
+/* Main container */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Kartlar sola hizalı */
+  min-height: 100vh;
+  padding-left: 2rem;
+  font-family: 'Merriweather', serif;
+  background: transparent;
+  color: #222;
+}
+
+/* Hero section */
+.hero-text {
+  width: 100%;
+  text-align: center; /* Başlık ortalanmış */
+  margin-bottom: 1.5rem;
+}
+
+.hero-text .welcome {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #b30000;
+  margin-bottom: 0.5rem;
+  font-family: 'Georgia', serif;
+}
+
+/* Logo box */
+.logo-box {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background: transparent;
+  border: 3px solid #b30000;
+  color: #b30000;
+  font-size: 2.4rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(179,0,0,0.2);
+  margin-bottom: 1.5rem;
+  text-align: center; /* yazı da ortalanmış */
+}
+
+.logo-box::before {
+  content: "rumiakademi";
+  display: inline-block;
+}
+
+/* Intro paragraph */
+.intro-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  width: 100%; /* Yatay olarak yayılıyor */
+  text-align: justify; /* soldan sağa yayılmış */
+  margin-bottom: 2.5rem;
+  color: #333;
+  font-family: 'Merriweather', serif;
+}
+
+/* Cards container */
+.cards {
+  display: flex;
+  flex-direction: row; /* kartlar soldan sağa */
+  flex-wrap: wrap; /* taşarsa alt satıra geçer */
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+/* Card style */
+.marda-card {
+  width: 450px;
+  padding: 1.5rem;
+  background: transparent;
+  border: 2px solid #b30000;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  font-family: 'Georgia', serif;
+}
+
+.marda-card h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #b30000;
+  margin-bottom: 0.5rem;
+}
+
+.marda-card p {
+  font-size: 0.95rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+}
+
+/* Button */
+.btn-marda {
+  display: inline-block;
+  padding: 0.7rem 2rem;
+  background: #b30000;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: 0.3s ease;
+}
+
+.btn-marda:hover {
+  background: #ff1a1a;
+  box-shadow: 0 4px 12px rgba(179,0,0,0.3);
+}

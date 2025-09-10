@@ -1,0 +1,147 @@
+/* cayrok.css — Kırmızı-beyaz, klasik, bilimsel/teknik temalı stil
+   Sadece #content ve içindeki elemanları hedefler. Body veya global reset yapmaz. */
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Inter:wght@300;400;600&display=swap');
+
+:root{
+  --accent-red: #b71c1c;
+  --accent-light: #ffebee;
+  --muted: #66686b;
+  --paper: #fbfbfb;
+  --card-shadow: 0 6px 18px rgba(11,13,14,0.06);
+  --rounded: 12px;
+}
+
+#content.content{
+  max-width: 980px;
+  margin: 0px auto;
+  padding: 28px 34px;
+  background: linear-gradient(180deg, var(--paper) 0%, #ffffff 100%);
+  border-radius: calc(var(--rounded) - 2px);
+  box-shadow: var(--card-shadow);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  color: #1b1c1d;
+}
+
+#content .text-content{
+  max-width: 900px;
+}
+
+#content h1{
+  font-family: 'Merriweather', serif;
+  text-align: center;
+  margin: 6px 0 10px 0;
+  font-size: 38px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--accent-red);
+  line-height: 1.05;
+}
+
+#content h2{
+  font-family: 'Merriweather', serif;
+  font-size: 20px;
+  color: #232425;
+  margin: 28px 0 12px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid rgba(183,28,28,0.08);
+}
+
+#content p,
+#content .text-content p{
+  font-size: 15px;
+  line-height: 1.65;
+  color: #222428;
+  margin: 12px 0;
+}
+
+#content b{
+  color: var(--accent-red);
+  font-weight: 600;
+}
+
+#content b + span{
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+#content img{
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 14px auto;
+  border-radius: 6px;
+  background: white;
+  padding: 8px;
+  box-shadow: 0 8px 22px rgba(11,13,14,0.06);
+  border: 1px solid rgba(183,28,28,0.07);
+}
+
+#content div[style*="text-align: center;"] img{
+  max-width: 540px;
+}
+
+#content .text-content > div[style*="justify-content: space-around;"]{
+  gap: 18px;
+  align-items: start;
+}
+
+#content .text-content > div[style*="justify-content: space-around;"] > div{
+  flex: 1 1 280px;
+}
+
+#content .text-content div[style*="flex-wrap: wrap;"]{
+  display: flex;
+  gap: 8px;
+}
+
+#content .text-content div[style*="flex-wrap: wrap;"] > div{
+  background: linear-gradient(180deg, rgba(255,235,238,0.6), rgba(255,255,255,0.6));
+  border-radius: 8px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#content b{
+  display: inline-block;
+  margin-top: 8px;
+}
+
+#content b + br + b,
+#content b + br + br + b{
+  margin-top: 6px;
+}
+
+#content .text-content > b,
+#content .text-content > p > b{
+  display: inline-block;
+  min-width: 110px;
+}
+
+@media (max-width: 720px){
+  #content.content{
+    margin: 18px;
+    padding: 18px;
+  }
+  #content h1{ font-size: 28px; }
+  #content h2{ font-size: 18px; }
+  #content .text-content div[style*="flex-wrap: wrap;"]{ flex-direction: column; }
+  #content .text-content > div[style*="justify-content: space-around;"]{ flex-direction: column; }
+}
+
+.rumi{ text-transform: lowercase; font-style: italic; color: var(--muted); }
+
+#content::before{
+  content: "ÇAYROK: Deneysel Model Roket";
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #7a1a1a;
+  background: rgba(183,28,28,0.06);
+  padding: 6px 10px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+/* NOT: Eğer HTML içine bazı <b> veya image caption yapılandırmaları eklerseniz, daha temiz hedefleme yapabilirim. */

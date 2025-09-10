@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>404</title>
+    <title>Status</title>
     <meta name="description" content="Page not found error.">
     <meta name="keywords" content="rumi, rumixist">
     <meta name="author" content="rumixist">
@@ -22,67 +22,78 @@
     <link rel="apple-touch-icon" href="/assets/img/favicon.png">
 
     <link rel="stylesheet" href="/assets/css/global.css">
-    <link rel="stylesheet" href="/assets/css/404.css">
+    <link rel="stylesheet" href="/status/status.css">
 
     <script defer src="/assets/js/global.js"></script>
 </head>
 <body>
     <a href="/" class="logo">rumi</a>
 
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="#">Things</a></li>
-            <li><a href="#">Projects</a></li>
-            <li><a href="#">Help</a></li>
-            <li><a href="/settings/">Settings</a></li>
-            <li class="login-button"><a href="/login">Login</a></li>
-
-        </ul>
-    </nav>
-
-    <div class="search-container">
-        <form class="search-box" onsubmit="return handleSearch(event)">
-            <span class="prompt-char">></span>
-            <input id="searchInput" type="text" placeholder="Search...">
-            <button type="submit">Enter</button>
-        </form>
-    </div>
-
     <div class="page-layout">
-        <aside class="left-sidebar">
-            <h2>Navigation</h2>
-            <p>________________</pp>
-            <ul>
-                <br>
-                <li><a href="/">Home</a></li>
-                <li><a href="/users/">Profile</a></li>
-                <li><a href="/settings/">Settings</a></li>
-                <li><a href="#">Friends</a></li>
-                <li><a href="#">Messages</a></li>
-                <li><a href="#">Groups</a></li>
-                <li><a href="#">Newsroom</a></li>
-                <br> <br>
-                <li><a href="/akademi/">Rumiakademi</a></li>
-                <li><a href="/labs/">Rumilabs</a></li>
-                <li><a href="#">Rumilibrary</a></li>
-                <li><a href="#">Rumiarchive</a></li>
-                <li><a href="#">Rumiforum</a></li>
-                <br> <br>
-                <li><a href="/status/">Status</a></li>
-            </ul>
-        </aside>
+        
         <main class="main-content-area">
-            <div id="content" class="content">
-                <div class="not-found-container">
-                    <h1 class="not-found-title">404</h1>
-                    <div class="text-content">
-                        <h2 class="not-found-subtitle">Page Not Found</h2>
-                        <p class="not-found-message">The page you're looking for doesn't exist.</p>
-                        <a href="/" class="return-home-button">Return to Homepage</a>
-                    </div>
+            <h1 class="status-title">Project Status</h1>
+
+            <section class="progress">
+                <label>Progress Overview</label>
+                <div class="progress-bar">
+                <div class="progress-fill" style="width: 4%;">4%</div>
                 </div>
-            </div>
+                <p class="progress-note">Approximate value – not an exact measurement.</p>
+            </section>
+
+            <section class="tasks">
+                <div class="done">
+                <h2>Completed</h2>
+                <ul>
+                    <li>Basic layout</li>
+                    <li>Account system</li>
+                    <li>User search & profile pages</li>
+                    <li>Ban system</li>
+                    <li>Support system</li>
+                    <li>Rumilabs & Rumiakademi pages</li>
+                </ul>
+                </div>
+                <div class="todo">
+                <h2>Planned</h2>
+                <ul>
+                    <li>Friends system</li>
+                    <li>Email adding to your account</li>
+                    <li>Profile picture</li>
+                    <li>Actual status page for website</li>
+                    <li>Following system</li>
+                    <li>Messaging system</li>
+                    <li>Groups</li>
+                    <li>Newsroom page</li>
+                    <li>Rumilibrary, Rumiarchive, Rumiforum pages</li>
+                    <li>Rumiakademi content</li>
+                    <li>Mobile support</li>
+                    <li>More langueges</li> <br>
+                    More things will be added here as we go.
+                </ul>
+                </div>
+            </section>
+
+            <section class="updates">
+                <h2>Latest Updates</h2>
+
+                <div class="update-card">
+                    <div class="update-date">Sep 10, 2025</div> <br>
+                        <div class="update-body">
+                            <p>This status page has launched.</p> <br>
+                            <p>Rumiakademi page has launched.</p> <br>
+                            <p>ÇAYROK page has launched.</p> <br>
+                        </div>
+                </div>
+
+                <div class="update-card">
+                    <div class="update-date">Before Sep 10, 2025</div> <br>
+                        <div class="update-body">
+                            <p>A lot of thing happened</p> <br>
+                        </div>
+                </div>
+                <!-- Add new cards here -->
+            </section>
 
             <div style="display: none;" id="ban-window" class="ban-window">
                 <div class="ban-content">
@@ -105,15 +116,5 @@
         </main>
 
     </div>
-
-    <script>
-        const currentPath = window.location.pathname;
-        const searchParams = window.location.search;
-
-        if (currentPath.startsWith('/users/') && !currentPath.endsWith('/users/')) {
-            const userId = currentPath.split('/').filter(Boolean).pop();
-            window.location.replace(`/users/?id=${userId}${searchParams}`);
-        }
-    </script>
 </body>
 </html>
