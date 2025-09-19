@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Profile</title>
-    <meta name="description" content="This is rumixist website.">
+    <title>Profile - Friends</title>
+    <meta name="description" content="">
     <meta name="keywords" content="rumi, rumixist">
     <meta name="author" content="rumixist">
     
     <meta name="robots" content="noindex, follow">
 
-    <meta property="og:title" content="rumixist website name">
-    <meta property="og:description" content="This is rumixist website.">
+    <meta property="og:title" content="rumi">
+    <meta property="og:description" content="">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://rumixist.github.io/">
     <meta property="og:image" content="https://rumixist.github.io/assets/img/favicon">
@@ -22,11 +22,10 @@
     <link rel="apple-touch-icon" href="/assets/img/favicon.png">
 
     <link rel="stylesheet" href="/assets/css/global.css">
-    <link rel="stylesheet" href="/assets/css/users.css">
+    <link rel="stylesheet" href="/assets/css/friends.css">
 
     <script defer src="/assets/js/global.js"></script>
-    <script defer src="/assets/js/users.js"></script>
-    <script src="friend-system.js"></script>
+    <script defer src="/assets/js/friends.js"></script>
 
     </head>
 <body>
@@ -77,33 +76,29 @@
         </aside>
 
         <main class="main-content-area">
-            <div id="user-profile-container">
-                <div class="profile-header">
-                    <div class="profile-avatar"></div>
-                    <div class="profile-details">
-                        <div class="profile-info">
-                            <h1 id="profile-username">username</h1>
-                            <div id="profile-badges" class="badges">
-                                <span class="badge admin">Admin</span>
-                            </div>
-                        </div>
-                        <div class="social-stats">
-                            <p class="friends" id="friends">0 Friends</p>
-                            <p class="followers" id="followers">0 Followers</p>
-                            <p class="following" id="following">0 Following</p>
-                        </div>
+            <div id="container">
+                <div id="friends-system">
+                    <!-- Sekme düğmeleri -->
+                    <div class="tabs">
+                    <button class="tab-btn active" data-tab="friends">Friends</button>
+                    <button class="tab-btn" data-tab="followers">Followers</button>
+                    <button class="tab-btn" data-tab="following">Following</button>
+                    <button class="tab-btn" data-tab="requests">Requests</button>
                     </div>
-                    <div class="social-actions">
-                        <button class="add-friend" id="add-friend">Send Request</button>
-                        <button class="add-friend" id="reject-request">Reject</button>
-                        <button class="send-message" id="send-message">Message</button>
+
+                    <!-- Arama kutusu -->
+                    <div class="search-box">
+                    <input type="text" id="global-search" placeholder="Search..." />
                     </div>
-                </div>
-                <div class="profile-meta">
-                    <p>Join Date: <span id="profile-created">00.00.0000</span></p>
-                    <p>Last Online: <span id="last-online">0 days ago</span></p>
+
+                    <!-- İçerik konteynerleri -->
+                    <div class="tab-content" id="friends"></div>
+                    <div class="tab-content hidden" id="followers"></div>
+                    <div class="tab-content hidden" id="following"></div>
+                    <div class="tab-content hidden" id="requests"></div>
                 </div>
             </div>
+
 
             <div style="display: none;" id="ban-window" class="ban-window">
                 <div class="ban-content">

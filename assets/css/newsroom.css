@@ -1,0 +1,107 @@
+/* Newsroom bölüm */
+.newsroom {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+    padding-top: 0.5rem;
+    background: #ffffff3c;
+    border-top: 4px solid #c00;
+}
+
+.newsroom-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.newsroom-header h1 {
+    font-size: 2rem;
+    color: #c00;
+    margin-bottom: 0.3rem;
+}
+
+.newsroom-header p {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Timeline */
+.news-timeline {
+    position: relative;
+    margin: 0 auto;
+    max-width: 700px;
+}
+
+.news-timeline::before {
+    content: "";
+    position: absolute;
+    left: 28px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #ddd;
+}
+
+.news-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+/* Tarih kutusu */
+.news-date {
+    min-width: 90px;
+    background: #c00;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 0.5rem 0.7rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    margin-right: 1rem;
+    white-space: nowrap;
+}
+
+/* Kart */
+.news-body {
+    background: #fafafa;
+    padding: 1rem 1.25rem;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    flex: 1;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.news-body:hover {
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+}
+
+.news-body h2 {
+    margin: 0 0 0.5rem 0;
+    color: #c00;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.news-body p {
+    margin-bottom: 0.8rem;
+    color: #333;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.news-link {
+    color: #c00;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding-bottom: 2px;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+.news-link:hover {
+    border-color: #c00;
+}

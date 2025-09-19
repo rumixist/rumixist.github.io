@@ -42,6 +42,15 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         console.log("Kullanıcı ID'si bulunamadı veya profil linki yok.");
     }
+
+    const friendsLink = document.querySelector('a[href="/users/friends/"]');
+
+    if (friendsLink && userId) {
+        friendsLink.href = `/users/friends/?id=${userId}`;
+        console.log("Friends link succesfully updated:", profileLink.href);
+    } else {
+        console.log("ID could not be found or friends link does not exist.");
+    }
 });
 
 /**

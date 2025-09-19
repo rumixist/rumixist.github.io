@@ -5,28 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Profile</title>
-    <meta name="description" content="This is rumixist website.">
-    <meta name="keywords" content="rumi, rumixist">
+    <title>Newsroom</title>
+    <meta name="description" content="See Our latest news, articles, and announcements from rumixist. Explore our newsroom for important updates and insights.">
+    <meta name="keywords" content="rumi, rumixist, newsroom, news, articles, updates">
     <meta name="author" content="rumixist">
     
-    <meta name="robots" content="noindex, follow">
+    <meta name="robots" content="index, follow">
 
-    <meta property="og:title" content="rumixist website name">
-    <meta property="og:description" content="This is rumixist website.">
+    <meta property="og:title" content="newsrom">
+    <meta property="og:description" content="See Our latest news, articles, and announcements from rumixist. Explore our newsroom for important updates and insights.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://rumixist.github.io/">
+    <meta property="og:url" content="https://rumixist.github.io/labs">
     <meta property="og:image" content="https://rumixist.github.io/assets/img/favicon">
 
-    <link rel="icon" href="/assets/img/favicon.png" type="image/x-icon">
-    <link rel="apple-touch-icon" href="/assets/img/favicon.png">
+    <link rel="icon" href="assets/img/favicon.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="assets/img/favicon.png">
 
     <link rel="stylesheet" href="/assets/css/global.css">
-    <link rel="stylesheet" href="/assets/css/users.css">
+    <link rel="stylesheet" href="/assets/css/newsroom.css">
 
     <script defer src="/assets/js/global.js"></script>
-    <script defer src="/assets/js/users.js"></script>
-    <script src="friend-system.js"></script>
 
     </head>
 <body>
@@ -77,35 +75,32 @@
         </aside>
 
         <main class="main-content-area">
-            <div id="user-profile-container">
-                <div class="profile-header">
-                    <div class="profile-avatar"></div>
-                    <div class="profile-details">
-                        <div class="profile-info">
-                            <h1 id="profile-username">username</h1>
-                            <div id="profile-badges" class="badges">
-                                <span class="badge admin">Admin</span>
-                            </div>
-                        </div>
-                        <div class="social-stats">
-                            <p class="friends" id="friends">0 Friends</p>
-                            <p class="followers" id="followers">0 Followers</p>
-                            <p class="following" id="following">0 Following</p>
-                        </div>
-                    </div>
-                    <div class="social-actions">
-                        <button class="add-friend" id="add-friend">Send Request</button>
-                        <button class="add-friend" id="reject-request">Reject</button>
-                        <button class="send-message" id="send-message">Message</button>
-                    </div>
-                </div>
-                <div class="profile-meta">
-                    <p>Join Date: <span id="profile-created">00.00.0000</span></p>
-                    <p>Last Online: <span id="last-online">0 days ago</span></p>
-                </div>
-            </div>
+            <section class="content newsroom">
+                <header class="newsroom-header">
+                    <h1>Newsroom</h1>
+                    <p>
+                        We’re trying to keep you updated with what is going on at rumi. News, little updates, some announcements... everything ends up here. Some things are big, some are just small changes, but if you check in, you won’t miss out
+                    </p>
+                    <br> <br>
+                </header>
 
-            <div style="display: none;" id="ban-window" class="ban-window">
+                <div class="news-timeline">
+                    <div class="news-item">
+                        <div class="news-date">18 Eyl 2025</div>
+                        <div class="news-body">
+                            <h2>Placeholder</h2>
+                            <p>This is a placeholder news item. Real news will be added soon.</p>
+                            <a href="" class="news-link">➜ Read more</a>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+
+
+
+           <div style="display: none;" id="ban-window" class="ban-window">
                 <div class="ban-content">
                     <h2 id="ban-title" class="ban-title">Account Terminated</h2>
                     <p class="pri-ban-desc">Our moderators have determined that your behaviour at this website has been in violation of our Terms of Use</p>
@@ -124,8 +119,7 @@
             </div>
 
         </main>
-
-    </div>
+        </div>
 
     </body>
 </html>

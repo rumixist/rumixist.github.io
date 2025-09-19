@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             greeting.style.display = "block";
 
             document.getElementById("home-main-text").textContent = "Welcome to the homepage! ";
-            document.getElementById("friends").textContent = "[Friends list will be added here]";
+            document.getElementById("friends").textContent = "More things to show on home page are coming soon!";
         }
     } else {
         // Token veya kullanıcı adı yoksa giriş düğmesini göster
