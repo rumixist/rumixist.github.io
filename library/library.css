@@ -1,0 +1,120 @@
+/* ========== Rumilibrary Content Section ========== */
+
+/* Genel yapı */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding-left: 2rem;
+  font-family: 'Merriweather', serif;
+  background: transparent;
+  color: #1c1c1c;
+}
+
+/* Hero kısmı */
+.hero-text {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Rumilibrary logosu - kitap havasında */
+.logo-box {
+  display: inline-block;
+  padding: 1rem 3rem;
+  background: linear-gradient(135deg, #1f1f1f 0%, #3d3d3d 100%);
+  color: #f1f1f1;
+  font-size: 2.3rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  pointer-events: none; /* tıklanamaz */
+  cursor: default;
+  font-family: 'Georgia', serif;
+}
+
+.logo-box::before {
+  content: "rumilibrary";
+}
+
+/* Alt açıklama (intro) */
+.intro-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  width: 100%;
+  text-align: justify;
+  margin-bottom: 2.5rem;
+  color: #2b2b2b;
+  font-family: 'Merriweather', serif;
+  max-width: 900px;
+}
+
+/* Kart alanı */
+.cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+/* Kart tasarımı */
+.marda-card {
+  width: 420px;
+  padding: 1.5rem;
+  background: #f9f9f9;
+  border: 1.8px solid #333;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  font-family: 'Georgia', serif;
+}
+
+.marda-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Kart başlıkları */
+.marda-card h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1f1f1f;
+  margin-bottom: 0.5rem;
+}
+
+.marda-card h3 {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 0.7rem;
+}
+
+/* Kart içeriği */
+.marda-card p {
+  font-size: 0.95rem;
+  color: #333;
+  margin-bottom: 1.2rem;
+  line-height: 1.6;
+}
+
+/* Buton */
+.btn-marda {
+  display: inline-block;
+  padding: 0.7rem 1.8rem;
+  background: #1f1f1f;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.25s ease;
+}
+
+.btn-marda:hover {
+  background: #444;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}

@@ -190,22 +190,26 @@
   async function unfriend() { return await apiFetch("POST", ENDPOINTS.unfriend, { other_user_id: otherUserId }); }
 
   // ---------- FRIEND COUNT ----------
-  async function fetchFriendCount() {
-    try {
-      const json = await apiFetch("GET", ENDPOINTS.count);
-      return json && typeof json.count === "number" ? json.count : 0;
-    } catch (err) {
-      console.error("Friend count fetch error:", err);
-      return 0;
-    }
+  async function fetchFriendCount(profileId) {
+  try {
+    const json = await apiFetch("GET", `${ENDPOINTS.count}?id=${profileId}`);
+    return json && typeof json.count === "number" ? json.count : 0;
+  } catch (err) {
+    console.error("Friend count fetch error:", err);
+    return 0;
   }
+}
 
-  async function updateFriendCountUI() {
-    const elFriends = document.querySelector("#friends");
-    if (!elFriends) return;
-    const count = await fetchFriendCount();
-    elFriends.textContent = `${count} Friends`;
-  }
+async function updateFriendCountUI() {
+  const elFriends = document.querySelector("#friends");
+  if (!elFriends) return;
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const profileId = urlParams.get("id");   // Profil sayfasındaki id parametresi
+  const count = await fetchFriendCount(profileId);
+
+  elFriends.textContent = `${count} Friends`;
+}
 
   // ---------- STATE REFRESH ----------
   async function refreshState() {
@@ -322,3 +326,20 @@
   });
 
 })(); // end IIFE
+
+// ---------- Friends Button ----------
+document.addEventListener("DOMContentLoaded", () => {
+  const friendsElement = document.getElementById("friends");
+
+  friendsElement.addEventListener("click", () => {
+    // URL'deki parametreyi al
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get("id");
+
+    if (userId) {
+      window.location.href = `/users/friends/?id=${userId}`;
+    } else {
+      console.warn("Profil ID bulunamadı!");
+    }
+  });
+});

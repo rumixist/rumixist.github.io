@@ -126,3 +126,7 @@
     font-size: 0.95rem;
     color: #444;
 }
+
+.friends:hover {
+    text-decoration: underline;
+}

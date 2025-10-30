@@ -73,10 +73,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function loadFriends() {
-    const friends = await fetchAPI("friends-list");
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get("id");
+
+    // id parametresi varsa endpoint'e ekle
+    const endpoint = userId
+      ? `friends-list?id=${userId}`
+      : "friends-list";
+
+    const friends = await fetchAPI(endpoint);
     const container = document.getElementById("friends");
     renderCards(container, friends, "friend");
   }
+
 
   async function loadRequests() {
     const requests = await fetchAPI("friend-requests-list");

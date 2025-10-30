@@ -1,36 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Settings</title>
-    <meta name="description" content="This is rumixist website.">
-    <meta name="keywords" content="rumi, rumixist">
+    <title>TÜV Sözlüğü</title>
+    <meta name="description" content="TÜV Sözlüğü">
+    <meta name="keywords" content="rumi, rumixist, türkçesi varken, türkçesi varken sözlüğü, TUV, tuv, TÜV, tüv, türkçesi varken uyarlama, türkçesi varken çeviri">
     <meta name="author" content="rumixist">
     
-    <meta name="robots" content="noindex, follow">
+    <meta name="robots" content="index, nofollow">
 
-    <meta property="og:title" content="rumixist website name">
-    <meta property="og:description" content="This is rumixist website.">
+    <meta property="og:title" content="TÜV Sözlüğü">
+    <meta property="og:description" content="TÜV Sözlüğünde aradığınız sözcüklerin türkçesi varsa, karşılıklarını bulabilirsiniz.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://rumixist.github.io/">
+    <meta property="og:url" content="https://rumixist.github.io/tuv/">
     <meta property="og:image" content="https://rumixist.github.io/assets/img/favicon">
 
     <link rel="icon" href="/assets/img/favicon.png" type="image/x-icon">
     <link rel="apple-touch-icon" href="/assets/img/favicon.png">
 
     <link rel="stylesheet" href="/assets/css/global.css">
-    <link rel="stylesheet" href="/assets/css/settings.css">
+    <link rel="stylesheet" href="/tuv/tuv.css">
 
     <script defer src="/assets/js/global.js"></script>
-    <script defer src="/assets/js/settings.js"></script>
-    <script defer src="/assets/js/logout.js"></script>
+    <script type="module" src="/tuv/tuv.js"></script>
 
-    </head>
+</head>
 <body>
-  <a href="/" class="logo">rumi</a>
+    <a href="/" class="logo">rumi</a>
 
     <nav>
         <ul>
@@ -75,71 +74,58 @@
                 <li><a href="/status/">Status</a></li>
             </ul>
         </aside>
-
         <main class="main-content-area">
-            <div id="settings-container">
-                <h1>Settings</h1>
-
-                <div class="settings-item">
-                <span class="label">Username:</span>
-                <span class="value" id="username"></span>
-                <button class="edit-btn">You can't change your username</button>
-                </div>
-
-                <div class="settings-item">
-                <span class="label">Password:</span>
-                <span class="value" id="password">********</span>
-                <button class="edit-btn">Edit</button>
-                </div>
-
-                <p style="color: red; padding-left: 4px;">Do not add your real email, our database may not be very secure</p>
-                <div class="settings-item">
-                <span class="label">Email:</span>
-                <span class="value" id="email"></span>
-                <button class="edit-btn">Edit</button>
-                </div>
+           <div id="content" class="content">
+                <h1 class="tuv-h1">TÜV Sözlüğü</h1>
                 
+                <div class="tuv-search-container">
+                    <div class="tuv-search-container">
+                        <form class="tuv-search-box" onsubmit="return handleTuvSearch(event)">
+                            <input id="tuvSearchInput" type="text" placeholder="Ara...">
+                            <button type="submit" id="tuvSearchButton">Ara</button>
+                        </form>
 
-                <div class="settings-item picture-item">
-                <span class="label">Avatar:</span>
-                <img src="/assets/img/default-profile.png" alt="Profile Picture" class="profile-pic">
-                <button class="edit-btn">Change</button>
+                        <ul id="tuvSuggestions" class="tuv-suggestions-list" style="display: none;"></ul>
+
+                        <div id="tuvWordDetails" class="tuv-word-details"></div>
+                    </div>
+
+                    <br> <br> <br> <br>
+
+                    <div class="info-section">
+                        <div class="word-of-the-day-container">
+                            <h2>Günün Kelimesi</h2>
+                            <div class="word-of-the-day">
+                                <p class="word-title">...</p>
+                                <p class="word-origin">...</p> <br>
+                                <p class="word-meaning">...</p> <br> <br>
+                                <p class="tarih" id="tarih">...</p>
+                                
+                            </div>
+                        </div>
+
+                        <div class="statistics-container">
+                            <h3>Kelime İstatistikleri</h3>
+                            <div id="statsSummary" class="stats-summary">
+                                <p>Yükleniyor...</p>
+                            </div>
+                            <div id="statsBars" class="stats-bars"></div>
+                        </div>
+                    </div>
+
                 </div>
 
-                <br> <br>
-                <button class="logout-btn" id="logout-button">Logout</button>
             </div>
-
-            <!-- Password Change Modal -->
-            <div id="password-modal" class="modal">
-                <div class="modal-content">
-                    <h2>Change Password</h2>
-                    <form id="password-form">
-                    <label for="old-password">Old Password:</label>
-                    <input type="password" id="old-password" name="old-password" required>
-
-                    <label for="new-password">New Password:</label>
-                    <input type="password" id="new-password" name="new-password" required>
-
-                    <label for="confirm-password">Confirm New Password:</label>
-                    <input type="password" id="confirm-password" name="confirm-password" required>
-
-                    <button type="submit" class="save-btn">Save</button>
-                    <button type="close" class="close-btn" id="close-password-modal">Cancel</button>
-                    </form>
-                </div>
-            </div>
-
 
             <div style="display: none;" id="ban-window" class="ban-window">
                 <div class="ban-content">
                     <h2 id="ban-title" class="ban-title">Account Terminated</h2>
                     <p class="pri-ban-desc">Our moderators have determined that your behaviour at this website has been in violation of our Terms of Use</p>
                     <p class="ban-date">Ban Date: <span class="ban-date" id="ban-date">DD/MM/YYYY HH:MM:SS (TSİ)</span></p>
-                    <P class="moderator-note">Moderator Note: Please do not do lalalalalal lelelele read our rules again.</P>
+                    <P class="moderator-note">Moderator Note: Failed to get moderator note, reload the page or contact with support.</P>
                     <br>
-                    <p class="ban-reason">Reason: </p>
-                    <p class="offensive-item">Offensive Item: </p>
+                    <p class="ban-reason">Reason: Failed to get reason.</p>
+                    <p class="offensive-item">Offensive Item: Failed to get offensive item.</p>
                     
                     <p class="sec-ban-desc">Please abide by the community guidelines so that this website can be fun for users of all ages</p>
                     <p class="reactivate-date">You can use your account after <span class="ban-date" id="ban-date">DD/MM/YYYY HH:MM:SS (TSİ)</span></p>
@@ -152,6 +138,5 @@
         </main>
 
     </div>
-
-    </body>
+</body>
 </html>

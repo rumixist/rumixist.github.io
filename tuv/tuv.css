@@ -1,0 +1,241 @@
+.tuv-h1 {
+    font-size: 48px;
+    color: #c00;
+    text-align: left;
+    margin-bottom: 20px;
+    margin-left: 8%
+}
+
+/* Genel arama kutusu ve detay alanı */
+.tuv-search-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    position: relative;
+}
+
+.tuv-search-box {
+    display: flex;
+    align-items: center;
+}
+
+.tuv-search-box input {
+    flex: 1;
+    padding: 12px 16px;
+    font-size: 18px;
+    border: 2px solid #c00;
+    border-radius: 8px 0 0 8px; /* Sol alt köşe normalde yuvarlak */
+    outline: none;
+    /* Köşe yumuşatma geçişi için eklendi (Opsiyonel ama daha hoş durur) */
+    transition: border-radius 0.1s ease-out;
+}
+
+.tuv-search-box input:focus {
+    border-color: #900;
+}
+
+.tuv-search-box button {
+    background-color: #c00;
+    color: white;
+    border: 2px solid #c00;
+    border-radius: 0 8px 8px 0; /* Sağ alt köşe normalde yuvarlak */
+    padding: 12px 24px;
+    font-weight: bold;
+    font-size: 18px;
+    /* Köşe yumuşatma geçişi için eklendi (Opsiyonel ama daha hoş durur) */
+    transition: border-radius 0.1s ease-out;
+}
+
+.tuv-search-box button:hover {
+    background-color: #900;
+}
+
+.tuv-suggestions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 2px solid #c00;
+    /* border-radius: 8px; */ /* Değişti */
+    border-radius: 0 0 8px 8px; /* Sadece alt köşeler yuvarlak */
+    border-top: none; /* Arama kutusuyla birleşmesi için üst kenarlığı kaldır */
+    max-height: 250px;
+    overflow-y: auto;
+    background-color: white;
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.tuv-suggestions-list li {
+    padding: 10px 16px;
+    font-size: 16px;
+}
+
+.tuv-suggestions-list li:hover, .tuv-suggestions-list li.active {
+    background-color: #c00;
+    color: white;
+}
+
+/* Detay kutusu */
+.tuv-word-details {
+    border: 2px solid #c00;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #fff0f0;
+    margin-top: 10px;
+}
+
+.tuv-word-details h2 {
+    margin-top: 0;
+    color: #c00;
+    font-size: 54px;
+}
+
+.tuv-word-details p {
+    margin: 6px 0;
+    font-size: 16px;
+}
+
+.tuv-search-container:focus-within .tuv-search-box input {
+    border-bottom-left-radius: 0;
+}
+
+.tuv-search-container:focus-within .tuv-search-box button {
+    border-bottom-right-radius: 0;
+}
+
+/* *************************************************** */
+/* Ortak yer: İstatistikler yeri + Günün kelimesi */
+/* *************************************************** */
+
+.info-section {
+    display: flex;
+    justify-content: center;
+    align-items: stretch; /* Yükseklikleri eşitlemek için stretch */
+    gap: 40px;
+    flex-wrap: wrap; /* Ekran daralınca alt alta geçer */
+    margin: 40px auto;
+    max-width: 1000px;
+}
+
+.word-of-the-day-container,
+.statistics-container {
+    flex: 1;
+    min-width: 450px;
+    max-width: 550px;
+    box-sizing: border-box;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* *************************************************** */
+/* İstatistikler yeri */
+/* *************************************************** */
+
+.statistics-container {
+    padding: 20px;
+    border: 2px solid #c00;
+    border-radius: 12px;
+    background-color: #fff5f5;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.statistics-container h3 {
+    margin-top: 0;
+    color: #900;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.stats-summary {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 16px;
+    color: #333;
+}
+
+.stats-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    flex-grow: 1; /* İçeriğe göre esner */
+}
+
+/* Dil ismini üstte göstermek için */
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.stat-label {
+    font-weight: bold;
+    font-size: 15px;
+    color: #333;
+}
+
+.stat-bar {
+    position: relative;
+    background-color: #ffeaea;
+    border-radius: 8px;
+    height: 28px;
+    overflow: hidden;
+    border: 1px solid #e0b5b5;
+}
+
+.stat-bar-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #d40000 0%, #b00000 100%);
+    transition: width 0.6s ease;
+}
+
+/* *************************************************** */
+/* Günün kelimesi */
+/* *************************************************** */
+
+.word-of-the-day-container {
+    background-color: #fff5f5;
+    border: 2px solid #cc0000;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* İçerik yukarı-aşağı dengelensin */
+}
+
+.word-of-the-day-container h2 {
+    color: #b00000;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.word-of-the-day .word-title {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #a00000;
+    margin: 8px 0;
+}
+
+.word-of-the-day .word-meaning {
+    font-size: 1.1em;
+    color: #333;
+    margin: 4px 0;
+}
+
+.word-of-the-day .word-origin {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 6px;
+}
+
+
+
