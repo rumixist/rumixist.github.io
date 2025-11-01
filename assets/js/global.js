@@ -338,3 +338,27 @@ async function renderSearchResults() {
         resultsContainer.innerHTML = `<p style="color:red">Failed to fetch results</p>`;
     }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const navToggle = document.getElementById("navToggle");
+    const sidebar = document.querySelector(".left-sidebar");
+
+    if (navToggle && sidebar) {
+        navToggle.addEventListener("click", () => {
+            sidebar.classList.toggle("active");
+            document.body.classList.toggle("nav-open");
+        });
+
+        // Arka plan tıklanınca menü kapansın
+        document.addEventListener("click", (e) => {
+            if (document.body.classList.contains("nav-open")) {
+                const clickedInsideMenu = sidebar.contains(e.target);
+                const clickedButton = navToggle.contains(e.target);
+                if (!clickedInsideMenu && !clickedButton) {
+                    sidebar.classList.remove("active");
+                    document.body.classList.remove("nav-open");
+                }
+            }
+        });
+    }
+});

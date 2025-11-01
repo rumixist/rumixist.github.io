@@ -311,3 +311,84 @@ nav a:hover {
 /* ======================================= */
 /* === YASAKLAMA PENCERESİ STİLLERİ SON === */
 /* ======================================= */
+
+/* ------------------------------ */
+/* Mobil Navigasyon için stiller  */
+/* ------------------------------ */
+
+@media (max-width: 768px) {
+
+    /* Normal menü gizleniyor, sadece login ve Navigasyon kalıyor */
+    nav ul li:not(.login-button):not(.mobile-nav-toggle) {
+        display: none;
+    }
+
+    .mobile-nav-toggle {
+        display: block;
+    }
+
+    #navToggle {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 4px 10px;
+        border-radius: 3px;
+        border: red 2px solid;
+        font-size: 0.85em;
+    }
+
+    #navToggle:hover {
+        background-color: white;
+        color: red;
+    }
+
+    /* Sol menü başlangıçta gizli */
+    .left-sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%; /* Başta ekran dışında */
+        width: 250px;
+        height: 100vh;
+        background-color: #e9f5fe;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+        transition: left 0.3s ease;
+        z-index: 1000;
+        padding: 20px;
+        overflow-y: auto;
+    }
+
+    .left-sidebar::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Edge */
+    }
+
+    /* Menü açıldığında */
+    .left-sidebar.active {
+        left: 0;
+    }
+
+    /* Menü açıkken arka plan karartma efekti */
+    body.nav-open::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.4);
+        z-index: 900;
+        transition: opacity 0.3s ease;
+    }
+
+    /* Diğer içerik menü altında kalsın */
+    .main-content-area {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+/* Navigasyon düğmesini masaüstünde gizle */
+@media (min-width: 769px) {
+    .mobile-nav-toggle {
+        display: none !important;
+    }
+}

@@ -190,7 +190,7 @@ async function loadStatistics() {
 
     // Özet
     document.getElementById('statsSummary').innerHTML =
-        `<p>Toplam <strong>${total}</strong> kelime var.</p>`
+        `<p>Bu sözlükte <strong>${total}</strong> kelime var.</p>`
 
     // Grafik çubukları
     const bars = entries.map(e => `
