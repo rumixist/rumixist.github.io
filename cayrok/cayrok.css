@@ -119,7 +119,58 @@
   min-width: 110px;
 }
 
-@media (max-width: 720px){
+@media (min-width: 984px) and (max-width: 1200px) {
+  #content.content {
+    width: 0%;
+    max-width: 960px;
+    margin: 24px auto;
+    padding: 24px 28px;
+    border-radius: 12px;
+  }
+
+  #content h1 {
+    font-size: clamp(28px, 3.5vw, 34px);
+    margin: 8px 0 14px 0;
+  }
+
+  #content h2 {
+    font-size: clamp(18px, 2.2vw, 20px);
+    margin: 24px 0 12px 0;
+  }
+
+  #content p,
+  #content .text-content p {
+    font-size: clamp(14px, 1.8vw, 15px);
+    line-height: 1.7;
+  }
+
+  #content img {
+    max-width: 100%;
+    height: auto;
+    margin: 14px auto;
+    border-radius: 8px;
+  }
+
+  #content .text-content {
+    max-width: 100%;
+  }
+
+  #content .text-content > div[style*="justify-content: space-around;"] {
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  #content .text-content > div[style*="justify-content: space-around;"] > div {
+    flex: 1 1 45%;
+  }
+
+  #content::before {
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 984px){
   #content.content{
     margin: 18px;
     padding: 18px;
@@ -145,3 +196,104 @@
 }
 
 /* NOT: Eğer HTML içine bazı <b> veya image caption yapılandırmaları eklerseniz, daha temiz hedefleme yapabilirim. */
+
+@media (max-width: 768px) {
+  #content.content {
+    margin: 16px;
+    padding: 20px;
+    box-shadow: none; /* Mobilde daha sade */
+    border-radius: 10px;
+  }
+
+  #content h1 {
+    font-size: 26px;
+    line-height: 1.15;
+    letter-spacing: 1px;
+    margin: 10px 0 14px 0;
+  }
+
+  #content h2 {
+    font-size: 18px;
+    margin: 22px 0 10px 0;
+    border-bottom-width: 1.5px;
+  }
+
+  #content p,
+  #content .text-content p {
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 10px 0;
+  }
+
+  #content img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 12px auto;
+    padding: 6px;
+    box-shadow: 0 4px 12px rgba(11,13,14,0.05);
+  }
+
+  #content div[style*="text-align: center;"] img {
+    max-width: 100%;
+  }
+
+  #content .text-content > div[style*="justify-content: space-around;"] {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  #content .text-content > div[style*="justify-content: space-around;"] > div {
+    flex: 1 1 auto;
+  }
+
+  #content .text-content div[style*="flex-wrap: wrap;"] {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #content .text-content div[style*="flex-wrap: wrap;"] > div {
+    padding: 8px;
+  }
+
+  #content b {
+    font-size: 15px;
+  }
+
+  #content b + span {
+    font-size: 12px;
+  }
+
+  #content::before {
+    font-size: 10px;
+    padding: 5px 8px;
+    margin-bottom: 10px;
+  }
+
+  .rumi {
+    font-size: 13px;
+  }
+}
+
+/* Ekstra küçük ekranlar (telefon <480px) */
+@media (max-width: 480px) {
+  #content h1 {
+    font-size: 22px;
+  }
+
+  #content h2 {
+    font-size: 16px;
+  }
+
+  #content p {
+    font-size: 14px;
+  }
+
+  #content img {
+    padding: 4px;
+  }
+
+  #content.content {
+    margin: 10px;
+    padding: 16px;
+  }
+}

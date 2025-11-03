@@ -237,5 +237,102 @@
     margin-top: 6px;
 }
 
+@media (max-width: 768px) {
+  /* Başlık */
+  .tuv-h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin: 20px 0 16px 0;
+  }
+
+  /* Arama kutusu alanı */
+  .tuv-search-container {
+    width: 95%;
+    margin: 0 auto;
+    flex-direction: row;
+  }
+
+  .tuv-search-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tuv-search-box input {
+    border-radius: 8px;
+    font-size: 1rem;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+  }
+
+  .tuv-search-box button {
+    border-radius: 8px;
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .tuv-suggestions-list {
+    max-height: 200px;
+    font-size: 0.9rem;
+  }
+
+  /* Kelime detay kutusu */
+  .tuv-word-details {
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+
+  .tuv-word-details h2 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  /* Bilgi bölümü (istatistik + günün kelimesi) */
+  .info-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin: 25px auto;
+    width: 95%;
+  }
+
+  .statistics-container,
+  .word-of-the-day-container {
+    width: 100%;
+    min-width: unset;
+    max-width: unset;
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 0.95rem;
+  }
+
+  /* İstatistik barları */
+  .stat-bar {
+    height: 22px;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+  }
+
+  /* Günün kelimesi */
+  .word-of-the-day-container h2 {
+    font-size: 1.3rem;
+  }
+
+  .word-of-the-day .word-title {
+    font-size: 1.2rem;
+  }
+
+  .word-of-the-day .word-meaning {
+    font-size: 1rem;
+  }
+
+  .word-of-the-day .word-origin {
+    font-size: 0.85rem;
+  }
+}
+
+
 
 

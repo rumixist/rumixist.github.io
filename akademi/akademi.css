@@ -69,7 +69,9 @@
 
 /* Card style */
 .marda-card {
-  width: 450px;
+  width: 100%;
+  max-width: 450px;
+  box-sizing: border-box;
   padding: 1.5rem;
   background: transparent;
   border: 2px solid #b30000;
@@ -107,4 +109,47 @@
 .btn-marda:hover {
   background: #ff1a1a;
   box-shadow: 0 4px 12px rgba(179,0,0,0.3);
+}
+
+@media (max-width: 768px) {
+  .content {
+    align-items: center;
+    padding: 0 1rem;
+  }
+
+  .hero-text {
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-text .welcome {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+  }
+
+  .logo-box {
+    padding: 0.6rem 1.4rem;
+    border: 2px solid #b30000;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(179,0,0,0.15);
+    margin-bottom: 1rem;
+  }
+
+  .intro-text {
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.6;
+    padding: 0 0.5rem;
+  }
+
+  .cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .marda-card {
+    max-width: 90%;
+  }
 }
