@@ -73,7 +73,7 @@ async function showWordDetails(id) {
         input.blur()
 
     } else {
-        wordDetails.innerHTML = '<p>Aradığınız sözcük veya ifade veritabanımızda yok</p>'
+        wordDetails.innerHTML = '<p>Aradığınız sözcük ya da söylem veritabanımızda yok</p>'
         suggestions.style.display = 'none'
         input.blur()
     }
@@ -101,7 +101,7 @@ input.addEventListener('keydown', (e) => {
             if (exact) {
                 showWordDetails(exact.id)
             } else {
-                wordDetails.innerHTML = '<p>Aradığınız sözcük veya ifade veritabanımızda yok</p>'
+                wordDetails.innerHTML = '<p>Aradığınız sözcük ya da söylem veritabanımızda yok</p>'
             }
         }
     }
@@ -124,7 +124,7 @@ window.handleTuvSearch = function(e) {
         if (exact) {
             showWordDetails(exact.id)
         } else {
-            wordDetails.innerHTML = '<p>Aradığınız sözcük veya ifade veritabanımızda yok</p>'
+            wordDetails.innerHTML = '<p>Aradığınız sözcük ya da söylem veritabanımızda yok</p>'
         }
     }
     return false

@@ -135,3 +135,10 @@
   gap: 15px;
   justify-content: flex-start;
 }
+
+.friends-title {
+  font-size: 44px;
+  font-weight: bold;
+  color: #b82626;
+  margin-bottom: 15px;
+}

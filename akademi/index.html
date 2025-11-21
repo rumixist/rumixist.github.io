@@ -6,14 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>Rumiakademi</title>
-    <meta name="description" content="Rumiakademi is a platform for educational stuff. We do projects, experiments, and hands on learning across different fields. Students, teachers, or curious folks come check it out.">
+    <meta name="description" content="">
     <meta name="keywords" content="rumi, rumixist, akademi, learning, learn, rumiakademi, education, projects, experiments">
     <meta name="author" content="rumixist">
     
     <meta name="robots" content="index, follow">
 
     <meta property="og:title" content="rumiakademi">
-    <meta property="og:description" content="Rumiakademi is a platform for educational stuff. We do projects, experiments, and hands on learning across different fields. Students, teachers, or curious folks come check it out.">
+    <meta property="og:description" content="">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://rumixist.github.io/labs">
     <meta property="og:image" content="https://rumixist.github.io/assets/img/favicon">
@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="/akademi/akademi.css">
 
     <script defer src="/assets/js/global.js"></script>
+    <script defer src="/akademi/akademi.js"></script>
 
     </head>
 <body>
@@ -57,7 +58,7 @@
     <div class="page-layout">
         <aside class="left-sidebar">
             <h2>Navigation</h2>
-            <p>________________</pp>
+            <p>________________</p>
             <ul>
                 <br>
                 <li><a href="/">Home</a></li>
@@ -86,27 +87,239 @@
                 </div>
 
                 <p class="intro-text">
-                    Rumiakademi is a platform for educational stuff. We do projects, experiments, and hands on learning across different fields. Curious folks come check it out and maybe learn something new!
+                    Rumiakademi is a platform for doing research, learning and sharing knowledge. Explore things made by the community. Here you don't just learn something, you learn what can you learn. In the future, you will be able to share your own work here as well. 
                 </p>
-                
-                
 
-                <h3>Look at these:</h3>
+
+                <h2>Category:</h2>
+                <div class="topic-buttons" style="display:flex; gap:1rem; margin-top:1rem; flex-wrap:wrap;">
+                    <button class="topic-btn" data-target="matematik">Math</button>
+                    <button class="topic-btn" data-target="havacilik">Aeroneutics</button>
+                    <button class="topic-btn" data-target="haritacilik">Cartography</button>
+                    <button class="topic-btn" data-target="dil">Linguistics</button>
+                </div>
+
+                <!-- Hidden expandable sections -->
+                <div id="matematik" class="topic-section" style="display:none; margin-top:1rem;">
+                    <h3>Math</h3>
+                    <p>Content coming soon</p>
+                </div>
+
+
+                <div id="havacilik" class="topic-section" style="display:none; margin-top:1rem;">
+                    <h3>Aeroneutics</h3>
+                    <p>Content coming soon</p>
+                </div>
+
+
+                <div id="haritacilik" class="topic-section" style="display:none; margin-top:1rem;">
+                    <h3>Cartography</h3>
+                    <p>Content coming soon</p>
+                </div>
+
+
+                <div id="dil" class="topic-section" style="display:none; margin-top:1rem;">
+                    <h3>Linguistics</h3>
+                    <p>Content coming soon</p>
+                </div>
+
                 <br> <br>
 
-                <div class="cards">
-                    <div class="marda-card">
-                        <h2>Learn Turkish</h2>
-                        <h3 style="color: red;">Türkçe Öğren</h3> <br>
-                        <p>
-                            Please learn Turkish
-                        </p>
-                        <p>NOT AVALIABLE YET</p>
-                        <a href="" class="btn-marda">Let's go<br>OR WAIT UNTIL IT IS AVALIABLE</a>
+                <!-- Research Encouragement Section -->
+                <div class="research-container" style="margin-top:3rem;">
+
+                    <h2 style="margin-bottom:1rem;">Explore Your Own Research</h2>
+                    <p style="max-width:650px; line-height:1.6;">
+                        This section encourages you to conduct your own research or experiments. 
+                        Choose a field, select a difficulty level, and explore goals, paths, and 
+                        ideas for independent study.
+                    </p>
+
+                    <!-- Field Tabs -->
+                    <div class="research-fields" style="display:flex; gap:1rem; margin-top:1.5rem; flex-wrap:wrap;">
+                        <button class="research-field-btn" data-target="r-math">Math</button>
+                        <button class="research-field-btn" data-target="r-physics">Physics</button>
+                        <button class="research-field-btn" data-target="r-chemistry">Chemistry</button>
+                        <button class="research-field-btn" data-target="r-biology">Biology</button>
+                        <button class="research-field-btn" data-target="r-linguistics">Linguistics</button>
+                        <button class="research-field-btn" data-target="r-geography">Geography</button>
                     </div>
 
+                    <!-- Research Field Sections -->
+                    <!-- MATH -->
+                    <div id="r-math" class="research-field-section" style="display:none; margin-top:1.5rem;">
 
+                        <!-- Level Tabs -->
+                        <div class="level-buttons" style="display:flex; gap:1rem; margin-top:1rem; flex-wrap:wrap;">
+                            <button class="level-btn" data-level="math-hs">High School</button>
+                            <button class="level-btn" data-level="math-uni">University</button>
+                            <button class="level-btn" data-level="math-adv">Advanced</button>
+                        </div>
+
+                        <!-- Levels -->
+                        <div id="math-hs" class="level-section" style="display:none; margin-top:1rem;">
+                            <p>Content coming soon</p>
+                        </div>
+
+                        <div id="math-uni" class="level-section" style="display:none; margin-top:1rem;">
+                            <p>Content coming soon</p>
+                        </div>
+
+                        <div id="math-adv" class="level-section" style="display:none; margin-top:1rem;">
+                            <p>Content coming soon</p>
+                        </div>
+                    </div>
+
+                    <!-- PHYSICS -->
+                    <div id="r-physics" class="research-field-section" style="display:none; margin-top:1.5rem;">
+
+                        <div class="level-buttons" style="display:flex; gap:1rem; margin-top:1rem; flex-wrap:wrap;">
+                            <button class="level-btn" data-level="phys-hs">High School</button>
+                            <button class="level-btn" data-level="phys-uni">University</button>
+                            <button class="level-btn" data-level="phys-adv">Advanced</button>
+                        </div>
+
+                        <div id="phys-hs" class="level-section" style="display:none; margin-top:1rem;">
+                            <p>Content coming soon</p>
+                        </div>
+
+                        <div id="phys-uni" class="level-section" style="display:none; margin-top:1rem;">
+                            <p>Content coming soon</p>
+                        </div>
+
+                        <div id="phys-adv" class="level-section" style="display:none; margin-top:1rem;">
+                            <p>Content coming soon</p>
+                        </div>
+                    </div>
+
+                    <!-- CHEMISTRY -->
+                    <div id="r-chemistry" class="research-field-section" style="display:none; margin-top:1.5rem;">
+
+                        <div class="level-buttons" style="display:flex; gap:1rem; margin-top:1rem; flex-wrap:wrap;">
+                            <button class="level-btn" data-level="chem-hs">High School</button>
+                            <button class="level-btn" data-level="chem-uni">University</button>
+                            <button class="level-btn" data-level="chem-adv">Advanced</button>
+                        </div>
+
+                        <div id="chem-hs" class="level-section" style="display:none; margin-top:1rem;">
+                            <p>Content coming soon</p>
+                        </div>
+
+                        <div id="chem-uni" class="level-section" style="display:none; margin-top:1rem;">
+                            <p>Content coming soon</p>
+                        </div>
+
+                        <div id="chem-adv" class="level-section" style="display:none; margin-top:1rem;">
+                            <p>Content coming soon</p>
+                        </div>
+                    </div>
+
+                    <!-- BIOLOGY -->
+                    <div id="r-biology" class="research-field-section" style="display:none; margin-top:1.5rem;">
+
+                        <div class="level-buttons" style="display:flex; gap:1rem; margin-top:1rem; flex-wrap:wrap;">
+                            <button class="level-btn" data-level="bio-hs">High School</button>
+                            <button class="level-btn" data-level="bio-uni">University</button>
+                            <button class="level-btn" data-level="bio-adv">Advanced</button>
+                        </div>
+
+                        <div id="bio-hs" class="level-section" style="display:none; margin-top:1rem;">
+                            <p>Content coming soon</p>
+                        </div>
+
+                        <div id="bio-uni" class="level-section" style="display:none; margin-top:1rem;">
+                            <p>Content coming soon</p>
+                        </div>
+
+                        <div id="bio-adv" class="level-section" style="display:none; margin-top:1rem;">
+                            <p>Content coming soon</p>
+                        </div>
+                    </div>
+
+                    <!-- LINGUISTICS -->
+                    <div id="r-linguistics" class="research-field-section" style="display:none; margin-top:1.5rem;">
+
+                        <div class="level-buttons" style="display:flex; gap:1rem; margin-top:1rem; flex-wrap:wrap;">
+                            <button class="level-btn" data-level="ling-hs">High School</button>
+                            <button class="level-btn" data-level="ling-uni">University</button>
+                            <button class="level-btn" data-level="ling-adv">Advanced</button>
+                        </div>
+
+                        <div id="ling-hs" class="level-section" style="display:none; margin-top:1rem;">
+                            <p>Content coming soon</p>
+                        </div>
+
+                        <div id="ling-uni" class="level-section" style="display:none; margin-top:1rem;">
+                            <p>Content coming soon</p>
+                        </div>
+
+                        <div id="ling-adv" class="level-section" style="display:none; margin-top:1rem;">
+                            <p>Content coming soon</p>
+                        </div>
+                    </div>
+
+                    <!-- GEOGRAPHY -->
+                    <div id="r-geography" class="research-field-section" style="display:none; margin-top:1.5rem;">
+
+                        <div class="level-buttons" style="display:flex; gap:1rem; margin-top:1rem; flex-wrap:wrap;">
+                            <button class="level-btn" data-level="geo-hs">High School</button>
+                            <button class="level-btn" data-level="geo-uni">University</button>
+                            <button class="level-btn" data-level="geo-adv">Advanced</button>
+                        </div>
+
+                        <div id="geo-hs" class="level-section" style="display:none; margin-top:1rem;">
+                            <p>Content coming soon</p>
+                        </div>
+
+                        <div id="geo-uni" class="level-section" style="display:none; margin-top:1rem;">
+                            <p>Content coming soon</p>
+                        </div>
+
+                        <div id="geo-adv" class="level-section" style="display:none; margin-top:1rem;">
+                            <p>Content coming soon</p>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Independent Research Articles Section -->
+                <div class="independent-research-section" style="margin-top:4rem;">
+
+                    <h2 style="margin-bottom:1rem;">Articles</h2>
+                    <p style="max-width:650px; line-height:1.6; margin-bottom:2rem;">
+                        This section contains articles and research notes written by Rumiakademi staff and selected contributors.
+                    </p>
+
+                    <div class="research-article-list" style="display:flex; flex-direction:column; gap:1.5rem;">
+
+                        <!-- Example Article Card -->
+                        <div class="research-article-card" style="padding:1.5rem; border:1px solid #ddd; border-radius:12px;">
+                            <h3 style="margin:0 0 0.5rem 0;">Sample Article Title</h3>
+                            <p style="margin:0 0 0.5rem 0; line-height:1.5;">
+                                This is a placeholder summary describing the research article.
+                            </p>
+                            <div style="font-size:0.9rem; opacity:0.7;">
+                                <span>Author: Placeholder</span>  
+                                <span style="margin-left:1rem;">Date: 21 Nov 2025</span>
+                            </div>
+                        </div>
+
+                        <!-- Another Example -->
+                        <div class="research-article-card" style="padding:1.5rem; border:1px solid #ddd; border-radius:12px;">
+                            <h3 style="margin:0 0 0.5rem 0;">Another Sample Article</h3>
+                            <p style="margin:0 0 0.5rem 0; line-height:1.5;">
+                                Another placeholder summary for demonstration.
+                            </p>
+                            <div style="font-size:0.9rem; opacity:0.7;">
+                                <span>Author: Placeholder</span>  
+                                <span style="margin-left:1rem;">Date: 21 Nov 2025</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                
             </section>
 
 

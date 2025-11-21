@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Rumimaps</title>
+    <link rel="stylesheet" href="css/maps.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+</head>
+<body>
+    <header>
+        <h1>Rumimaps</h1>
+    </header>
+
+    <div id="map-container">
+        <div id="map"></div>
+
+          <!-- Düğmeler paneli -->
+          <div class="map-controls">
+              <button class="control-btn" title="Yakınlaştır">＋</button>
+              <button class="control-btn" title="Uzaklaştır">－</button>
+              <button class="control-btn" title="Konumumu bul">📍</button>
+              <button class="control-btn" title="Katmanlar">🗂️</button>
+              <button class="control-btn" title="Ölçüm">📏</button>
+              <button class="control-btn" title="Tam ekran">⛶</button>
+              <button class="control-btn" title="Harita bilgisi">ℹ️</button>
+              <button id="transit-btn" class="control-btn" title="Toplu Taşıma">🚇</button>
+          </div>
+      </div>
+
+      <div id="measure-panel" class="side-panel" style="display: none;">
+        <button id="close-measure" class="close-btn">✖</button>
+        <h3>Ölçüm Aracı</h3>
+        <div id="measure-content">
+            <p>Toplam Uzunluk:</p>
+            <strong id="measure-dist">0 metre</strong>
+        </div>
+        <button id="reset-measure" style="margin-top:10px;">Temizle</button>
+    </div>
+
+      <!-- Arama kutusu -->
+      <div id="search-container">
+          <input type="text" id="search-input" placeholder="Yer ara..." />
+          <button id="search-btn">🔍</button>
+      </div>
+
+
+      <div id="info-panel" class="info-panel"></div>
+          <div id="poi-panel" class="side-panel">
+              <button id="close-poi" class="close-btn">✖</button>
+              <h3>POI Bilgisi</h3>
+              <div id="poi-content">Tıklayınca POI bilgisi burada.</div>
+          </div>
+
+          <div id="bus-panel" class="side-panel">
+              <button id="close-bus" class="close-btn">✖</button>
+              <h3>Otobüs Hattı</h3>
+              <div id="bus-content">Bir hat arayın.</div>
+          </div>
+
+
+      </div>
+
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

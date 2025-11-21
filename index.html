@@ -84,16 +84,74 @@
                 <h1 id="greetingtext">Hello, </h1>
                 <br>
                 <p id="friends"></p>
-                <br>
-                <p class="home-main-text" id="home-main-text"></p>
-                <br> <br> <br>
-                <p>
-                    -Mobile support is not available yet. Please use a desktop device for the best experience.
-                    <br> <br>
-                    -This website is currently in development. Some features may not work as expected.
-                    <br> <br>
-                    -If you encounter any issues, please report them to the <a class="a-button-a" href="/support/">support</a> page.
-                </p>
+                <div class="alert-container">
+                    <div class="alert-box login-required">You can log in to see other features.</div>
+                    <div class="alert-box mobile-warning">Mobile support is not available yet. Please use a desktop device for the best experience.</div>
+                    <div class="alert-box">This website is currently in development. Some features may not work as expected. If you encounter any issues, please report them to the <a class="a-button-a" href="/support/">support</a> page.</div>
+                </div>
+
+                <div class="main-grid">
+
+                    <div class="section-box friends-requests">
+                        <!-- FRIENDS -->
+                        <div class="friends-section" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                            <h2>Friends</h2>
+                            <p class="friends-list"></p>
+                            <a class="see-more-btn see-more-friends" style="display:none" id="see-more-friends">
+                                See more
+                            </a>
+                        </div>
+                        <!-- REQUESTS -->
+                        <div class="requests-section" style="padding: 10px;">
+                            <h2>Requests</h2>
+                            <p class="requests-list"></p>
+                            <a class="see-more-btn see-more-requests" style="display:none" id="see-more-friends">
+                                See more
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="section-box">
+                        <h2>Featured Content</h2>
+                        <p>Check MARDA regularly:</p> <br>
+                        <a class="check-marda-button" href="marda/">MARDA</a>
+                        <br> <br>
+                        <p>We have a Turkish dictionary about Turkish words that have origin from another languege:</p> <br>
+                        <a class="check-marda-button" href="tuv/">TÜV Sözlüğü</a>
+                    </div>
+
+                    <div class="section-box">
+                        <h2>News from rumilabs</h2>
+                        <p>A new version of MARDA has developing (s1.1). In this version, there will be a lot of statistics and you will be able to see some calculations and prediction of an AI model, Ögdül.</p>
+                        <br>
+                        <p>This is really exciting because MARDA will be more useful for everyone.</p>
+                        <br>
+                    </div>
+
+                    <div class="section-box">
+                        <h2>What is developing right now?</h2> <br>
+                        <ul>
+                        <li>Rumimaps: A map using OSM data. Goal is combining all good sides of every map app in one.</li> <br>
+                        <li>Rumiakademi page is in reconstruction</li> 
+                        </ul>
+                    </div>
+
+                    <div class="section-box" id="dynamic-info-box">
+                        <h2 class="dynamic-title"></h2>
+                        <br>
+                        <ul class="dynamic-content"></ul>
+                    </div>
+
+                    
+                    <div class="section-box">
+                        <h2>News from rumiakademi</h2>
+                        <ul>
+                        <li>A research about AI's response in different langueges is preparing. The research will be published in Rumiakademi when it's finished.
+                        </li> <br>
+                        </ul>
+                    </div>
+                
+                </div>
             </section>
 
            <div style="display: none;" id="ban-window" class="ban-window">

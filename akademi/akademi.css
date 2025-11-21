@@ -1,4 +1,13 @@
 /* Main container */
+:root{
+  --kirmizi: #b31b1b;    /* koyu kırmızı, eski usul */
+  --kirmizi-acik: #e04b4b;
+  --beyaz: #fffdf6;      /* hafif kremimsi beyaz, eski kağıt hissi */
+  --gri: #6b6863;
+  --golge: rgba(0,0,0,0.14);
+  --font-base: "Georgia", "Times New Roman", serif;
+}
+
 .content {
   display: flex;
   flex-direction: column;
@@ -10,7 +19,6 @@
   color: #222;
 }
 
-/* Hero section */
 .hero-text {
   width: 100%;
   text-align: center; /* Başlık ortalanmış */
@@ -25,7 +33,6 @@
   font-family: 'Georgia', serif;
 }
 
-/* Logo box */
 .logo-box {
   display: inline-block;
   padding: 1rem 2.5rem;
@@ -58,58 +65,397 @@
   font-family: 'Merriweather', serif;
 }
 
-/* Cards container */
-.cards {
-  display: flex;
-  flex-direction: row; /* kartlar soldan sağa */
-  flex-wrap: wrap; /* taşarsa alt satıra geçer */
-  gap: 2rem;
-  align-items: flex-start;
+
+/* Responsive design for smaller screens */
+.topic-buttons{
+  display:flex;
+  gap:1rem;
+  margin-top:1rem;
+  flex-wrap:wrap;
+  align-items:center;
 }
 
-/* Card style */
-.marda-card {
-  width: 100%;
-  max-width: 450px;
-  box-sizing: border-box;
-  padding: 1.5rem;
-  background: transparent;
-  border: 2px solid #b30000;
-  border-radius: 10px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-  font-family: 'Georgia', serif;
+/* düğmeler: eski usul, biraz kabartma, yuvarlak uçlar */
+.topic-btn{
+  background: linear-gradient(180deg, var(--beyaz) 0%, #f7efe6 100%);
+  color: var(--kirmizi);
+  border: 1px solid rgba(179,27,27,0.25);
+  padding: .55rem 1rem;
+  font-family: var(--font-base);
+  font-size: .95rem;
+  letter-spacing: .02em;
+  border-radius: 999px;
+  position: relative;
+  box-shadow:
+    0 2px 0 rgba(255,255,255,0.6) inset,
+    0 6px 18px var(--golge);
+  transition: transform .18s ease, box-shadow .18s ease;
+  outline: none;
 }
 
-.marda-card h2 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #b30000;
-  margin-bottom: 0.5rem;
+/* hafif yükselme hissi */
+.topic-btn:hover{
+  transform: translateY(-3px);
+  box-shadow:
+    0 6px 0 rgba(255,255,255,0.6) inset,
+    0 12px 26px rgba(0,0,0,0.18);
 }
 
-.marda-card p {
-  font-size: 0.95rem;
-  color: #333;
-  margin-bottom: 1.5rem;
-  line-height: 1.7;
+/* tıklanınca bastırma hissi */
+.topic-btn:active{
+  transform: translateY(0);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.6) inset,
+    0 4px 10px rgba(0,0,0,0.12);
 }
 
-/* Button */
-.btn-marda {
-  display: inline-block;
-  padding: 0.7rem 2rem;
-  background: #b30000;
+/* alt çizgi göstergesi (aktif düğme) */
+.topic-btn.active{
   color: #fff;
-  font-weight: 600;
-  text-decoration: none;
-  border-radius: 6px;
-  transition: 0.3s ease;
+  background: linear-gradient(180deg, var(--kirmizi) 0%, var(--kirmizi-acik) 100%);
+  border-color: rgba(255,255,255,0.08);
 }
 
-.btn-marda:hover {
-  background: #ff1a1a;
-  box-shadow: 0 4px 12px rgba(179,0,0,0.3);
+/* aktif göstergesi için ince çizgi animasyonu */
+.topic-btn.active::after{
+  content: "";
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: -10px;
+  height: 6px;
+  border-radius: 6px;
+  background: radial-gradient(closest-side, rgba(255,255,255,0.18), rgba(255,255,255,0));
+  box-shadow: 0 2px 8px rgba(179,27,27,0.28);
+  transform: translateY(0);
+  animation: pulseUnderline 1800ms infinite ease-in-out;
 }
+
+/* aktif olmayan düğmelerin alt gölgesi (ince) */
+.topic-btn::before{
+  content: "";
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: -8px;
+  height: 4px;
+  border-radius: 6px;
+  background: rgba(0,0,0,0.03);
+  transition: opacity .25s ease;
+  opacity: 0;
+}
+.topic-btn:hover::before{ opacity: 1; }
+
+@keyframes pulseUnderline{
+  0%{ transform: translateY(0) scaleX(0.95); opacity: .9; }
+  50%{ transform: translateY(2px) scaleX(1.05); opacity: .7; }
+  100%{ transform: translateY(0) scaleX(0.95); opacity: .9; }
+}
+
+/* bölüm kartları: eski kağıt, iç rahatlatan gölgeler */
+.topic-section{
+  display:none; /* JS ile gösterilecek */
+  width: 95%;
+  margin-top:1rem;
+  background: linear-gradient(180deg, rgba(255,250,245,1) 0%, var(--beyaz) 100%);
+  border: 1px solid rgba(107,104,99,0.12);
+  padding: 1.25rem;
+  border-radius: 12px;
+  font-family: var(--font-base);
+  color: #2b2a28;
+  box-shadow:
+    0 6px 22px rgba(0,0,0,0.08),
+    0 1px 0 rgba(255,255,255,0.9) inset;
+  transform-origin: top center;
+  transform: translateY(8px) scale(.995);
+  transition: opacity .36s ease, transform .36s ease, box-shadow .36s ease;
+  opacity: 0;
+}
+
+/* açıkken görünür kıl */
+.topic-section.show{
+  display:block;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* başlık görünüşü: eski yazı hissi */
+.topic-section h3{
+  margin: 0 0 .5rem 0;
+  font-size: 1.2rem;
+  letter-spacing: .01em;
+  color: var(--kirmizi);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+}
+
+/* içerik metni */
+.topic-section p{
+  margin: 0;
+  line-height: 1.65;
+  color: var(--gri);
+  font-size: .98rem;
+}
+
+/* ince süs çizgisi üstte */
+.topic-section::before{
+  content: "";
+  display:block;
+  height:6px;
+  margin-bottom: .75rem;
+  border-radius: 6px;
+  background: linear-gradient(90deg, rgba(179,27,27,0.18), rgba(179,27,27,0));
+  opacity: .9;
+}
+
+/* küçük ekranlarda düğmeler tam genişlikte blok haline gelir */
+@media (max-width:640px){
+  .topic-buttons{ gap:.6rem; }
+  .topic-btn{ flex: 1 1 auto; min-width: 0; text-align:center; padding:.6rem .75rem; }
+  .topic-btn::after{ left: 12%; right: 12%; }
+}
+
+/* erişilebilirlik: eğer kullanıcı hareketten kaçınıyorsa, hareketleri azalt */
+@media (prefers-reduced-motion: reduce){
+  .topic-btn, .topic-section{ transition: none; animation: none; transform: none; }
+}
+
+
+/*********************************************************************************************/
+/* Research Container Start */
+/*********************************************************************************************/
+/* Genel bölüm kutusu */
+.research-container{
+  width: 95%;
+  background: linear-gradient(180deg, rgba(255,250,245,0.7), rgba(255,255,255,0.3));
+  border: 1px solid rgba(0,0,0,0.05);
+  border-radius: 14px;
+  padding: 1.5rem 1.8rem;
+  font-family: var(--font-base);
+  color: #2b2a28;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  backdrop-filter: blur(2px);
+  margin-bottom: 2rem;
+}
+
+.research-container h2{
+  font-family: var(--font-base);
+  color: var(--kirmizi);
+  letter-spacing: .02em;
+  margin: 0 0 .5rem 0;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+}
+
+/* Alan butonları (Math, Physics, ...) */
+.research-field-btn{
+  background: linear-gradient(180deg, var(--beyaz) 0%, #f7efe6 100%);
+  color: var(--kirmizi);
+  border: 1px solid rgba(179,27,27,0.25);
+  padding: .55rem 1rem;
+  font-family: var(--font-base);
+  font-size: .95rem;
+  letter-spacing: .02em;
+  border-radius: 999px;
+  position: relative;
+  box-shadow:
+    0 2px 0 rgba(255,255,255,0.6) inset,
+    0 6px 18px var(--golge);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.research-field-btn:hover{
+  transform: translateY(-3px);
+  box-shadow:
+    0 6px 0 rgba(255,255,255,0.6) inset,
+    0 12px 26px rgba(0,0,0,0.18);
+}
+
+.research-field-btn:active{
+  transform: translateY(0);
+}
+
+.research-field-btn.active{
+  color: #fff;
+  background: linear-gradient(180deg, var(--kirmizi) 0%, var(--kirmizi-acik) 100%);
+  border-color: rgba(255,255,255,0.08);
+}
+
+.research-field-btn.active::after{
+  content: "";
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: -10px;
+  height: 6px;
+  border-radius: 6px;
+  background: radial-gradient(closest-side, rgba(255,255,255,0.18), rgba(255,255,255,0));
+  box-shadow: 0 2px 8px rgba(179,27,27,0.28);
+  animation: pulseUnderline 1800ms infinite ease-in-out;
+}
+
+/* Araştırma alanı bölüm kartları (Math Research Ideas vs...) */
+.research-field-section{
+  display:none;
+  opacity: 0;
+  margin-top: 2rem;
+  background: linear-gradient(180deg, rgba(255,250,245,1) 0%, var(--beyaz) 100%);
+  border: 1px solid rgba(107,104,99,0.12);
+  padding: 1.25rem;
+  border-radius: 12px;
+  font-family: var(--font-base);
+  color: #2b2a28;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.08);
+  transform-origin: top center;
+  transform: translateY(12px) scale(.985);
+  transition: opacity .36s ease, transform .36s ease;
+}
+
+.research-field-section.show{
+  display:block;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.research-field-section::before{
+  content:"";
+  display:block;
+  height:6px;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  background: linear-gradient(90deg, rgba(179,27,27,0.18), rgba(179,27,27,0));
+}
+
+/* Alt seviye düğmeleri (High School – University – Advanced) */
+.level-btn{
+  background: linear-gradient(180deg, var(--beyaz) 0%, #fcf5ea 100%);
+  color: var(--kirmizi);
+  border: 1px solid rgba(179,27,27,0.25);
+  padding: .45rem .9rem;
+  font-family: var(--font-base);
+  font-size: .88rem;
+  border-radius: 999px;
+  transition: transform .18s ease, box-shadow .18s ease;
+  box-shadow:
+    0 2px 0 rgba(255,255,255,0.6) inset,
+    0 6px 18px rgba(0,0,0,0.1);
+}
+
+.level-btn:hover{
+  transform: translateY(-2px);
+}
+
+.level-btn.active{
+  color: #fff;
+  background: linear-gradient(180deg, var(--kirmizi), var(--kirmizi-acik));
+}
+
+/* İç seviyeler (HS, UNI, ADV) */
+.level-section{
+  display:none;
+  opacity:0;
+  transform: translateY(8px) scale(.99);
+  transition: opacity .32s ease, transform .32s ease;
+  padding: 1rem 1.2rem;
+}
+
+.level-section.show{
+  display:block;
+  opacity:1;
+  transform: translateY(0) scale(1);
+}
+
+/* Animasyon */
+@keyframes pulseUnderline{
+  0%{ transform: translateY(0) scaleX(0.95); opacity: .9; }
+  50%{ transform: translateY(2px) scaleX(1.05); opacity: .7; }
+  100%{ transform: translateY(0) scaleX(0.95); opacity: .9; }
+}
+
+/* Mobil uyum */
+@media (max-width:640px){
+  .research-field-btn,
+  .level-btn{ flex:1 1 auto; text-align:center; }
+}
+
+/* Hareket azaltma */
+@media (prefers-reduced-motion: reduce){
+  .research-field-section,
+  .level-section,
+  .research-field-btn,
+  .level-btn{ transition:none; animation:none; }
+}
+/*********************************************************************************************/
+/* Research Container End */
+/*********************************************************************************************/
+/*********************************************************************************************/
+/* Articles Start */
+/*********************************************************************************************/
+
+/* --- Independent Research Section --- */
+.independent-research-section {
+  width: 95%;
+  background: linear-gradient(180deg, rgba(255,250,245,0.8), #fffdf6);
+  border: 1px solid rgba(179,27,27,0.12);
+  border-radius: 14px;
+  padding: 2rem 1.8rem;
+  font-family: "Georgia", "Times New Roman", serif;
+  color: #2b2a28;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.07);
+  margin-bottom: 3rem;
+}
+
+.independent-research-section h2 {
+  color: #b31b1b;
+  letter-spacing: .02em;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+  margin-bottom: 1rem;
+}
+
+.research-article-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.research-article-card {
+  background: #fffdf6;
+  border: 1px solid rgba(179,27,27,0.15);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  transition: transform .18s ease, box-shadow .18s ease;
+  cursor: default;
+}
+
+.research-article-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+.research-article-card h3 {
+  margin: 0 0 .5rem 0;
+  color: #b31b1b;
+  font-size: 1.2rem;
+}
+
+.research-article-card p {
+  margin: 0 0 .5rem 0;
+  line-height: 1.55;
+}
+
+.research-article-card div {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+/* Mobil uyumlu */
+@media (max-width:640px){
+  .research-article-card {
+      padding: 1.2rem;
+  }
+}
+/*********************************************************************************************/
+/* Articles End */
+/*********************************************************************************************/
 
 @media (max-width: 768px) {
   .content {
@@ -144,12 +490,4 @@
     padding: 0 0.5rem;
   }
 
-  .cards {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .marda-card {
-    max-width: 90%;
-  }
 }

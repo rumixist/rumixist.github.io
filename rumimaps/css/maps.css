@@ -1,0 +1,159 @@
+/* Genel stil */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Başlık */
+header {
+    height: 45px; /* biraz daha küçük */
+    background-color: #d21111; /* kırmızı tema */
+    color: #ffffff; /* beyaz yazı */
+    padding: 8px 20px; /* dikey padding biraz azaltıldı */
+    font-size: 18px; /* daha küçük yazı */
+    font-weight: 600; /* profesyonel ve okunaklı */
+    text-align: left;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* profesyonel görünüm */
+    letter-spacing: 0.5px; /* harf aralığı hafif artırıldı */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3); /* hafif gölge */
+    display: flex;
+    align-items: center; /* dikey ortalama */
+}
+
+
+/* Harita alanı */
+#map-container {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 60px); /* başlık yüksekliği kadar boşluk bırak */
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+/* Düğmeler paneli */
+.map-controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.control-btn {
+    width: 40px;
+    height: 40px;
+    background-color: #ffffffcc;
+    border: 1px solid #888;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    transition: all 0.2s ease;
+}
+
+.control-btn:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.1);
+}
+
+/* Leaflet attribution panelini minimal yap */
+.leaflet-control-attribution {
+    font-size: 12px;
+}
+
+#search-container {
+    position: absolute;
+    top: 80px; /* POI panelinin üstüne hizalandı */
+    left: 20px;  /* sol tarafta */
+    display: flex;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    padding: 4px;
+}
+
+#search-input {
+    width: 300px;  /* biraz daha uzun */
+    padding: 6px 8px;
+    border: 1px solid #888;
+    border-radius: 4px 0 0 4px;
+    font-size: 14px;
+}
+
+#search-btn {
+    border: 1px solid #888;
+    border-left: none;
+    background: #d21111;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#search-btn:hover {
+    background: #b10f0f;
+}
+
+.dir-btn {
+    padding:6px 10px;
+    background:#eee;
+    border:1px solid #ccc;
+    border-radius:4px;
+    cursor:pointer;
+}
+.dir-btn.active {
+    background:#007bff;
+    color:#fff;
+}
+
+.side-panel {
+    position: absolute;
+    top: 140px;
+    left: 20px;
+    width: 260px;
+    min-height: 200px;        /* Panel en az bu kadar yüksek olsun */
+    max-height: 80%;
+    background: rgba(255,255,255,0.97);
+    border-radius: 8px;
+    padding: 14px;            /* İç boşluğu büyüt */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    overflow-y: auto;
+    z-index: 1200;
+    display: none;
+
+    font-size: 16px;          /* Yazı büyüsün */
+    line-height: 1.4;         /* Satır arası açılsın */
+    transform: none !important;   /* HARİTANIN SCALE ETKİSİNİ BOZ */
+}
+
+
+.close-btn {
+    float: right;
+    background: #eee;
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.close-btn:hover {
+    background: #ddd;
+}
+
+#transit-btn.active {
+    background-color: #d21111; /* aktif durum rengi kırmızı */
+    color: #fff;
+}
+

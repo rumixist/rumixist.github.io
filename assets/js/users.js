@@ -135,6 +135,6 @@ function formatTimeAgo(dateString) {
         return `${days} days ago`;
     } else {
         const formattedDate = past.toLocaleDateString("tr-TR", { year: 'numeric', month: 'long', day: 'numeric' });
-        return `En son: ${formattedDate}`;
+        return `${formattedDate}`;
     }
 }
