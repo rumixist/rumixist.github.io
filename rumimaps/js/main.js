@@ -11,9 +11,9 @@ const map = L.map('map', {
     zoomControl: false
 });
 
-L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a> | © OSM',
-    maxZoom: 20
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
 // ----------------------
@@ -594,4 +594,5 @@ function gosterUzunluk(meters) {
         text = Math.round(meters) + ' metre';
     }
     measureDistEl.innerText = text;
+
 }
