@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>OSM Araçları</title>
+    <meta name="description" content="OpenStreetMap verilerini kullanarak ölçümler yapabileceğiniz çeşitli araçlar sunan bir site.">
+    <meta name="keywords" content="rumi, rumixist, openstreetmap, osm, araçlar, ölçümler">
+    <meta name="author" content="rumixist">
+    
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:title" content="OSM Araçları">
+    <meta property="og:description" content="OpenStreetMap verilerini kullanarak ölçümler yapabileceğiniz çeşitli araçlar sunan bir site.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rumixist.github.io/">
+    <meta property="og:image" content="https://rumixist.github.io/assets/img/favicon">
+
+    <link rel="icon" href="/assets/img/favicon.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/assets/img/favicon.png">
+
+    <link rel="stylesheet" href="/assets/css/global.css">
+
+    <script defer src="/assets/js/global.js"></script>
+</head>
+<body>
+    <a href="/" class="logo">rumi</a>
+
+    <nav>
+        <ul>
+            <li class="mobile-nav-toggle"><button id="navToggle">Navigation</button></li>
+            
+            <li><a href="/">Home</a></li>
+            <li><a href="#">Things</a></li>
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Help</a></li>
+            <li><a href="/settings/">Settings</a></li>
+            <li class="login-button"><a href="/login">Login</a></li>
+
+        </ul>
+    </nav>
+
+    <div class="search-container">
+        <form class="search-box" onsubmit="return handleSearch(event)">
+            <span class="prompt-char">></span>
+            <input id="searchInput" type="text" placeholder="Search...">
+            <button type="submit">Enter</button>
+        </form>
+    </div>
+
+    <div class="page-layout">
+        <aside class="left-sidebar">
+            <h2>Navigation</h2>
+            <p>________________</pp>
+            <ul>
+                <br>
+                <li><a href="/">Home</a></li>
+                <li><a href="/users/">Profile</a></li>
+                <li><a href="/settings/">Settings</a></li>
+                <li><a href="/users/friends/">Friends</a></li>
+                <li><a href="#">Messages</a></li>
+                <li><a href="#">Groups</a></li>
+                <li><a href="/newsroom/">Newsroom</a></li>
+                <br> <br>
+                <li><a href="/akademi/">Rumiakademi</a></li>
+                <li><a href="/labs/">Rumilabs</a></li>
+                <li><a href="/library/">Rumilibrary</a></li>
+                <li><a href="#">Rumiarchive</a></li>
+                <li><a href="#">Rumiforum</a></li>
+                <br> <br>
+                <li><a href="/status/">Status</a></li>
+            </ul>
+        </aside>
+        <main class="main-content-area">
+            <h1>OSM Araçları</h1>
+            <p>OpenStreetMap verilerini kullanarak ölçümler yapabileceğiniz çeşitli araçlar sunan bir site.</p> <br>
+            <ul>
+                <li><a class="a-button-a" href="/osmaraclari/ilkartlari/">Türkiye'nin illerine bak</a> - Her şehirdeki veri kalitesini anlamada yardımcı olan bir araç</li>
+
+                <li><a class="a-button-a" href="/osmaraclari/l1-l3-hatalar/">Osmose hatalarının illere göre dağılımı</a> - Osmose L1 L2 ve L3 hatalarının Türkiye'nin farklı illerindeki dağılımını gösteren araç.</li>
+            </ul>
+
+
+
+            <div style="display: none;" id="ban-window" class="ban-window">
+                <div class="ban-content">
+                    <h2 id="ban-title" class="ban-title">Account Terminated</h2>
+                    <p class="pri-ban-desc">Our moderators have determined that your behaviour at this website has been in violation of our Terms of Use</p>
+                    <p class="ban-date">Ban Date: <span class="ban-date" id="ban-date">DD/MM/YYYY HH:MM:SS (TSİ)</span></p>
+                    <P class="moderator-note">Moderator Note: Failed to get moderator note, reload the page or contact with support.</P>
+                    <br>
+                    <p class="ban-reason">Reason: Failed to get reason.</p>
+                    <p class="offensive-item">Offensive Item: Failed to get offensive item.</p>
+                    
+                    <p class="sec-ban-desc">Please abide by the community guidelines so that this website can be fun for users of all ages</p>
+                    <p class="reactivate-date">You can use your account after <span class="ban-date" id="ban-date">DD/MM/YYYY HH:MM:SS (TSİ)</span></p>
+                    <br>
+                    <p class="appeal">If you believe this action was taken in error, you can appeal by contacting us at <a href="/support/">support</a>.</p>
+                    <button id="ban-logout-button" class="ban-logout-button">Logout</button>
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+
+    <script>
+        const currentPath = window.location.pathname;
+        const searchParams = window.location.search;
+
+        if (currentPath.startsWith('/users/') && !currentPath.endsWith('/users/')) {
+            const userId = currentPath.split('/').filter(Boolean).pop();
+            window.location.replace(`/users/?id=${userId}${searchParams}`);
+        }
+    </script>
+</body>
+</html>
