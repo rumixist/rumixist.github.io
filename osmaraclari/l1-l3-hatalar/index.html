@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Türkiye İlleri Osmose L1-3 Hataları</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<style>
+  body { margin:0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+  #map { position:fixed; inset:0; }
+  .panel {
+    position: absolute;
+    left:12px; top:12px; z-index:1000;
+    background: rgba(255,255,255,0.96);
+    padding:12px; border-radius:8px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    width: 340px;
+  }
+  .panel h3 { margin:0 0 6px 0; font-size:15px; }
+  .panel label { font-size:13px; display:block; margin-top:6px; color:#333; }
+  .small { font-size:12px; color:#555; }
+  .btn { margin-top:8px; padding:8px 10px; border-radius:6px; border:0; background:#1976d2; color:white; cursor:pointer; width:100%; }
+  .btn:disabled { opacity:0.6; cursor:default; }
+  .status { margin-top:8px; font-weight:700; }
+  hr { border:0; border-top:1px solid #eee; margin:10px 0; }
+  select, input { box-sizing: border-box; }
+  .purple { background:#8e24aa; color:white; border:0; padding:8px 10px; border-radius:6px; cursor:pointer; width:100%; margin-top:6px; }
+  .levels { display:flex; gap:10px; margin-top:6px; }
+  .levels label { font-size:13px; }
+  .note { font-size:12px; color:#666; margin-top:6px; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+
+<div class="panel" id="panel">
+  <h3>Türkiye'nin şehirlerinde Osmose L1-3 hataları</h3>
+  <div class="small">Grid ne kadar büyükse sonuç gerçek sayıya o kadar yakın olur ama daha uzun sürer. İstediğiniz hata seviyelerini seçin. İstek gecikme süresini azaltırsanız daha hızlı ölçüm yapabilirsiniz ama API istek engeline de takılabilirsiniz.</div>
+
+  <label>Grid boyutu (NxN)
+    <select id="gridSelect">
+      <option value="3" selected>3 × 3</option>
+      <option value="7">7 × 7</option>
+      <option value="11">11 × 11</option>
+      <option value="19">19 × 19</option>
+      <option value="27">27 × 27</option>
+      <option value="39">39 × 39</option>
+    </select>
+  </label>
+
+  <label>Hata seviyeleri:</label>
+  <div class="levels">
+    <label><input type="checkbox" id="level1" checked> L1</label>
+    <label><input type="checkbox" id="level2" checked> L2</label>
+    <label><input type="checkbox" id="level3" checked> L3</label>
+  </div>
+
+  <label>İstek gecikmesi (ms)</label>
+  <input id="delay" type="number" value="150" min="0" step="50" style="width:100%" />
+
+  <button id="runBtn" class="btn">Çalıştır (Tüm Şehirler)</button>
+
+  <div class="status" id="status">Hazır.</div>
+
+  <hr>
+
+  <h4>Tek Şehir Analizi</h4>
+
+  <label>Şehir seç</label>
+  <select id="singleCitySelect" style="width:100%; padding:6px; margin-top:6px"></select>
+
+  <button id="singleRunBtn" class="purple">Yalnız bu il için çalıştır</button>
+
+  <div id="singleStatus" class="status">Hazır.</div>
+
+  <div class="note">Not: komşu şehirlerdeki bazı osmose hataları da ölçtüğünüz şehirde gözükebilir. Gridi ne kadar büyük alırsanız hata oranı o kadar azalır.</div>
+</div>
+
+<script>
+/* ---------- Ayarlar ---------- */
+const GEOJSON_URL = 'https://raw.githubusercontent.com/alpers/Turkey-Maps-GeoJSON/master/tr-cities.json';
+const OSMOSE_BASE = 'https://osmose.openstreetmap.fr/api/0.3/issues';
+const PER_REQUEST_LIMIT = 500;
+
+// global cached geo + cityLayer
+let cachedGeo = null;
+let cityLayer = null;
+
+const map = L.map('map').setView([39, 35], 6);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19, attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+/* ---------- Seçili seviyeleri oku ---------- */
+function getSelectedLevels(){
+  const levels = [];
+  if(document.getElementById('level1').checked) levels.push(1);
+  if(document.getElementById('level2').checked) levels.push(2);
+  if(document.getElementById('level3').checked) levels.push(3);
+  if(levels.length === 0) return null;
+  return levels.join(',');
+}
+
+/* ---------- Renk skalası ---------- */
+function colorForCount(n){
+  if(n === null) return '#cccccc';
+  const stops = [
+    [0,      '#f7fcf0'],
+    [1000,   '#e2f2d4'],
+    [2000,   '#c7e9c0'],
+    [4000,   '#a1d99b'],
+    [6000,   '#78c679'],
+    [8000,   '#41ab5d'],
+    [10000,  '#238b45'],
+    [12000,  '#006d2c'],
+    [16000,  '#084081'],
+    [20000,  '#0868ac'],
+    [25000,  '#2b8cbe'],
+    [30000,  '#253494']
+  ];
+  for(let i=0;i<stops.length;i++){
+    if(n <= stops[i][0]) return stops[i][1];
+  }
+  return stops[stops.length-1][1];
+}
+
+/* ---------- Geo helpers ---------- */
+function bboxFromFeature(feature){
+  let minx=Infinity,miny=Infinity,maxx=-Infinity,maxy=-Infinity;
+  function walkCoords(coords){
+    for(const c of coords){
+      if(Array.isArray(c[0])){
+        walkCoords(c);
+      } else {
+        const lon=c[0], lat=c[1];
+        if(lon < minx) minx = lon;
+        if(lat < miny) miny = lat;
+        if(lon > maxx) maxx = lon;
+        if(lat > maxy) maxy = lat;
+      }
+    }
+  }
+  const geom = feature.geometry;
+  if(!geom) return null;
+  if(geom.type === 'Polygon' || geom.type === 'MultiPolygon'){
+    walkCoords(geom.coordinates);
+    return [minx,miny,maxx,maxy];
+  }
+  return null;
+}
+
+function splitBBox(bbox, n){
+  const [minx,miny,maxx,maxy] = bbox;
+  const dx = (maxx - minx) / n;
+  const dy = (maxy - miny) / n;
+  const cells=[];
+  for(let i=0;i<n;i++){
+    for(let j=0;j<n;j++){
+      cells.push([
+        minx + i*dx,
+        miny + j*dy,
+        minx + (i+1)*dx,
+        miny + (j+1)*dy
+      ]);
+    }
+  }
+  return cells;
+}
+
+function osmoseUrlForBBox(bbox, levels){
+  const pad = 0.0005;
+  const [minx,miny,maxx,maxy] = bbox;
+  return `${OSMOSE_BASE}?bbox=${minx-pad},${miny-pad},${maxx+pad},${maxy+pad}&level=${levels}&limit=${PER_REQUEST_LIMIT}`;
+}
+
+/* ---------- UI helper: şehir dropdown doldur ---------- */
+function fillCitySelect(geo){
+  const citySelect = document.getElementById('singleCitySelect');
+  citySelect.innerHTML = '';
+  const features = geo.features || [];
+  for(let i=0;i<features.length;i++){
+    const f = features[i];
+    const name = f.properties?.name || f.properties?.ad || f.properties?.il || `il-${i}`;
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = name;
+    citySelect.appendChild(opt);
+  }
+}
+
+/* ---------- Başlangıç: GeoJSON preload ve şehir layer oluştur ---------- */
+async function preloadGeoAndLayer(){
+  const statusEl = document.getElementById('status');
+  statusEl.textContent = 'GeoJSON yükleniyor...';
+  try{
+    const r = await fetch(GEOJSON_URL);
+    if(!r.ok) throw new Error('GeoJSON alınamadı: ' + r.status);
+    cachedGeo = await r.json();
+
+    if(cityLayer) map.removeLayer(cityLayer);
+    cityLayer = L.geoJson(cachedGeo, {
+      style: () => ({ color:'#444', weight:1, fillOpacity:0.6, fillColor:'#eee' }),
+      onEachFeature: (f, lyr) => {
+        const name = f.properties?.name || f.properties?.ad || f.properties?.il || 'Unknown';
+        lyr.bindTooltip(name + '\n(Hazır)', { sticky:true });
+      }
+    }).addTo(map);
+
+    map.fitBounds(cityLayer.getBounds(), { padding:[20,20] });
+
+    fillCitySelect(cachedGeo);
+    statusEl.textContent = 'GeoJSON yüklendi.';
+  } catch(err){
+    console.error(err);
+    statusEl.textContent = 'GeoJSON yüklenemedi: ' + (err.message || err);
+  }
+}
+
+/* ---------- Güncelleme: bir feature'ı renklendir ve tooltip güncelle ---------- */
+function colorFeatureByIndex(index, count){
+  if(!cityLayer) return;
+  const layers = cityLayer.getLayers();
+  const target = layers[index];
+  if(!target) return;
+  const name = target.feature?.properties?.name || target.feature?.properties?.ad || target.feature?.properties?.il || `il-${index}`;
+  const fill = colorForCount(count);
+  target.setStyle({ fillColor: fill });
+  target.unbindTooltip();
+  target.bindTooltip(`${name}\nIssues: ${count===null ? 'bilinmiyor' : count}`, { sticky:true });
+}
+
+/* ---------- Temel Osmose istek + dedupe logic ---------- */
+async function countIssuesForBBoxCells(cells, delayMs, selectedLevels){
+  const uniq = new Set();
+  let totalCount = 0;
+  for(const cell of cells){
+    const url = osmoseUrlForBBox(cell, selectedLevels);
+    try{
+      const res = await fetch(url);
+      if(!res.ok){
+        console.warn('Osmose isteği başarısız', res.status, url);
+        return null;
+      }
+      const j = await res.json();
+      let issues = [];
+      if(Array.isArray(j)) issues = j;
+      else if(j && Array.isArray(j.issues)) issues = j.issues;
+      else if(j && Array.isArray(j.result)) issues = j.result;
+
+      for(const issue of issues){
+        let key;
+        if(issue.id) key = 'id:'+issue.id;
+        else if(issue.uid) key = 'uid:'+issue.uid;
+        else if(issue.osm_obj && issue.osm_obj.id) key = 'osm:'+issue.osm_obj.id;
+        else if(issue.lat && issue.lon && issue.item) key = `p:${issue.lat.toFixed(6)},${issue.lon.toFixed(6)}|${issue.item}`;
+        else key = JSON.stringify(issue);
+
+        if(!uniq.has(key)){
+          uniq.add(key);
+          totalCount++;
+        }
+      }
+    } catch(e){
+      console.error('fetch hata', e);
+      return null;
+    }
+    if(delayMs > 0) await sleep(delayMs);
+  }
+  return totalCount;
+}
+
+/* ---------- Global run: tüm şehirleri tarar ve boyar ---------- */
+async function runAnalysis(gridN, delayMs){
+  const runBtn = document.getElementById('runBtn');
+  const statusEl = document.getElementById('status');
+
+  if(!cachedGeo || !cityLayer){
+    statusEl.textContent = 'GeoJSON henüz yüklenmedi, bekleyin...';
+    return;
+  }
+
+  const selectedLevels = getSelectedLevels();
+  if(!selectedLevels){
+    statusEl.textContent = 'En az bir hata seviyesi seçmelisiniz (L1/L2/L3).';
+    return;
+  }
+
+  runBtn.disabled = true;
+  statusEl.textContent = 'Başlıyor: tüm şehirler analiz ediliyor...';
+
+  const features = cachedGeo.features || [];
+  for(let i=0;i<features.length;i++){
+    const f = features[i];
+    const name = f.properties?.name || f.properties?.ad || f.properties?.il || `il-${i}`;
+    statusEl.textContent = `İşleniyor ${i+1}/${features.length} — ${name}`;
+
+    const bbox = bboxFromFeature(f);
+    if(!bbox){
+      colorFeatureByIndex(i, null);
+      continue;
+    }
+
+    const cells = splitBBox(bbox, gridN);
+    const count = await countIssuesForBBoxCells(cells, delayMs, selectedLevels);
+    colorFeatureByIndex(i, count);
+    await sleep(60);
+  }
+
+  statusEl.textContent = 'Global analiz tamamlandı.';
+  runBtn.disabled = false;
+}
+
+/* ---------- Single city run: sadece seçili şehri çalıştır, önceki boyamalar korunur ---------- */
+async function runSingleCity(index, gridN, delayMs){
+  const singleBtn = document.getElementById('singleRunBtn');
+  const singleStatus = document.getElementById('singleStatus');
+
+  if(!cachedGeo || !cityLayer){
+    singleStatus.textContent = 'GeoJSON henüz yüklenmedi.';
+    return;
+  }
+
+  const selectedLevels = getSelectedLevels();
+  if(!selectedLevels){
+    singleStatus.textContent = 'En az bir hata seviyesi seçmelisiniz (L1/L2/L3).';
+    return;
+  }
+
+  if(typeof index !== 'number' || isNaN(index) || index < 0 || index >= (cachedGeo.features||[]).length){
+    singleStatus.textContent = 'Geçersiz şehir seçimi.';
+    return;
+  }
+
+  singleBtn.disabled = true;
+  singleStatus.textContent = 'Başlıyor: şehir analiz ediliyor...';
+
+  const feat = cachedGeo.features[index];
+  const name = feat.properties?.name || feat.properties?.ad || feat.properties?.il || `il-${index}`;
+
+  const bbox = bboxFromFeature(feat);
+  if(!bbox){
+    singleStatus.textContent = 'Bbox alınamadı.';
+    singleBtn.disabled = false;
+    return;
+  }
+
+  const cells = splitBBox(bbox, gridN);
+  const count = await countIssuesForBBoxCells(cells, delayMs, selectedLevels);
+
+  colorFeatureByIndex(index, count);
+
+  singleStatus.textContent = `Tamamlandı: ${name}, Hata sayısı: ${count===null ? 'bilinmiyor' : count}`;
+  singleBtn.disabled = false;
+}
+
+/* ---------- Event bağlama ---------- */
+document.getElementById('runBtn').addEventListener('click', ()=>{
+  const gridN = parseInt(document.getElementById('gridSelect').value, 10) || 3;
+  const delayMs = Math.max(0, parseInt(document.getElementById('delay').value,10) || 150);
+  runAnalysis(gridN, delayMs);
+});
+
+document.getElementById('singleRunBtn').addEventListener('click', ()=>{
+  const index = parseInt(document.getElementById('singleCitySelect').value, 10);
+  const gridN = parseInt(document.getElementById('gridSelect').value, 10) || 3;
+  const delayMs = Math.max(0, parseInt(document.getElementById('delay').value,10) || 150);
+  runSingleCity(index, gridN, delayMs);
+});
+
+/* ---------- Başlat ---------- */
+preloadStart();
+async function preloadStart(){
+  await preloadGeoAndLayer();
+}
+</script>
+</body>
+</html>

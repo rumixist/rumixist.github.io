@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>OSM İl Veri Ölçümü</title>
+<style>
+  :root {
+    --arkaplan: #f4f6f8;
+    --kart-rengi: #ffffff;
+    --yazi-koyu: #1e293b;
+    --yazi-silik: #64748b;
+    --vurgu: #2563eb; 
+    --yesil: #16a34a;
+    --kirmizi: #dc2626;
+    --sinir: #e2e8f0;
+    --bilgi-cubugu-bg: #1e293b;
+    --bilgi-cubugu-text: #fff;
+  }
+
+  body {
+    margin: 0;
+    padding: 20px;
+    padding-top: 60px;
+    background: var(--arkaplan);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--yazi-koyu);
+  }
+
+  .bilgi-cubugu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: var(--bilgi-cubugu-bg);
+    color: var(--bilgi-cubugu-text);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
+    z-index: 1000;
+    font-size: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  
+  .ilerleme-kutusu { display: flex; gap: 15px; align-items: center; }
+
+  .yukleniyor-simge {
+    width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff; border-radius: 50%;
+    animation: don 1s linear infinite; display: none;
+  }
+  .aktif .yukleniyor-simge { display: block; }
+
+  .baslik-alani { max-width: 1200px; margin: 0 auto 20px auto; display:flex; gap:15px; align-items:center; justify-content:space-between; flex-wrap:wrap;}
+  h1 { margin: 0; font-size: 22px; font-weight: 700; }
+  .denetimler { display: flex; gap: 10px; flex-wrap: wrap; }
+  select, input, button { padding: 8px 12px; border: 1px solid var(--sinir); border-radius:6px; font-size:14px; background:white; }
+  button { background: var(--vurgu); color:white; border:none; cursor:pointer; font-weight:500; }
+
+  .liste { max-width: 1200px; margin: 0 auto; display:flex; flex-direction:column; gap:16px; }
+
+  .kart { background: var(--kart-rengi); border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05); border:1px solid var(--sinir); padding:20px; }
+  .kart-baslik { display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--sinir); padding-bottom:12px; margin-bottom:12px; }
+  .il-adi { font-size:18px; font-weight:700; color:var(--vurgu); display:flex; gap:10px; align-items:center; }
+  .durum-metni { font-size:12px; color:var(--yazi-silik); margin-right:10px; }
+
+  .mini-btn { padding:5px 10px; font-size:12px; background:white; color:var(--vurgu); border:1px solid var(--vurgu); border-radius:4px; cursor:pointer; }
+  .mini-btn:disabled { opacity:0.6; cursor:not-allowed; }
+
+  .veri-izgarasi { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:20px; }
+  .veri-grubu { display:flex; flex-direction:column; gap:4px; }
+  .etiket { font-size:12px; text-transform:uppercase; color:var(--yazi-silik); font-weight:600; }
+  .deger { font-size:20px; font-weight:600; }
+  .alt-bilgi { font-size:13px; color:var(--yazi-silik); }
+
+  .oran-cubugu { height:6px; background:#f1f5f9; border-radius:3px; margin-top:6px; overflow:hidden; }
+  .oran-doluluk { height:100%; background:var(--yesil); width:0%; transition: width 0.5s ease; }
+
+  .degisim-artti { color:var(--yesil); }
+  @keyframes don { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+  <div id="genelDurum" class="bilgi-cubugu">
+    <div class="ilerleme-kutusu">
+      <div class="yukleniyor-simge"></div>
+      <span id="durumMesaji">Sistem Hazır.</span>
+    </div>
+    <div id="istatistikMesaji">0/81 Tamamlandı</div>
+  </div>
+
+    <div id="tarihBilgi" style="
+        max-width:1200px;
+        margin: 0 auto 15px auto;
+        font-size:14px;
+        color:#475569;
+        text-align:center;
+        ">
+        OHSome veri tarihi yükleniyor...
+    </div>
+
+
+  <div class="baslik-alani">
+    <h1>OSM Türkiye İl Verileri</h1>
+    <div class="denetimler">
+      <select id="siralamaSecimi" onchange="arayuzGuncelle()">
+        <option value="alfabetik">Sırala: Alfabetik</option>
+        <option value="yapi_toplam">Sırala: Bina Sayısı</option>
+        <option value="adresli_bina">Sırala: Adresli Bina Sayısı</option>
+        <option value="adres_orani">Sırala: Adres Oranı</option>
+        <option value="yol_toplam">Sırala: Toplam Sokak Sayısı</option>
+        <option value="yol_isimli">Sırala: İsimli Sokak Sayısı</option>
+        <option value="yol_oran">Sırala: Sokak adı Oranı</option>
+        <option value="son_degisim">Sırala: Son 90 Gün Katkı</option>
+      </select>
+      <input type="text" id="aramaKutusu" placeholder="İl Ara..." oninput="arayuzGuncelle()" />
+      <button onclick="bellekTemizle()">Tümünü Yenile</button>
+    </div>
+  </div>
+
+  <div id="anaListe" class="liste">
+    <div style="text-align:center; padding:40px; color:#666;">Harita verisi yükleniyor...</div>
+  </div>
+
+<script>
+/**
+ * Temel ayarlar
+ */
+const GEOJSON_URL = 'https://raw.githubusercontent.com/alpers/Turkey-Maps-GeoJSON/master/tr-cities.json';
+const OHSOME_API = 'https://api.ohsome.org/v1/elements/count';
+const CONCURRENCY = 3;
+
+// ---------- ÖNEMLİ: OHSome'un en son indekslediği tarih (sabit, isteğin üzerine Eylül 2025 sonu) ----------
+const OHSOME_SAFE_LAST = '2025-09-30'; // kullanıcı istediği tarih: Eylül 2025 sonu
+const CHANGE_DAYS = 90; // son kaç günün değişimini hesaplayacağız
+
+let iller = [];
+let islemKuyrugu = [];
+let aktifIslemSayisi = 0;
+let tamamlananSayisi = 0;
+
+/* Yardımcılar */
+const el = id => document.getElementById(id);
+const sayiFmt = s => (s === null || s === undefined) ? '-' : s.toLocaleString('tr-TR');
+
+function formatDateYMD(d) {
+  // d: Date objesi
+  const yyyy = d.getUTCFullYear();
+  const mm = String(d.getUTCMonth()+1).padStart(2,'0');
+  const dd = String(d.getUTCDate()).padStart(2,'0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+function tarihGunOnceFrom(baseIsoDate, daysBack) {
+  // baseIsoDate: 'YYYY-MM-DD' (UTC assumed), daysBack: integer
+  const t = new Date(baseIsoDate + 'T00:00:00Z');
+  t.setUTCDate(t.getUTCDate() - daysBack);
+  return formatDateYMD(t);
+}
+
+/* Durum çubuğu */
+function durumGuncelle(mesaj, aktifMi = true) {
+  el('durumMesaji').innerText = mesaj;
+  el('istatistikMesaji').innerText = `${tamamlananSayisi}/${iller.length} Tamamlandı`;
+  const simge = document.querySelector('.yukleniyor-simge');
+  if(aktifMi) {
+     el('genelDurum').classList.add('aktif'); simge.style.display='block';
+  } else {
+     el('genelDurum').classList.remove('aktif'); simge.style.display='none';
+  }
+}
+
+/* API çağrısı (form-urlencoded, bpolys stringified) */
+async function apiSorgula(geoFeature, filtre, zaman) {
+  try {
+    // Eğer tek Feature ise FeatureCollection'e sar
+    let geoToSend = geoFeature;
+    if (geoFeature && geoFeature.type === 'Feature') {
+      geoToSend = { type: 'FeatureCollection', features: [ geoFeature ] };
+    } else if (!geoFeature.type) {
+      geoToSend = { type: 'FeatureCollection', features: [ geoFeature ] };
+    }
+
+    const params = new URLSearchParams();
+    params.append('bpolys', JSON.stringify(geoToSend));
+    params.append('filter', filtre);
+    params.append('time', zaman); // örn '2025-09-30'
+    params.append('format', 'json');
+
+    const res = await fetch(OHSOME_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+      body: params.toString()
+    });
+
+    const text = await res.text();
+    if (!res.ok) {
+      console.error('ohsome hata:', res.status, text);
+      return null;
+    }
+    const parsed = JSON.parse(text);
+    return parsed.result?.[0]?.value ?? parsed.value ?? 0;
+  } catch (e) {
+    console.error('apiSorgula catch hatası:', e);
+    return null;
+  }
+}
+
+/* Kuyruk yönetimi */
+function gorevEkle(indeks, oncelikli=false) {
+  const il = iller[indeks];
+  if (!il || il.yukleniyor || il.veri) return;
+  il.yukleniyor = true;
+  kartDurumuGuncelle(indeks, 'Sırada...', true);
+  const islev = () => veriyiCek(indeks);
+  if (oncelikli) islemKuyrugu.unshift({ islev, indeks });
+  else islemKuyrugu.push({ islev, indeks });
+  kuyruguIsle();
+}
+
+function kuyruguIsle() {
+  if (aktifIslemSayisi >= CONCURRENCY || islemKuyrugu.length === 0) {
+    if(aktifIslemSayisi === 0 && islemKuyrugu.length === 0) durumGuncelle('Tüm işlemler tamamlandı.', false);
+    return;
+  }
+  const gorev = islemKuyrugu.shift();
+  aktifIslemSayisi++;
+  const ilAdi = iller[gorev.indeks].ad;
+  durumGuncelle(`${ilAdi} verisi çekiliyor...`);
+  kartDurumuGuncelle(gorev.indeks, 'Veri alınıyor...', true);
+  gorev.islev().finally(() => {
+    aktifIslemSayisi--;
+    kuyruguIsle();
+  });
+}
+
+/* Asıl iş: veriyi çek (OHSome için sabit son tarih ve 90 gün öncesi) */
+async function veriyiCek(indeks) {
+  const il = iller[indeks];
+  if(!il) return;
+
+  // OHSome için kullanılacak tarihler (sabit last, ve last - CHANGE_DAYS)
+  const ohsomeLast = OHSOME_SAFE_LAST; // '2025-09-30'
+  const ohsomePast = tarihGunOnceFrom(ohsomeLast, CHANGE_DAYS); // last - 90 gün
+
+  const geo = il.geo;
+
+  try {
+    // paralel sorgular: bugünkü snapshot yerine ohsomeLast; geçmiş snapshot ohsomePast
+    const [ yapiT, yapiA, yapiEski, yolT, yolIsim, yolEski ] = await Promise.all([
+      apiSorgula(geo, 'building=* and geometry:polygon', ohsomeLast),
+      apiSorgula(geo, 'building=* and addr:housenumber=*', ohsomeLast),
+      apiSorgula(geo, 'building=* and geometry:polygon', ohsomePast),
+      apiSorgula(geo, 'highway=* and type:way', ohsomeLast),
+      apiSorgula(geo, 'highway=* and name=*', ohsomeLast),
+      apiSorgula(geo, 'highway=* and type:way', ohsomePast)
+    ]);
+
+    const m = {
+      yapi_toplam: yapiT || 0,
+      yapi_adresli: yapiA || 0,
+      yapi_oran: yapiT ? (yapiA / yapiT) * 100 : 0,
+      yol_toplam: yolT || 0,
+      yol_isimli: yolIsim || 0,
+      yol_oran: yolT ? (yolIsim / yolT) * 100 : 0,
+      // değişim: iki snapshot arasındaki mutlak farkların toplamı
+      degisim: Math.abs((yapiT||0) - (yapiEski||0)) + Math.abs((yolT||0) - (yolEski||0)),
+      meta: {
+        ohsome_last: ohsomeLast,
+        ohsome_past: ohsomePast,
+        change_days: CHANGE_DAYS
+      }
+    };
+
+    il.veri = m;
+    sessionStorage.setItem(`il_v6_${il.ad}`, JSON.stringify(m));
+    tamamlananSayisi++;
+    kartGorseliDoldur(indeks);
+
+  } catch (e) {
+    console.error('veriyiCek hata:', e);
+    kartDurumuGuncelle(indeks, 'Hata oluştu', false);
+  } finally {
+    il.yukleniyor = false;
+  }
+}
+
+/* UI üretimi */
+function kartHtmlUret(il) {
+  const i = il.indeks;
+  return `
+    <div class="kart" id="kart-${i}">
+      <div class="kart-baslik">
+        <div class="il-adi">
+          ${il.ad}
+          <span class="durum-metni" id="durum-${i}"></span>
+        </div>
+        <button class="mini-btn" id="btn-${i}" onclick="manuelVeriIste(${i})">Veriyi Getir</button>
+      </div>
+
+      <div class="veri-izgarasi">
+        <div class="veri-grubu">
+          <div class="etiket">Toplam Bina</div>
+          <div class="deger" id="d-${i}-yapi">-</div>
+          <div class="alt-bilgi"><span id="d-${i}-yapi-adr">-</span> adresli</div>
+          <div class="oran-cubugu"><div class="oran-doluluk" id="bar-${i}-yapi"></div></div>
+          <div class="alt-bilgi" style="text-align:right" id="yuzde-${i}-yapi">--</div>
+        </div>
+
+        <div class="veri-grubu">
+          <div class="etiket">Toplam Sokak</div>
+          <div class="deger" id="d-${i}-yol">-</div>
+          <div class="alt-bilgi"><span id="d-${i}-yol-isim">-</span> isimli</div>
+          <div class="oran-cubugu"><div class="oran-doluluk" id="bar-${i}-yol"></div></div>
+          <div class="alt-bilgi" style="text-align:right" id="yuzde-${i}-yol">--</div>
+        </div>
+
+        <div class="veri-grubu">
+          <div class="etiket">Son ${CHANGE_DAYS} Gün</div>
+          <div class="deger" id="d-${i}-deg">-</div>
+          <div class="alt-bilgi">Yeni nesne sayısı (${OHSOME_SAFE_LAST} ← ${tarihGunOnceFrom(OHSOME_SAFE_LAST, CHANGE_DAYS)})</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function manuelVeriIste(indeks) {
+  const btn = el(`btn-${indeks}`);
+  if(btn) { btn.disabled = true; btn.innerText = 'Bekleniyor...'; }
+  gorevEkle(indeks, true);
+}
+
+function kartGorseliDoldur(indeks) {
+  const il = iller[indeks];
+  const m = il.veri;
+  if(!m) return;
+
+  const btn = el(`btn-${indeks}`);
+  if(btn) { btn.innerText = 'Hazır'; btn.disabled = true; btn.style.borderColor='transparent'; }
+
+  el(`durum-${indeks}`).innerText = '';
+
+  el(`d-${indeks}-yapi`).innerText = sayiFmt(m.yapi_toplam);
+  el(`d-${indeks}-yapi-adr`).innerText = sayiFmt(m.yapi_adresli);
+  el(`bar-${indeks}-yapi`).style.width = `${m.yapi_oran}%`;
+  el(`yuzde-${indeks}-yapi`).innerText = `%${m.yapi_oran.toFixed(1)}`;
+
+  el(`d-${indeks}-yol`).innerText = sayiFmt(m.yol_toplam);
+  el(`d-${indeks}-yol-isim`).innerText = sayiFmt(m.yol_isimli);
+  el(`bar-${indeks}-yol`).style.width = `${m.yol_oran}%`;
+  el(`yuzde-${indeks}-yol`).innerText = `%${m.yol_oran.toFixed(1)}`;
+
+  el(`d-${indeks}-deg`).innerText = `+${sayiFmt(m.degisim)}`;
+  el(`d-${indeks}-deg`).className = 'deger degisim-artti';
+}
+
+function kartDurumuGuncelle(indeks, yazi, yukleniyorMu) {
+  const d = el(`durum-${indeks}`);
+  if(d) d.innerText = yazi;
+  const btn = el(`btn-${indeks}`);
+  if(btn && yukleniyorMu) { btn.innerText = 'Yükleniyor'; btn.disabled = true; }
+}
+
+/* Filtreleme / sıralama */
+function arayuzGuncelle() {
+  const arama = el('aramaKutusu').value.toLocaleLowerCase('tr');
+  const tip = el('siralamaSecimi').value;
+  const liste = el('anaListe');
+
+  const gosterilecek = iller.filter(il => il.ad.toLocaleLowerCase('tr').includes(arama));
+  gosterilecek.sort((a,b) => {
+    const ma = a.veri || {}; const mb = b.veri || {};
+    if(tip === 'alfabetik') return a.ad.localeCompare(b.ad,'tr');
+    if(tip === 'yapi_toplam') return (mb.yapi_toplam||0) - (ma.yapi_toplam||0);
+    if(tip === 'adres_orani') return (mb.yapi_oran||0) - (ma.yapi_oran||0);
+    if(tip === 'son_degisim') return (mb.degisim||0) - (ma.degisim||0);
+    if(tip === 'yol_toplam') return (mb.yol_toplam||0) - (ma.yol_toplam||0);
+    if(tip === 'yol_isimli') return (mb.yol_isimli||0) - (ma.yol_isimli||0);
+    if(tip === 'yol_oran') return (mb.yol_oran||0) - (ma.yol_oran||0);
+    if(tip === 'adresli_bina') return (mb.yapi_adresli||0) - (ma.yapi_adresli||0);
+    return 0;
+  });
+
+  liste.innerHTML = '';
+  gosterilecek.forEach(il => {
+    liste.insertAdjacentHTML('beforeend', kartHtmlUret(il));
+    if(il.veri) kartGorseliDoldur(il.indeks);
+    else if(il.yukleniyor) kartDurumuGuncelle(il.indeks, 'Sırada...', true);
+  });
+
+  gosterilecek.forEach(il => {
+    if(!il.veri && !il.yukleniyor) gorevEkle(il.indeks, false);
+  });
+}
+
+function bellekTemizle() {
+  sessionStorage.clear();
+  location.reload();
+}
+
+/* Başlat */
+(async function() {
+  try {
+    durumGuncelle('Şehir haritaları indiriliyor...');
+    const req = await fetch(GEOJSON_URL);
+    const geoJson = await req.json();
+
+    iller = geoJson.features.map((f,i) => {
+      const ad = f.properties.name || f.properties.il || `il-${i}`;
+      const kayit = sessionStorage.getItem(`il_v6_${ad}`);
+      let veri = null;
+      if(kayit) { veri = JSON.parse(kayit); tamamlananSayisi++; }
+      return { indeks: i, ad: ad, geo: f, veri: veri, yukleniyor: false };
+    });
+
+    // Bilgilendirici not: hangi OHSome tarihini kullandığımızı göster
+    durumGuncelle(`Hazır. OHSome snapshot: ${OHSOME_SAFE_LAST} (son ${CHANGE_DAYS} gün hesaplanıyor).`, false);
+    el('tarihBilgi').innerText = `Veriler OHSome ${OHSOME_SAFE_LAST} tarihli verileridir.`;
+    arayuzGuncelle();
+
+  } catch(e) {
+    console.error('başlat hata:', e);
+    el('anaListe').innerHTML = 'Veri kaynağına erişilemedi.';
+  }
+})();
+</script>
+
+</body>
+</html>
