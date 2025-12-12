@@ -98,20 +98,20 @@ map.on('load', function () {
 
   // Birincil Yollar
   const birincilRenk = "#c9922bff";
-  addGeoJsonLayer("data/yollar/birincil/asya.geojson", "yol-asya", "line", birincilRenk, 2, 10);
-  addGeoJsonLayer("data/yollar/birincil/avrupa.geojson", "yol-avrupa", "line", birincilRenk, 2, 10);
+  addGeoJsonLayer("data/yollar/birincil/asya.geojson", "yol-asya", "line", birincilRenk, 2, 9.5);
+  addGeoJsonLayer("data/yollar/birincil/avrupa.geojson", "yol-avrupa", "line", birincilRenk, 2, 9.5);
 
   // İkincil Yollar
   const ikincilRenk = "#b7ae63ff";
-  addGeoJsonLayer("data/yollar/ikincil/ikincilyollar.geojson", "yol-ikincil", "line", ikincilRenk, 2, 10);
+  addGeoJsonLayer("data/yollar/ikincil/ikincilyollar.geojson", "yol-ikincil", "line", ikincilRenk, 2, 9.5);
 
   // Üçüncül Yollar
   const ucunculRenk = "#bbc198ff";
-  addGeoJsonLayer("data/yollar/ucuncul/ucunculyollar.geojson", "yol-ucuncul", "line", ucunculRenk, 1.5, 10);
+  addGeoJsonLayer("data/yollar/ucuncul/ucunculyollar.geojson", "yol-ucuncul", "line", ucunculRenk, 1.5, 9.5);
 
   // Yerleşim Yeri Yolları
   const yerlesimyeriRenk = "#a1a198ff";
-  const yyMinZoom = 11.5;
+  const yyMinZoom = 11;
   addGeoJsonLayer("data/yollar/yerlesimyeri/adalar.geojson", "yol-yerlesim-adalar", "line", yerlesimyeriRenk, 1, yyMinZoom);
   addGeoJsonLayer("data/yollar/yerlesimyeri/arnavutkoy.geojson", "yol-yerlesim-arnavutkoy", "line", yerlesimyeriRenk, 1, yyMinZoom);
   addGeoJsonLayer("data/yollar/yerlesimyeri/atasehir.geojson", "yol-yerlesim-atasehir", "line", yerlesimyeriRenk, 1, yyMinZoom);
@@ -154,4 +154,5 @@ map.on('load', function () {
   
 
   console.info("Tüm katmanlar başarıyla kuruldu.");
+
 });
