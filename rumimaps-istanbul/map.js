@@ -138,44 +138,44 @@ map.on('load', function () {
   const buildingOpacity = 0.7;
   const buildingMinZoom = 14;
 
-  addGeoJsonLayer("data/yapilar/binalar/adalar.geojson", "binalar-adalar", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/arnavutkoy.geojson", "binalar-arnavutkoy", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/atasehir.geojson", "binalar-atasehir", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/avcilar.geojson", "binalar-avcilar", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/bagcilar.geojson", "binalar-bagcilar", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/bahcelievler.geojson", "binalar-bahcelievler", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/bakirkoy.geojson", "binalar-bakirkoy", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/basaksehir.geojson", "binalar-basaksehir", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/bayrampasa.geojson", "binalar-bayrampasa", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/besiktas.geojson", "binalar-besiktas", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/beykoz.geojson", "binalar-beykoz", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/beylikduzu.geojson", "binalar-beylikduzu", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/beyoglu.geojson", "binalar-beyoglu", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/buyukcekmece.geojson", "binalar-buyukcekmece", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/cekmekoy.geojson", "binalar-cekmekoy", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/esenler.geojson", "binalar-esenler", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/esenyurt.geojson", "binalar-esenyurt", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/eyupsultan.geojson", "binalar-eyupsultan", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/fatih.geojson", "binalar-fatih", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/gaziosmanpasa.geojson", "binalar-gaziosmanpasa", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/gungoren.geojson", "binalar-gungoren", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/kadikoy.geojson", "binalar-kadikoy", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/kagithane.geojson", "binalar-kagithane", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/kartal.geojson", "binalar-kartal", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/kucukcekmece.geojson", "binalar-kucukcekmece", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/maltepe.geojson", "binalar-maltepe", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/pendik.geojson", "binalar-pendik", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/sancaktepe.geojson", "binalar-sancaktepe", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/sariyer.geojson", "binalar-sariyer", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/silivri.geojson", "binalar-silivri", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/sultanbeyli.geojson", "binalar-sultanbeyli", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/sultangazi.geojson", "binalar-sultangazi", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/sile.geojson", "binalar-sile", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/sisli.geojson", "binalar-sisli", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/tuzla.geojson", "binalar-tuzla", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/umraniye.geojson", "binalar-umraniye", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/uskudar.geojson", "binalar-uskudar", "fill", buildingColor, buildingOpacity, buildingMinZoom);
-  addGeoJsonLayer("data/yapilar/binalar/zeytinburnu.geojson", "binalar-zeytinburnu", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/adalar.geojson", "binalar-adalar", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/arnavutkoy.geojson", "binalar-arnavutkoy", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/atasehir.geojson", "binalar-atasehir", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/avcilar.geojson", "binalar-avcilar", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/bagcilar.geojson", "binalar-bagcilar", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/bahcelievler.geojson", "binalar-bahcelievler", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/bakirkoy.geojson", "binalar-bakirkoy", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/basaksehir.geojson", "binalar-basaksehir", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/bayrampasa.geojson", "binalar-bayrampasa", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/besiktas.geojson", "binalar-besiktas", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/beykoz.geojson", "binalar-beykoz", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/beylikduzu.geojson", "binalar-beylikduzu", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/beyoglu.geojson", "binalar-beyoglu", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/buyukcekmece.geojson", "binalar-buyukcekmece", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/cekmekoy.geojson", "binalar-cekmekoy", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/esenler.geojson", "binalar-esenler", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/esenyurt.geojson", "binalar-esenyurt", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/eyupsultan.geojson", "binalar-eyupsultan", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/fatih.geojson", "binalar-fatih", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/gaziosmanpasa.geojson", "binalar-gaziosmanpasa", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/gungoren.geojson", "binalar-gungoren", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/kadikoy.geojson", "binalar-kadikoy", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/kagithane.geojson", "binalar-kagithane", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/kartal.geojson", "binalar-kartal", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/kucukcekmece.geojson", "binalar-kucukcekmece", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/maltepe.geojson", "binalar-maltepe", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/pendik.geojson", "binalar-pendik", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/sancaktepe.geojson", "binalar-sancaktepe", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/sariyer.geojson", "binalar-sariyer", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/silivri.geojson", "binalar-silivri", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/sultanbeyli.geojson", "binalar-sultanbeyli", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/sultangazi.geojson", "binalar-sultangazi", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/sile.geojson", "binalar-sile", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/sisli.geojson", "binalar-sisli", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/tuzla.geojson", "binalar-tuzla", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/umraniye.geojson", "binalar-umraniye", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/uskudar.geojson", "binalar-uskudar", "fill", buildingColor, buildingOpacity, buildingMinZoom);
+  addGeoJsonLayer("data/yapilar/zeytinburnu.geojson", "binalar-zeytinburnu", "fill", buildingColor, buildingOpacity, buildingMinZoom);
 
 
   // Yol Katmanları (Çizgi tipi)
@@ -301,4 +301,5 @@ map.on('load', function () {
 
 
   console.info("Tüm katmanlar başarıyla kuruldu.");
+
 });
