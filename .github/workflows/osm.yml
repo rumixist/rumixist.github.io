@@ -1,5 +1,8 @@
 name: OSM İl İstatistikleri
 
+permissions:
+  contents: write
+
 on:
   schedule:
     - cron: "0 3 * * *"   # Her gün Türkiye saatiyle ~06:00
