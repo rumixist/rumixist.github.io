@@ -1,0 +1,31 @@
+{
+  "istanbul": {
+    "ad": "İstanbul",
+    "hata": true,
+    "guncelleme": "2025-12-22"
+  },
+  "kocaeli": {
+    "ad": "Kocaeli",
+    "bina": "0",
+    "adresli_bina": "0",
+    "adres_orani": 0,
+    "yol": "0",
+    "isimli_yol": "0",
+    "guncelleme": "2025-12-22"
+  },
+  "sakarya": {
+    "ad": "Sakarya",
+    "hata": true,
+    "guncelleme": "2025-12-22"
+  },
+  "eskisehir": {
+    "ad": "Eskişehir",
+    "hata": true,
+    "guncelleme": "2025-12-22"
+  },
+  "canakkale": {
+    "ad": "Çanakkale",
+    "hata": true,
+    "guncelleme": "2025-12-22"
+  }
+}
