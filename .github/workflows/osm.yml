@@ -1,0 +1,39 @@
+name: OSM İl İstatistikleri
+
+on:
+  schedule:
+    - cron: "0 3 * * *"   # Her gün Türkiye saatiyle ~06:00
+  workflow_dispatch:      # Elle çalıştırabilmek için
+
+jobs:
+  guncelle:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repo'yu çek
+        uses: actions/checkout@v4
+
+      - name: Node.js kur
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: OSM istatistiklerini üret
+        run: node scripts/osm_istatistik.js
+
+      - name: Değişiklik var mı kontrol et
+        run: |
+          if git status --porcelain | grep .; then
+            echo "degisiklik_var=true" >> $GITHUB_ENV
+          else
+            echo "degisiklik_var=false" >> $GITHUB_ENV
+          fi
+
+      - name: Commit at
+        if: env.degisiklik_var == 'true'
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add osmaraclari/ilizle/veri/iller.json
+          git commit -m "OSM il istatistiklerini güncelle"
+          git push
