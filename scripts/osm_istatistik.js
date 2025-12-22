@@ -1,4 +1,4 @@
-import fs from "fs";
+const fs = require("fs");
 
 const CIKTI_YOLU = "osmaraclari/ilizle/veri/iller.json";
 
@@ -111,3 +111,4 @@ async function ilIstatistik(iller) {
 
   console.log("✔ iller.json yazıldı:", CIKTI_YOLU);
 })();
+
