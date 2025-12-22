@@ -24,7 +24,12 @@ async function overpassCount(sorgu) {
   }
 
   const json = await res.json();
-  return json.elements?.[0]?.tags?.total ?? 0;
+
+  const eleman = json.elements?.[0];
+  if (!eleman || !eleman.tags) return 0;
+
+  // out count sonucunda way sayısı burada gelir
+  return Number(eleman.tags.ways ?? 0);
 }
 
 async function ilIstatistik(iller) {
@@ -111,4 +116,3 @@ async function ilIstatistik(iller) {
 
   console.log("✔ iller.json yazıldı:", CIKTI_YOLU);
 })();
-
