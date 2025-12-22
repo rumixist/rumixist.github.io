@@ -16,6 +16,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
+
 // ----------------------
 // PANEL & DOM KISIMLARI
 // ----------------------
@@ -594,5 +595,4 @@ function gosterUzunluk(meters) {
         text = Math.round(meters) + ' metre';
     }
     measureDistEl.innerText = text;
-
 }
