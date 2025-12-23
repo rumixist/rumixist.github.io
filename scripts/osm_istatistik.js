@@ -17,21 +17,45 @@ const ILLER = [
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 async function fetchOverpass(query) {
+  let lastError = null;
+
   for (let i = 0; i < ENDPOINTS.length; i++) {
+    const endpoint = ENDPOINTS[i];
     try {
-      const res = await fetch(ENDPOINTS[i], {
+      console.log("   → deneme:", endpoint);
+
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "text/plain" },
         body: query
       });
-      if (!res.ok) throw new Error(res.status);
+
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+
       const json = await res.json();
-      return json.elements?.length ?? 0;
-    } catch {
+
+      if (!json.elements) {
+        throw new Error("elements yok");
+      }
+
+      return {
+        ok: true,
+        count: json.elements.length
+      };
+
+    } catch (e) {
+      console.warn("   ✗ hata:", endpoint, e.message);
+      lastError = `${endpoint} → ${e.message}`;
       await sleep(5000);
     }
   }
-  return null;
+
+  return {
+    ok: false,
+    error: lastError ?? "Bilinmeyen hata"
+  };
 }
 
 function q(il, filter) {
@@ -49,32 +73,55 @@ const tarih = new Date().toISOString().slice(0, 10);
 for (const il of ILLER) {
   console.log("▶", il.ad);
 
-  const bina = await fetchOverpass(q(il.ad, '["building"]'));
-  await sleep(4000);
+  try {
+    const binaR = await fetchOverpass(q(il.ad, '["building"]'));
+    await sleep(4000);
 
-  const adresli = await fetchOverpass(q(il.ad, '["building"]["addr:housenumber"]'));
-  await sleep(4000);
+    const adresliR = await fetchOverpass(
+      q(il.ad, '["building"]["addr:housenumber"]')
+    );
+    await sleep(4000);
 
-  const yol = await fetchOverpass(q(il.ad, '["highway"]'));
-  await sleep(4000);
+    const yolR = await fetchOverpass(q(il.ad, '["highway"]'));
+    await sleep(4000);
 
-  const isimli = await fetchOverpass(q(il.ad, '["highway"]["name"]'));
-  await sleep(8000);
+    const isimliR = await fetchOverpass(
+      q(il.ad, '["highway"]["name"]')
+    );
+    await sleep(8000);
 
-  if (bina === null || yol === null) {
-    sonuc[il.kod] = { ad: il.ad, hata: true, guncelleme: tarih };
-    continue;
+    if (!binaR.ok || !yolR.ok) {
+      throw new Error(
+        `bina: ${binaR.error ?? "ok"} | yol: ${yolR.error ?? "ok"}`
+      );
+    }
+
+    const bina = binaR.count;
+    const adresli = adresliR.ok ? adresliR.count : 0;
+    const yol = yolR.count;
+    const isimli = isimliR.ok ? isimliR.count : 0;
+
+    sonuc[il.kod] = {
+      ad: il.ad,
+      bina,
+      adresli_bina: adresli,
+      adres_orani: bina ? Number(((adresli / bina) * 100).toFixed(1)) : 0,
+      yol,
+      isimli_yol: isimli,
+      guncelleme: tarih
+    };
+
+  } catch (e) {
+    console.error("❌", il.ad, e.message);
+
+    sonuc[il.kod] = {
+      ad: il.ad,
+      hata: true,
+      hata_nedeni: "Overpass sorgusu basarisiz",
+      hata_detay: e.message,
+      guncelleme: tarih
+    };
   }
-
-  sonuc[il.kod] = {
-    ad: il.ad,
-    bina,
-    adresli_bina: adresli ?? 0,
-    adres_orani: bina ? Number(((adresli / bina) * 100).toFixed(1)) : 0,
-    yol,
-    isimli_yol: isimli ?? 0,
-    guncelleme: tarih
-  };
 
   await sleep(10000);
 }
@@ -86,5 +133,3 @@ fs.writeFileSync(
   JSON.stringify(sonuc, null, 2),
   "utf-8"
 );
-
-
