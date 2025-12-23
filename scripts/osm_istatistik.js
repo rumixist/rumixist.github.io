@@ -1,7 +1,9 @@
-const fs = require("fs");
+import fs from "fs";
 
 const CIKTI_YOLU = "osmaraclari/ilizle/veri/iller.json";
+const OVERPASS_URL = "https://overpass-api.de/api/interpreter";
 
+// İller (şimdilik senin verdiğinler, 81 il eklenebilir)
 const ILLER = [
   { kod: "istanbul", ad: "İstanbul", relation: 223474 },
   { kod: "kocaeli", ad: "Kocaeli", relation: 223499 },
@@ -10,26 +12,42 @@ const ILLER = [
   { kod: "canakkale", ad: "Çanakkale", relation: 223453 }
 ];
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 async function overpassCount(sorgu) {
-  const res = await fetch("https://overpass-api.de/api/interpreter", {
+  const res = await fetch(OVERPASS_URL, {
     method: "POST",
-    body: sorgu,
-    headers: {
-      "Content-Type": "text/plain"
-    }
+    headers: { "Content-Type": "text/plain" },
+    body: sorgu
   });
 
   if (!res.ok) {
-    throw new Error("Overpass hata: " + res.status);
+    throw new Error("HTTP hata: " + res.status);
   }
 
   const json = await res.json();
 
-  const eleman = json.elements?.[0];
-  if (!eleman || !eleman.tags) return 0;
+  if (!json.elements || json.elements.length === 0) {
+    throw new Error("Boş Overpass cevabı");
+  }
 
-  // out count sonucunda way sayısı burada gelir
-  return Number(eleman.tags.ways ?? 0);
+  const countElem = json.elements.find(e => e.type === "count");
+  if (!countElem || !countElem.tags) {
+    throw new Error("Count sonucu yok");
+  }
+
+  return Number(countElem.tags.ways || 0);
+}
+
+async function guvenliSay(sorgu, aciklama) {
+  try {
+    return await overpassCount(sorgu);
+  } catch (e) {
+    console.error("❌", aciklama, "hatası:", e.message);
+    return null;
+  }
 }
 
 async function ilIstatistik(iller) {
@@ -37,82 +55,92 @@ async function ilIstatistik(iller) {
   const tarih = new Date().toISOString().slice(0, 10);
 
   for (const il of iller) {
-    console.log("İşleniyor:", il.ad);
+    console.log("▶ İşleniyor:", il.ad);
 
-    try {
-      const alan = `
-        relation(${il.relation});
-        map_to_area->.a;
-      `;
+    const alan = `
+      relation(${il.relation});
+      map_to_area->.a;
+    `;
 
-      const binaSorgu = `
-        [out:json][timeout:180];
-        ${alan}
-        way["building"](area.a);
-        out count;
-      `;
+    const binaSorgu = `
+      [out:json][timeout:300];
+      ${alan}
+      way["building"](area.a);
+      out count;
+    `;
 
-      const adresliBinaSorgu = `
-        [out:json][timeout:180];
-        ${alan}
-        way["building"]["addr:housenumber"](area.a);
-        out count;
-      `;
+    const adresliBinaSorgu = `
+      [out:json][timeout:300];
+      ${alan}
+      way["building"]["addr:housenumber"](area.a);
+      out count;
+    `;
 
-      const yolSorgu = `
-        [out:json][timeout:180];
-        ${alan}
-        way["highway"](area.a);
-        out count;
-      `;
+    const yolSorgu = `
+      [out:json][timeout:300];
+      ${alan}
+      way["highway"](area.a);
+      out count;
+    `;
 
-      const isimliYolSorgu = `
-        [out:json][timeout:180];
-        ${alan}
-        way["highway"]["name"](area.a);
-        out count;
-      `;
+    const isimliYolSorgu = `
+      [out:json][timeout:300];
+      ${alan}
+      way["highway"]["name"](area.a);
+      out count;
+    `;
 
-      const bina = await overpassCount(binaSorgu);
-      const adresliBina = await overpassCount(adresliBinaSorgu);
-      const yol = await overpassCount(yolSorgu);
-      const isimliYol = await overpassCount(isimliYolSorgu);
+    const bina = await guvenliSay(binaSorgu, il.ad + " bina");
+    await sleep(5000);
 
-      const adresOrani =
-        bina > 0 ? Number(((adresliBina / bina) * 100).toFixed(1)) : 0;
+    const adresliBina = await guvenliSay(adresliBinaSorgu, il.ad + " adresli bina");
+    await sleep(5000);
 
-      sonuc[il.kod] = {
-        ad: il.ad,
-        bina,
-        adresli_bina: adresliBina,
-        adres_orani: adresOrani,
-        yol,
-        isimli_yol: isimliYol,
-        guncelleme: tarih
-      };
+    const yol = await guvenliSay(yolSorgu, il.ad + " yol");
+    await sleep(5000);
 
-    } catch (hata) {
-      console.error("Hata:", il.ad, hata.message);
+    const isimliYol = await guvenliSay(isimliYolSorgu, il.ad + " isimli yol");
+    await sleep(8000);
+
+    if (bina === null || yol === null) {
       sonuc[il.kod] = {
         ad: il.ad,
         hata: true,
         guncelleme: tarih
       };
+      console.log("⚠", il.ad, "eksik veri, atlandı");
+      continue;
     }
+
+    const adresOrani =
+      bina > 0 && adresliBina !== null
+        ? Number(((adresliBina / bina) * 100).toFixed(1))
+        : 0;
+
+    sonuc[il.kod] = {
+      ad: il.ad,
+      bina,
+      adresli_bina: adresliBina ?? 0,
+      adres_orani: adresOrani,
+      yol,
+      isimli_yol: isimliYol ?? 0,
+      guncelleme: tarih
+    };
+
+    console.log("✔", il.ad, "tamamlandı");
+    await sleep(10000); // il arası nefes
   }
 
   return sonuc;
 }
 
 (async () => {
+  console.log("⏳ İstatistikler başlıyor");
+
   const veri = await ilIstatistik(ILLER);
 
   fs.mkdirSync("osmaraclari/ilizle/veri", { recursive: true });
-  fs.writeFileSync(
-    CIKTI_YOLU,
-    JSON.stringify(veri, null, 2),
-    "utf-8"
-  );
+  fs.writeFileSync(CIKTI_YOLU, JSON.stringify(veri, null, 2), "utf-8");
 
-  console.log("✔ iller.json yazıldı:", CIKTI_YOLU);
+  console.log("✅ iller.json yazıldı:", CIKTI_YOLU);
 })();
