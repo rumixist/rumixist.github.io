@@ -3,155 +3,97 @@ const fs = require("fs");
 const OVERPASS_URL = "https://overpass-api.de/api/interpreter";
 const CIKTI_YOLU = "osmaraclari/ilizle/veri/iller.json";
 
-// İstersen buraya 81 ilin tamamını ekleyebilirsin
+// İllerin ISO kodlarını eklemek en güvenli yoldur
 const ILLER = [
-  { kod: "istanbul", ad: "İstanbul" },
-  { kod: "kocaeli", ad: "Kocaeli" },
-  { kod: "sakarya", ad: "Sakarya" },
-  { kod: "eskisehir", ad: "Eskişehir" },
-  { kod: "canakkale", ad: "Çanakkale" }
+  { iso: "TR-34", ad: "İstanbul", kod: "istanbul" },
+  { iso: "TR-41", ad: "Kocaeli", kod: "kocaeli" },
+  { iso: "TR-54", ad: "Sakarya", kod: "sakarya" },
+  { iso: "TR-26", ad: "Eskişehir", kod: "eskisehir" },
+  { iso: "TR-17", Çanakkale: "Çanakkale", kod: "canakkale" }
 ];
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+async function bekle(ms) {
+  return new Promise(coz => setTimeout(coz, ms));
 }
 
-async function overpassCount(sorgu) {
-  const res = await fetch(OVERPASS_URL, {
-    method: "POST",
-    headers: { "Content-Type": "text/plain" },
-    body: sorgu
-  });
+async function veriCek(il) {
+  // Tek bir istekte tüm sayımları yapıyoruz
+  const sorgu = `
+    [out:json][timeout:300];
+    area["ISO3166-2"="${il.iso}"]->.a;
+    (
+      nwr["building"](area.a);
+      nwr["building"]["addr:housenumber"](area.a);
+      nwr["highway"](area.a);
+      nwr["highway"]["name"](area.a);
+    );
+    out count;
+  `;
 
-  if (!res.ok) {
-    throw new Error("HTTP hata: " + res.status);
-  }
-
-  const json = await res.json();
-
-  if (!json.elements || json.elements.length === 0) {
-    throw new Error("Boş Overpass cevabı");
-  }
-
-  const countElem = json.elements.find(e => e.type === "count");
-  if (!countElem || !countElem.tags) {
-    throw new Error("Count sonucu yok");
-  }
-
-  return Number(countElem.tags.ways || 0);
-}
-
-async function guvenliSay(sorgu, etiket) {
   try {
-    return await overpassCount(sorgu);
-  } catch (e) {
-    console.error("❌", etiket, "→", e.message);
-    return null;
-  }
-}
+    const yanit = await fetch(OVERPASS_URL, {
+      method: "POST",
+      body: sorgu
+    });
 
-async function ilIstatistik(iller) {
-  const sonuc = {};
-  const tarih = new Date().toISOString().slice(0, 10);
+    if (!yanit.ok) throw new Error("Sunucu yanıt vermedi: " + yanit.status);
 
-  for (const il of iller) {
-    console.log("▶ İşleniyor:", il.ad);
-
-    // EN KRİTİK DEĞİŞİKLİK: relation YOK, indexed area VAR
-    const alan = `
-      area
-        ["name"="${il.ad}"]
-        ["boundary"="administrative"]
-        ["admin_level"="4"]
-      ->.a;
-    `;
-
-    const binaSorgu = `
-      [out:json][timeout:300];
-      ${alan}
-      way["building"](area.a);
-      out count;
-    `;
-
-    const adresliBinaSorgu = `
-      [out:json][timeout:300];
-      ${alan}
-      way["building"]["addr:housenumber"](area.a);
-      out count;
-    `;
-
-    const yolSorgu = `
-      [out:json][timeout:300];
-      ${alan}
-      way["highway"](area.a);
-      out count;
-    `;
-
-    const isimliYolSorgu = `
-      [out:json][timeout:300];
-      ${alan}
-      way["highway"]["name"](area.a);
-      out count;
-    `;
-
-    const bina = await guvenliSay(binaSorgu, il.ad + " bina");
-    await sleep(5000);
-
-    const adresliBina = await guvenliSay(adresliBinaSorgu, il.ad + " adresli bina");
-    await sleep(5000);
-
-    const yol = await guvenliSay(yolSorgu, il.ad + " yol");
-    await sleep(5000);
-
-    const isimliYol = await guvenliSay(isimliYolSorgu, il.ad + " isimli yol");
-    await sleep(8000);
-
-    // Sessiz 0’ları bilimsel olarak reddediyoruz
-    if (
-      bina === null ||
-      yol === null ||
-      (bina === 0 && yol === 0)
-    ) {
-      sonuc[il.kod] = {
-        ad: il.ad,
-        hata: true,
-        not: "Alan bulunamadi veya Overpass veri dondurmedi",
-        guncelleme: tarih
-      };
-      console.log("⚠", il.ad, "alan sorunu");
-      await sleep(10000);
-      continue;
+    const veri = await yanit.json();
+    
+    // Overpass count çıktısında elemanlar belirli bir sırayla gelir
+    // 0: bina, 1: adresli bina, 2: yol, 3: isimli yol
+    const sayimlar = veri.elements || [];
+    
+    if (sayimlar.length < 4) {
+       throw new Error("Eksik veri döndü");
     }
 
-    const adresOrani =
-      adresliBina !== null && bina > 0
-        ? Number(((adresliBina / bina) * 100).toFixed(1))
-        : 0;
+    const bina = Number(sayimlar[0].tags.total);
+    const adresliBina = Number(sayimlar[1].tags.total);
+    const yol = Number(sayimlar[2].tags.total);
+    const isimliYol = Number(sayimlar[3].tags.total);
 
-    sonuc[il.kod] = {
+    return {
       ad: il.ad,
       bina,
-      adresli_bina: adresliBina ?? 0,
-      adres_orani: adresOrani,
+      adresli_bina: adresliBina,
+      adres_orani: bina > 0 ? Number(((adresliBina / bina) * 100).toFixed(1)) : 0,
       yol,
-      isimli_yol: isimliYol ?? 0,
-      guncelleme: tarih
+      isimli_yol: isimliYol,
+      guncelleme: new Date().toISOString().slice(0, 10)
     };
-
-    console.log("✔", il.ad, "tamamlandı");
-    await sleep(12000); // il arası nefes
+  } catch (hata) {
+    console.error(`❌ ${il.ad} işlenirken aksaklık çıktı:`, hata.message);
+    return {
+      ad: il.ad,
+      hata: true,
+      not: hata.message,
+      guncelleme: new Date().toISOString().slice(0, 10)
+    };
   }
-
-  return sonuc;
 }
 
-(async () => {
-  console.log("⏳ OSM il istatistikleri başlıyor");
+async function anaSurec() {
+  console.log("⏳ OSM il sayımları başlatıldı");
+  const sonuc = {};
 
-  const veri = await ilIstatistik(ILLER);
+  for (const il of ILLER) {
+    console.log(`▶ ${il.ad} verisi derleniyor...`);
+    const ilVerisi = await veriCek(il);
+    sonuc[il.kod] = ilVerisi;
+    
+    // Her il arasında sunucuyu yormamak için uzun bir ara veriyoruz
+    console.log(`✔ ${il.ad} tamamlandı. Bekleniyor...`);
+    await bekle(15000); 
+  }
 
-  fs.mkdirSync("osmaraclari/ilizle/veri", { recursive: true });
-  fs.writeFileSync(CIKTI_YOLU, JSON.stringify(veri, null, 2), "utf-8");
+  const dizin = "osmaraclari/ilizle/veri";
+  if (!fs.existsSync(dizin)) {
+    fs.mkdirSync(dizin, { recursive: true });
+  }
 
-  console.log("✅ iller.json yazıldı:", CIKTI_YOLU);
-})();
+  fs.writeFileSync(CIKTI_YOLU, JSON.stringify(sonuc, null, 2), "utf-8");
+  console.log("✅ Tüm işlemler bitti ve dosya ak kâğıda yazıldı.");
+}
+
+anaSurec();
