@@ -1,11 +1,7 @@
 {
   "istanbul": {
     "ad": "İstanbul",
-    "bina": 721437,
-    "adresli_bina": 18739,
-    "adres_orani": 2.6,
-    "yol": 215912,
-    "isimli_yol": 87531,
+    "hata": true,
     "guncelleme": "2025-12-23"
   },
   "kocaeli": {
@@ -20,14 +16,18 @@
   },
   "eskisehir": {
     "ad": "Eskişehir",
-    "hata": true,
+    "bina": 0,
+    "adresli_bina": 0,
+    "adres_orani": 0,
+    "yol": 0,
+    "isimli_yol": 0,
     "guncelleme": "2025-12-23"
   },
   "canakkale": {
     "ad": "Çanakkale",
     "bina": 17261,
-    "adresli_bina": 17,
-    "adres_orani": 0.1,
+    "adresli_bina": 0,
+    "adres_orani": 0,
     "yol": 22518,
     "isimli_yol": 1141,
     "guncelleme": "2025-12-23"
