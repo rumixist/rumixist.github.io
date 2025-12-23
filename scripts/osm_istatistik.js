@@ -79,4 +79,12 @@ for (const il of ILLER) {
   await sleep(10000);
 }
 
-fs.writeFileSync("osmaraclari/ilizle/veri", JSON.stringify(sonuc, null, 2));
+fs.mkdirSync("osmaraclari/ilizle/veri", { recursive: true });
+
+fs.writeFileSync(
+  "osmaraclari/ilizle/veri/iller.json",
+  JSON.stringify(sonuc, null, 2),
+  "utf-8"
+);
+
+
