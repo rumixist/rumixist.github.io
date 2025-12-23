@@ -1,94 +1,82 @@
-const fs = require("fs");
+import fs from "fs";
 
-const OVERPASS_URL = "https://overpass-api.de/api/interpreter";
-const CIKTI_YOLU = "osmaraclari/ilizle/veri/iller.json";
-
-const ILLER = [
-  { ad: "İstanbul", kod: "istanbul" },
-  { ad: "Kocaeli", kod: "kocaeli" },
-  { ad: "Sakarya", kod: "sakarya" },
-  { ad: "Eskişehir", kod: "eskisehir" },
-  { ad: "Çanakkale", kod: "canakkale" }
+const ENDPOINTS = [
+  "https://overpass-api.de/api/interpreter",
+  "https://overpass.kumi.systems/api/interpreter",
+  "https://overpass.nchc.org.tw/api/interpreter"
 ];
 
-async function bekle(ms) {
-  return new Promise(coz => setTimeout(coz, ms));
-}
+const ILLER = [
+  { kod: "istanbul", ad: "İstanbul" },
+  { kod: "kocaeli", ad: "Kocaeli" },
+  { kod: "sakarya", ad: "Sakarya" },
+  { kod: "eskisehir", ad: "Eskişehir" },
+  { kod: "canakkale", ad: "Çanakkale" }
+];
 
-async function tekliSorgu(ilAd, ozellik) {
-  // Alanı hem adı hem de yönetim düzeyi ile arayarak sağlama alıyoruz
-  const alanTanimi = `area["name"="${ilAd}"]["admin_level"="4"]->.a;`;
-  let nesneSecimi = "";
+const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-  if (ozellik === "bina") nesneSecimi = 'nwr["building"](area.a);';
-  else if (ozellik === "adres") nesneSecimi = 'nwr["building"]["addr:housenumber"](area.a);';
-  else if (ozellik === "yol") nesneSecimi = 'nwr["highway"](area.a);';
-  else if (ozellik === "isimliyol") nesneSecimi = 'nwr["highway"]["name"](area.a);';
-
-  const sorgu = `[out:json][timeout:180];${alanTanimi}${nesneSecimi}out count;`;
-
-  const yanit = await fetch(OVERPASS_URL, {
-    method: "POST",
-    body: sorgu
-  });
-
-  if (!yanit.ok) throw new Error(`${yanit.status} yanıtı alındı`);
-
-  const veri = await yanit.json();
-  const sonuc = veri.elements && veri.elements[0] ? Number(veri.elements[0].tags.total) : 0;
-  return sonuc;
-}
-
-async function ilisleyis(il) {
-  console.log(`▶ ${il.ad} için veriler parça parça çekiliyor...`);
-  
-  try {
-    const bina = await tekliSorgu(il.ad, "bina");
-    await bekle(10000); 
-    
-    const adres = await tekliSorgu(il.ad, "adres");
-    await bekle(10000);
-    
-    const yol = await tekliSorgu(il.ad, "yol");
-    await bekle(10000);
-    
-    const isimliyol = await tekliSorgu(il.ad, "isimliyol");
-
-    return {
-      ad: il.ad,
-      bina,
-      adresli_bina: adres,
-      adres_orani: bina > 0 ? Number(((adres / bina) * 100).toFixed(1)) : 0,
-      yol,
-      isimli_yol: isimliyol,
-      guncelleme: new Date().toISOString().slice(0, 10)
-    };
-  } catch (aksaklik) {
-    console.error(`❌ ${il.ad} başarısız:`, aksaklik.message);
-    return null;
-  }
-}
-
-async function anaSurec() {
-  const sonuc = {};
-
-  for (const il of ILLER) {
-    const veri = await ilisleyis(il);
-    if (veri) {
-      sonuc[il.kod] = veri;
-      console.log(`✔ ${il.ad} verisi başarıyla eklendi.`);
-    } else {
-      sonuc[il.kod] = { ad: il.ad, hata: true, guncelleme: new Date().toISOString().slice(0, 10) };
+async function fetchOverpass(query) {
+  for (let i = 0; i < ENDPOINTS.length; i++) {
+    try {
+      const res = await fetch(ENDPOINTS[i], {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: query
+      });
+      if (!res.ok) throw new Error(res.status);
+      const json = await res.json();
+      return json.elements?.length ?? 0;
+    } catch {
+      await sleep(5000);
     }
-    // İller arasında uzun bir dinlenme süresi bırakıyoruz
-    await bekle(20000);
   }
-
-  const dizin = "osmaraclari/ilizle/veri";
-  if (!fs.existsSync(dizin)) fs.mkdirSync(dizin, { recursive: true });
-
-  fs.writeFileSync(CIKTI_YOLU, JSON.stringify(sonuc, null, 2), "utf-8");
-  console.log("✅ İşlem tamamlandı.");
+  return null;
 }
 
-anaSurec();
+function q(il, filter) {
+  return `
+[out:json][timeout:180];
+{{geocodeArea:${il}}}->.a;
+way${filter}(area.a);
+out ids;
+`;
+}
+
+const sonuc = {};
+const tarih = new Date().toISOString().slice(0, 10);
+
+for (const il of ILLER) {
+  console.log("▶", il.ad);
+
+  const bina = await fetchOverpass(q(il.ad, '["building"]'));
+  await sleep(4000);
+
+  const adresli = await fetchOverpass(q(il.ad, '["building"]["addr:housenumber"]'));
+  await sleep(4000);
+
+  const yol = await fetchOverpass(q(il.ad, '["highway"]'));
+  await sleep(4000);
+
+  const isimli = await fetchOverpass(q(il.ad, '["highway"]["name"]'));
+  await sleep(8000);
+
+  if (bina === null || yol === null) {
+    sonuc[il.kod] = { ad: il.ad, hata: true, guncelleme: tarih };
+    continue;
+  }
+
+  sonuc[il.kod] = {
+    ad: il.ad,
+    bina,
+    adresli_bina: adresli ?? 0,
+    adres_orani: bina ? Number(((adresli / bina) * 100).toFixed(1)) : 0,
+    yol,
+    isimli_yol: isimli ?? 0,
+    guncelleme: tarih
+  };
+
+  await sleep(10000);
+}
+
+fs.writeFileSync("osmaraclari/ilizle/veri", JSON.stringify(sonuc, null, 2));
