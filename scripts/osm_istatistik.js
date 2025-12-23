@@ -1,14 +1,15 @@
 const fs = require("fs");
 
-const CIKTI_YOLU = "osmaraclari/ilizle/veri/iller.json";
 const OVERPASS_URL = "https://overpass-api.de/api/interpreter";
+const CIKTI_YOLU = "osmaraclari/ilizle/veri/iller.json";
 
+// İstersen buraya 81 ilin tamamını ekleyebilirsin
 const ILLER = [
-  { kod: "istanbul", ad: "İstanbul", relation: 223474 },
-  { kod: "kocaeli", ad: "Kocaeli", relation: 223499 },
-  { kod: "sakarya", ad: "Sakarya", relation: 223555 },
-  { kod: "eskisehir", ad: "Eskişehir", relation: 223401 },
-  { kod: "canakkale", ad: "Çanakkale", relation: 223453 }
+  { kod: "istanbul", ad: "İstanbul" },
+  { kod: "kocaeli", ad: "Kocaeli" },
+  { kod: "sakarya", ad: "Sakarya" },
+  { kod: "eskisehir", ad: "Eskişehir" },
+  { kod: "canakkale", ad: "Çanakkale" }
 ];
 
 function sleep(ms) {
@@ -40,11 +41,11 @@ async function overpassCount(sorgu) {
   return Number(countElem.tags.ways || 0);
 }
 
-async function guvenliSay(sorgu, aciklama) {
+async function guvenliSay(sorgu, etiket) {
   try {
     return await overpassCount(sorgu);
   } catch (e) {
-    console.error("❌", aciklama, "hatası:", e.message);
+    console.error("❌", etiket, "→", e.message);
     return null;
   }
 }
@@ -56,9 +57,13 @@ async function ilIstatistik(iller) {
   for (const il of iller) {
     console.log("▶ İşleniyor:", il.ad);
 
+    // EN KRİTİK DEĞİŞİKLİK: relation YOK, indexed area VAR
     const alan = `
-      relation(${il.relation});
-      map_to_area->.a;
+      area
+        ["name"="${il.ad}"]
+        ["boundary"="administrative"]
+        ["admin_level"="4"]
+      ->.a;
     `;
 
     const binaSorgu = `
@@ -101,18 +106,25 @@ async function ilIstatistik(iller) {
     const isimliYol = await guvenliSay(isimliYolSorgu, il.ad + " isimli yol");
     await sleep(8000);
 
-    if (bina === null || yol === null) {
+    // Sessiz 0’ları bilimsel olarak reddediyoruz
+    if (
+      bina === null ||
+      yol === null ||
+      (bina === 0 && yol === 0)
+    ) {
       sonuc[il.kod] = {
         ad: il.ad,
         hata: true,
+        not: "Alan bulunamadi veya Overpass veri dondurmedi",
         guncelleme: tarih
       };
-      console.log("⚠", il.ad, "eksik veri, atlandı");
+      console.log("⚠", il.ad, "alan sorunu");
+      await sleep(10000);
       continue;
     }
 
     const adresOrani =
-      bina > 0 && adresliBina !== null
+      adresliBina !== null && bina > 0
         ? Number(((adresliBina / bina) * 100).toFixed(1))
         : 0;
 
@@ -127,14 +139,14 @@ async function ilIstatistik(iller) {
     };
 
     console.log("✔", il.ad, "tamamlandı");
-    await sleep(10000);
+    await sleep(12000); // il arası nefes
   }
 
   return sonuc;
 }
 
 (async () => {
-  console.log("⏳ İstatistikler başlıyor");
+  console.log("⏳ OSM il istatistikleri başlıyor");
 
   const veri = await ilIstatistik(ILLER);
 
