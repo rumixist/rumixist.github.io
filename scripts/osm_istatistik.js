@@ -1,14 +1,16 @@
 import fs from "fs";
 
 /**
- * SADECE STABİL ENDPOINTLER
- * nchc -> KALDIRILDI (geocodeArea + GHA uyumsuz)
+ * STABİL OVERPASS ENDPOINTLERİ
  */
 const ENDPOINTS = [
   "https://overpass-api.de/api/interpreter",
   "https://overpass.kumi.systems/api/interpreter"
 ];
 
+/**
+ * DENEME İLLERİ
+ */
 const ILLER = [
   { kod: "istanbul", ad: "İstanbul" },
   { kod: "kocaeli", ad: "Kocaeli" },
@@ -20,10 +22,9 @@ const ILLER = [
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 /**
- * Overpass çağrısı
- * - Her endpoint denenir
+ * OVERPASS FETCH
+ * - Endpoint sırayla denenir
  * - Hatalar toplanır
- * - Başarılı olursa count döner
  */
 async function fetchOverpass(query) {
   const errors = [];
@@ -36,7 +37,6 @@ async function fetchOverpass(query) {
         method: "POST",
         headers: {
           "Content-Type": "text/plain",
-          // ÇOK ÖNEMLİ: User-Agent
           "User-Agent": "rumixist-osm-bot/1.0 (github-actions)"
         },
         body: query
@@ -72,12 +72,13 @@ async function fetchOverpass(query) {
 }
 
 /**
- * Overpass sorgusu
+ * OVERPASS SORGUSU
+ * ⚠️ geocodeArea MUTLAKA TIRNAKLI
  */
 function q(il, filter) {
   return `
 [out:json][timeout:120];
-{{geocodeArea:${il}}}->.a;
+{{geocodeArea:"${il}"}}->.a;
 way${filter}(area.a);
 out ids;
 `;
@@ -86,6 +87,9 @@ out ids;
 const sonuc = {};
 const tarih = new Date().toISOString().slice(0, 10);
 
+/**
+ * ANA DÖNGÜ
+ */
 for (const il of ILLER) {
   console.log("▶", il.ad);
 
@@ -129,6 +133,8 @@ for (const il of ILLER) {
       guncelleme: tarih
     };
 
+    console.log("   ✔ tamamlandı");
+
   } catch (e) {
     console.error("❌", il.ad, e.message);
 
@@ -146,7 +152,7 @@ for (const il of ILLER) {
 }
 
 /**
- * JSON yaz
+ * JSON YAZ
  */
 fs.mkdirSync("osmaraclari/ilizle/veri", { recursive: true });
 
