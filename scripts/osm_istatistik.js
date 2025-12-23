@@ -1,9 +1,12 @@
 import fs from "fs";
 
+/**
+ * SADECE STABİL ENDPOINTLER
+ * nchc -> KALDIRILDI (geocodeArea + GHA uyumsuz)
+ */
 const ENDPOINTS = [
   "https://overpass-api.de/api/interpreter",
-  "https://overpass.kumi.systems/api/interpreter",
-  "https://overpass.nchc.org.tw/api/interpreter"
+  "https://overpass.kumi.systems/api/interpreter"
 ];
 
 const ILLER = [
@@ -16,17 +19,26 @@ const ILLER = [
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
+/**
+ * Overpass çağrısı
+ * - Her endpoint denenir
+ * - Hatalar toplanır
+ * - Başarılı olursa count döner
+ */
 async function fetchOverpass(query) {
-  let lastError = null;
+  const errors = [];
 
-  for (let i = 0; i < ENDPOINTS.length; i++) {
-    const endpoint = ENDPOINTS[i];
+  for (const endpoint of ENDPOINTS) {
     try {
       console.log("   → deneme:", endpoint);
 
       const res = await fetch(endpoint, {
         method: "POST",
-        headers: { "Content-Type": "text/plain" },
+        headers: {
+          "Content-Type": "text/plain",
+          // ÇOK ÖNEMLİ: User-Agent
+          "User-Agent": "rumixist-osm-bot/1.0 (github-actions)"
+        },
         body: query
       });
 
@@ -42,25 +54,29 @@ async function fetchOverpass(query) {
 
       return {
         ok: true,
-        count: json.elements.length
+        count: json.elements.length,
+        endpoint
       };
 
     } catch (e) {
       console.warn("   ✗ hata:", endpoint, e.message);
-      lastError = `${endpoint} → ${e.message}`;
+      errors.push(`${endpoint}: ${e.message}`);
       await sleep(5000);
     }
   }
 
   return {
     ok: false,
-    error: lastError ?? "Bilinmeyen hata"
+    error: errors.join(" | ")
   };
 }
 
+/**
+ * Overpass sorgusu
+ */
 function q(il, filter) {
   return `
-[out:json][timeout:180];
+[out:json][timeout:120];
 {{geocodeArea:${il}}}->.a;
 way${filter}(area.a);
 out ids;
@@ -105,7 +121,9 @@ for (const il of ILLER) {
       ad: il.ad,
       bina,
       adresli_bina: adresli,
-      adres_orani: bina ? Number(((adresli / bina) * 100).toFixed(1)) : 0,
+      adres_orani: bina
+        ? Number(((adresli / bina) * 100).toFixed(1))
+        : 0,
       yol,
       isimli_yol: isimli,
       guncelleme: tarih
@@ -123,9 +141,13 @@ for (const il of ILLER) {
     };
   }
 
+  // İller arası nefes
   await sleep(10000);
 }
 
+/**
+ * JSON yaz
+ */
 fs.mkdirSync("osmaraclari/ilizle/veri", { recursive: true });
 
 fs.writeFileSync(
@@ -133,3 +155,5 @@ fs.writeFileSync(
   JSON.stringify(sonuc, null, 2),
   "utf-8"
 );
+
+console.log("✅ iller.json yazildi");
