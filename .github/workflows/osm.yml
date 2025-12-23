@@ -5,12 +5,13 @@ permissions:
 
 on:
   schedule:
-    - cron: "0 3 * * *"   # Her gün Türkiye saatiyle ~06:00
+    - cron: "0 3 * * *"   # Her gün 03:00 UTC (Türkiye ~06:00)
   workflow_dispatch:      # Elle çalıştırabilmek için
 
 jobs:
   guncelle:
     runs-on: ubuntu-latest
+    timeout-minutes: 120   # Büyük şehirler için güvenli
 
     steps:
       - name: Repo'yu çek
