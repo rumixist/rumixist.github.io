@@ -1,9 +1,8 @@
-import fs from "fs";
+const fs = require("fs");
 
 const CIKTI_YOLU = "osmaraclari/ilizle/veri/iller.json";
 const OVERPASS_URL = "https://overpass-api.de/api/interpreter";
 
-// İller (şimdilik senin verdiğinler, 81 il eklenebilir)
 const ILLER = [
   { kod: "istanbul", ad: "İstanbul", relation: 223474 },
   { kod: "kocaeli", ad: "Kocaeli", relation: 223499 },
@@ -128,7 +127,7 @@ async function ilIstatistik(iller) {
     };
 
     console.log("✔", il.ad, "tamamlandı");
-    await sleep(10000); // il arası nefes
+    await sleep(10000);
   }
 
   return sonuc;
