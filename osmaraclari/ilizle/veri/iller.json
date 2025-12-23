@@ -2,26 +2,36 @@
   "istanbul": {
     "ad": "İstanbul",
     "hata": true,
+    "hata_nedeni": "Overpass sorgusu basarisiz",
+    "hata_detay": "bina: https://overpass.nchc.org.tw/api/interpreter → fetch failed | yol: https://overpass.nchc.org.tw/api/interpreter → fetch failed",
     "guncelleme": "2025-12-23"
   },
   "kocaeli": {
     "ad": "Kocaeli",
     "hata": true,
+    "hata_nedeni": "Overpass sorgusu basarisiz",
+    "hata_detay": "bina: https://overpass.nchc.org.tw/api/interpreter → fetch failed | yol: https://overpass.nchc.org.tw/api/interpreter → fetch failed",
     "guncelleme": "2025-12-23"
   },
   "sakarya": {
     "ad": "Sakarya",
     "hata": true,
+    "hata_nedeni": "Overpass sorgusu basarisiz",
+    "hata_detay": "bina: https://overpass.nchc.org.tw/api/interpreter → fetch failed | yol: https://overpass.nchc.org.tw/api/interpreter → fetch failed",
     "guncelleme": "2025-12-23"
   },
   "eskisehir": {
     "ad": "Eskişehir",
     "hata": true,
+    "hata_nedeni": "Overpass sorgusu basarisiz",
+    "hata_detay": "bina: https://overpass.nchc.org.tw/api/interpreter → fetch failed | yol: https://overpass.nchc.org.tw/api/interpreter → fetch failed",
     "guncelleme": "2025-12-23"
   },
   "canakkale": {
     "ad": "Çanakkale",
     "hata": true,
+    "hata_nedeni": "Overpass sorgusu basarisiz",
+    "hata_detay": "bina: https://overpass.nchc.org.tw/api/interpreter → fetch failed | yol: https://overpass.nchc.org.tw/api/interpreter → fetch failed",
     "guncelleme": "2025-12-23"
   }
 }
