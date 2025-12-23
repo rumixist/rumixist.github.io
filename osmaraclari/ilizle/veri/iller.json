@@ -2,30 +2,26 @@
   "istanbul": {
     "ad": "İstanbul",
     "hata": true,
-    "not": "Eksik veri döndü",
     "guncelleme": "2025-12-23"
   },
   "kocaeli": {
     "ad": "Kocaeli",
     "hata": true,
-    "not": "Eksik veri döndü",
     "guncelleme": "2025-12-23"
   },
   "sakarya": {
     "ad": "Sakarya",
     "hata": true,
-    "not": "Sunucu yanıt vermedi: 504",
     "guncelleme": "2025-12-23"
   },
   "eskisehir": {
     "ad": "Eskişehir",
     "hata": true,
-    "not": "Eksik veri döndü",
     "guncelleme": "2025-12-23"
   },
   "canakkale": {
+    "ad": "Çanakkale",
     "hata": true,
-    "not": "Eksik veri döndü",
     "guncelleme": "2025-12-23"
   }
 }
