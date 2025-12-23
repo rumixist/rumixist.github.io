@@ -1,27 +1,35 @@
 {
   "istanbul": {
     "ad": "İstanbul",
-    "hata": true,
-    "guncelleme": "2025-12-22"
+    "bina": 721437,
+    "adresli_bina": 18739,
+    "adres_orani": 2.6,
+    "yol": 215912,
+    "isimli_yol": 87531,
+    "guncelleme": "2025-12-23"
   },
   "kocaeli": {
     "ad": "Kocaeli",
     "hata": true,
-    "guncelleme": "2025-12-22"
+    "guncelleme": "2025-12-23"
   },
   "sakarya": {
     "ad": "Sakarya",
     "hata": true,
-    "guncelleme": "2025-12-22"
+    "guncelleme": "2025-12-23"
   },
   "eskisehir": {
     "ad": "Eskişehir",
     "hata": true,
-    "guncelleme": "2025-12-22"
+    "guncelleme": "2025-12-23"
   },
   "canakkale": {
     "ad": "Çanakkale",
-    "hata": true,
-    "guncelleme": "2025-12-22"
+    "bina": 17261,
+    "adresli_bina": 17,
+    "adres_orani": 0.1,
+    "yol": 22518,
+    "isimli_yol": 1141,
+    "guncelleme": "2025-12-23"
   }
 }
