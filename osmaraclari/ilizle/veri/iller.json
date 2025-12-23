@@ -1,35 +1,41 @@
 {
   "istanbul": {
     "ad": "İstanbul",
-    "hata": true,
+    "bina": 721464,
+    "adresli_bina": 18740,
+    "adres_orani": 2.6,
+    "yol": 215909,
+    "isimli_yol": 0,
     "guncelleme": "2025-12-23"
   },
   "kocaeli": {
     "ad": "Kocaeli",
     "hata": true,
+    "not": "Alan bulunamadi veya Overpass veri dondurmedi",
     "guncelleme": "2025-12-23"
   },
   "sakarya": {
     "ad": "Sakarya",
-    "hata": true,
+    "bina": 33978,
+    "adresli_bina": 435,
+    "adres_orani": 1.3,
+    "yol": 37308,
+    "isimli_yol": 0,
     "guncelleme": "2025-12-23"
   },
   "eskisehir": {
     "ad": "Eskişehir",
-    "bina": 0,
-    "adresli_bina": 0,
-    "adres_orani": 0,
-    "yol": 0,
-    "isimli_yol": 0,
+    "hata": true,
+    "not": "Alan bulunamadi veya Overpass veri dondurmedi",
     "guncelleme": "2025-12-23"
   },
   "canakkale": {
     "ad": "Çanakkale",
-    "bina": 17261,
+    "bina": 86634,
     "adresli_bina": 0,
     "adres_orani": 0,
-    "yol": 22518,
-    "isimli_yol": 1141,
+    "yol": 34129,
+    "isimli_yol": 3509,
     "guncelleme": "2025-12-23"
   }
 }
