@@ -5,27 +5,30 @@ permissions:
 
 on:
   schedule:
-    - cron: "0 3 * * *"   # Her gün 03:00 UTC (Türkiye ~06:00)
-  workflow_dispatch:      # Elle çalıştırabilmek için
+    - cron: "0 3 * * *"   # Her gün 03:00 UTC
+  workflow_dispatch:      # Elle çalıştırmak için
 
 jobs:
   guncelle:
     runs-on: ubuntu-latest
-    timeout-minutes: 120   # Büyük şehirler için güvenli
+    timeout-minutes: 120
 
     steps:
-      - name: Repo'yu çek
+      - name: Depoyu çek
         uses: actions/checkout@v4
 
-      - name: Node.js kur
-        uses: actions/setup-node@v4
+      - name: Python Kur
+        uses: actions/setup-python@v5
         with:
-          node-version: 18
+          python-version: '3.10' 
+
+      - name: Gerekli kitaplıkları kur
+        run: pip install requests
 
       - name: OSM istatistiklerini üret
-        run: node scripts/osm_istatistik.py
+        run: python scripts/osm_istatistik.py
 
-      - name: Değişiklik var mı kontrol et
+      - name: Değişiklik var mı bak
         run: |
           if git status --porcelain | grep .; then
             echo "degisiklik_var=true" >> $GITHUB_ENV
@@ -33,7 +36,7 @@ jobs:
             echo "degisiklik_var=false" >> $GITHUB_ENV
           fi
 
-      - name: Commit at
+      - name: Değişiklikleri işle ve gönder
         if: env.degisiklik_var == 'true'
         run: |
           git config user.name "github-actions"
