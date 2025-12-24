@@ -4,7 +4,7 @@ import time
 import os
 
 # Verilerin kaydedileceği dosya yolu
-DOSYA_YOLU = "/osmaraclari/ilizle/veri/iller.json"
+DOSYA_YOLU = "osmaraclari/ilizle/veri/iller.json"
 
 # Deneme amaçlı birkaç il seçildi.
 # Tüm iller için bu listeyi genişletebilirsin.
@@ -100,3 +100,4 @@ def ana_islev():
 
 if __name__ == "__main__":
     ana_islev()
+
