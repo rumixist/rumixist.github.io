@@ -23,7 +23,7 @@ jobs:
           node-version: 18
 
       - name: OSM istatistiklerini üret
-        run: node scripts/osm_istatistik.js
+        run: node scripts/osm_istatistik.py
 
       - name: Değişiklik var mı kontrol et
         run: |
