@@ -1,15 +1,33 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>OSM Şehir Kartları</title>
-  <link rel="stylesheet" href="tarz.css">
+    <meta charset="UTF-8">
+    <title>İl Verileri İzleme</title>
+    <link rel="stylesheet" href="tarz.css">
 </head>
 <body>
 
-<h1>OSM Şehir İstatistikleri</h1>
+<header>
+    <h1>Türkiye İl Verileri</h1>
 
-<div id="kartlar" class="kartlar"></div>
+    <div class="kontroller">
+        <input type="text" id="arama" placeholder="Şehir ara...">
+
+        <select id="siralama">
+            <option value="alfabetik">Alfabetik</option>
+            <option value="bina">Toplam bina</option>
+            <option value="adres">Adresli bina</option>
+            <option value="adres_oran">Adres/Bina oranı</option>
+            <option value="yol">Toplam yol</option>
+            <option value="isimli_yol">Adlı yol</option>
+            <option value="isimli_yol_oran">Adlı yol/Yol oranı</option>
+        </select>
+    </div>
+</header>
+
+<main>
+    <div id="kartlar" class="kartlar"></div>
+</main>
 
 <script src="betik.js"></script>
 </body>
