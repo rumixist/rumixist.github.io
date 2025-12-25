@@ -1,4 +1,11 @@
 {
+    "İstanbul": {
+        "il": "İstanbul",
+        "bina_sayisi": 722078,
+        "adres_sayisi": 36010,
+        "yol_sayisi": 216034,
+        "isimli_yol_sayisi": 87595
+    },
     "Ankara": {
         "il": "Ankara",
         "bina_sayisi": 223382,
@@ -12,5 +19,19 @@
         "adres_sayisi": 3678,
         "yol_sayisi": 117982,
         "isimli_yol_sayisi": 31428
+    },
+    "Bursa": {
+        "il": "Bursa",
+        "bina_sayisi": 87220,
+        "adres_sayisi": 1831,
+        "yol_sayisi": 74635,
+        "isimli_yol_sayisi": 27214
+    },
+    "Antalya": {
+        "il": "Antalya",
+        "bina_sayisi": 208319,
+        "adres_sayisi": 6495,
+        "yol_sayisi": 91640,
+        "isimli_yol_sayisi": 10941
     }
 }
