@@ -72,16 +72,37 @@ function kartlariCiz() {
 
         kart.innerHTML = `
             <h2>${il.il}</h2>
-            <ul>
-                <li>Bina sayısı: ${il.bina_sayisi.toLocaleString()}</li>
-                <li>Adresli bina: ${il.adres_sayisi.toLocaleString()}</li>
-                <li class="oran">Adres/Bina oranı: %${il.adres_oran.toFixed(2)}</li>
-                <li>Toplam yol: ${il.yol_sayisi.toLocaleString()}</li>
-                <li>Adlı yol: ${il.isimli_yol_sayisi.toLocaleString()}</li>
-                <li class="oran">Adlı yol/Yol oranı: %${il.isimli_yol_oran.toFixed(2)}</li>
-            </ul>
+
+            <div class="istatistik">
+                <div>Bina<br><strong>${il.bina_sayisi.toLocaleString()}</strong></div>
+                <div>Adres<br><strong>${il.adres_sayisi.toLocaleString()}</strong></div>
+                <div>Yol<br><strong>${il.yol_sayisi.toLocaleString()}</strong></div>
+                <div>Adlı Yol<br><strong>${il.isimli_yol_sayisi.toLocaleString()}</strong></div>
+            </div>
+
+            <div class="oran-blok">
+                <div class="oran-baslik">
+                    <span>Adres Oranı</span>
+                    <span>%${il.adres_oran.toFixed(2)}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-dolum" style="width:${il.adres_oran}%"></div>
+                </div>
+            </div>
+
+            <div class="oran-blok">
+                <div class="oran-baslik">
+                    <span>Yol Ad Oranı</span>
+                    <span>%${il.isimli_yol_oran.toFixed(2)}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-dolum" style="width:${il.isimli_yol_oran}%"></div>
+                </div>
+            </div>
         `;
 
         kartAlan.appendChild(kart);
     });
 }
+
+
