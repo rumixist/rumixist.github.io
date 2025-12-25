@@ -1,110 +1,87 @@
-const sehirler = [
-  { ad: "İstanbul", relation: 223474 },
-  { ad: "Kocaeli", relation: 223499 },
-  { ad: "Sakarya", relation: 223555 },
-  { ad: "Eskişehir", relation: 223401 },
-  { ad: "Çanakkale", relation: 223453 }
-];
+let tumSehirler = [];
+let gosterilenSehirler = [];
 
-const kartlarDiv = document.getElementById("kartlar");
+fetch("veri/iller.json")
+    .then(res => res.json())
+    .then(veri => {
+        tumSehirler = Object.values(veri).map(il => {
+            const adresOran = il.bina_sayisi
+                ? (il.adres_sayisi / il.bina_sayisi) * 100
+                : 0;
 
-sehirler.forEach(sehir => {
-  const kart = document.createElement("div");
-  kart.className = "kart";
-  kart.id = `kart-${sehir.relation}`;
+            const isimliYolOran = il.yol_sayisi
+                ? (il.isimli_yol_sayisi / il.yol_sayisi) * 100
+                : 0;
 
-  kart.innerHTML = `
-    <h2>${sehir.ad}</h2>
-    <div class="bilgi">Bina sayısı: <span>-</span></div>
-    <div class="bilgi">Adresli bina: <span>-</span></div>
-    <div class="bilgi">Adres oranı: <span>-</span></div>
-    <div class="bilgi">Yol sayısı: <span>-</span></div>
-    <div class="bilgi">İsimli yol: <span>-</span></div>
-    <button>Veriyi al</button>
-  `;
+            return {
+                ...il,
+                adres_oran: adresOran,
+                isimli_yol_oran: isimliYolOran
+            };
+        });
 
-  const button = kart.querySelector("button");
-  button.addEventListener("click", () => veriGetir(sehir, kart, button));
+        gosterilenSehirler = [...tumSehirler];
+        kartlariCiz();
+    });
 
-  kartlarDiv.appendChild(kart);
-});
+const kartAlan = document.getElementById("kartlar");
+const aramaInput = document.getElementById("arama");
+const siralamaSelect = document.getElementById("siralama");
 
-async function veriGetir(sehir, kart, button) {
-  button.disabled = true;
-  button.textContent = "Yükleniyor...";
+aramaInput.addEventListener("input", filtreleVeSirala);
+siralamaSelect.addEventListener("change", filtreleVeSirala);
 
-  const sorgu = `
-  [out:json][timeout:60];
-  relation(${sehir.relation})->.alan;
-  (
-    way["building"](area.alan);
-  );
-  out count;
-  `;
+function filtreleVeSirala() {
+    const aramaMetni = aramaInput.value.toLowerCase();
+    const siralama = siralamaSelect.value;
 
-  try {
-    const binaSayisi = await overpassSay(sorgu);
-
-    const adresSorgu = `
-    [out:json][timeout:60];
-    relation(${sehir.relation})->.alan;
-    (
-      way["building"]["addr:housenumber"](area.alan);
+    gosterilenSehirler = tumSehirler.filter(il =>
+        il.il.toLowerCase().includes(aramaMetni)
     );
-    out count;
-    `;
 
-    const adresliBina = await overpassSay(adresSorgu);
+    gosterilenSehirler.sort((a, b) => {
+        switch (siralama) {
+            case "alfabetik":
+                return a.il.localeCompare(b.il, "tr");
+            case "bina":
+                return b.bina_sayisi - a.bina_sayisi;
+            case "adres":
+                return b.adres_sayisi - a.adres_sayisi;
+            case "adres_oran":
+                return b.adres_oran - a.adres_oran;
+            case "yol":
+                return b.yol_sayisi - a.yol_sayisi;
+            case "isimli_yol":
+                return b.isimli_yol_sayisi - a.isimli_yol_sayisi;
+            case "isimli_yol_oran":
+                return b.isimli_yol_oran - a.isimli_yol_oran;
+            default:
+                return 0;
+        }
+    });
 
-    const yolSorgu = `
-    [out:json][timeout:60];
-    relation(${sehir.relation})->.alan;
-    (
-      way["highway"](area.alan);
-    );
-    out count;
-    `;
-
-    const yolSayisi = await overpassSay(yolSorgu);
-
-    const isimliYolSorgu = `
-    [out:json][timeout:60];
-    relation(${sehir.relation})->.alan;
-    (
-      way["highway"]["name"](area.alan);
-    );
-    out count;
-    `;
-
-    const isimliYol = await overpassSay(isimliYolSorgu);
-
-    const yuzde = binaSayisi > 0
-      ? ((adresliBina / binaSayisi) * 100).toFixed(1)
-      : "0";
-
-    const bilgiler = kart.querySelectorAll(".bilgi span");
-    bilgiler[0].textContent = binaSayisi;
-    bilgiler[1].textContent = adresliBina;
-    bilgiler[2].textContent = `% ${yuzde}`;
-    bilgiler[3].textContent = yolSayisi;
-    bilgiler[4].textContent = isimliYol;
-
-    button.textContent = "Veriyi güncelle";
-    button.disabled = false;
-
-  } catch (e) {
-    alert("Veri alınamadı");
-    button.textContent = "Veriyi al";
-    button.disabled = false;
-  }
+    kartlariCiz();
 }
 
-async function overpassSay(sorgu) {
-  const response = await fetch("https://overpass-api.de/api/interpreter", {
-    method: "POST",
-    body: sorgu
-  });
+function kartlariCiz() {
+    kartAlan.innerHTML = "";
 
-  const json = await response.json();
-  return json.elements[0].tags.total;
+    gosterilenSehirler.forEach(il => {
+        const kart = document.createElement("div");
+        kart.className = "kart";
+
+        kart.innerHTML = `
+            <h2>${il.il}</h2>
+            <ul>
+                <li>Bina sayısı: ${il.bina_sayisi.toLocaleString()}</li>
+                <li>Adresli bina: ${il.adres_sayisi.toLocaleString()}</li>
+                <li class="oran">Adres/Bina oranı: %${il.adres_oran.toFixed(2)}</li>
+                <li>Toplam yol: ${il.yol_sayisi.toLocaleString()}</li>
+                <li>Adlı yol: ${il.isimli_yol_sayisi.toLocaleString()}</li>
+                <li class="oran">Adlı yol/Yol oranı: %${il.isimli_yol_oran.toFixed(2)}</li>
+            </ul>
+        `;
+
+        kartAlan.appendChild(kart);
+    });
 }
