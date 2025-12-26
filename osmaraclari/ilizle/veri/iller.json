@@ -1,24 +1,17 @@
 {
     "İstanbul": {
         "il": "İstanbul",
-        "bina_sayisi": 722078,
-        "adres_sayisi": 36010,
-        "yol_sayisi": 216034,
-        "isimli_yol_sayisi": 87595
-    },
-    "Ankara": {
-        "il": "Ankara",
-        "bina_sayisi": 223382,
-        "adres_sayisi": 17989,
-        "yol_sayisi": 123578,
-        "isimli_yol_sayisi": 33528
+        "bina_sayisi": 722145,
+        "adres_sayisi": 36025,
+        "yol_sayisi": 216048,
+        "isimli_yol_sayisi": 87599
     },
     "İzmir": {
         "il": "İzmir",
         "bina_sayisi": 533888,
-        "adres_sayisi": 3678,
-        "yol_sayisi": 117982,
-        "isimli_yol_sayisi": 31428
+        "adres_sayisi": 3679,
+        "yol_sayisi": 118046,
+        "isimli_yol_sayisi": 31429
     },
     "Bursa": {
         "il": "Bursa",
