@@ -1,33 +1,68 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <title>İl Verileri İzleme</title>
-    <link rel="stylesheet" href="tarz.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>İl Veri Ölçümü</title>
+<link rel="stylesheet" href="tarz.css" />
 </head>
 <body>
 
-<header>
-    <h1>Türkiye İl Verileri</h1>
-
-    <div class="kontroller">
-        <input type="text" id="arama" placeholder="Şehir ara...">
-
-        <select id="siralama">
-            <option value="alfabetik">Alfabetik</option>
-            <option value="bina">Toplam bina</option>
-            <option value="adres">Adresli bina</option>
-            <option value="adres_oran">Adres/Bina oranı</option>
-            <option value="yol">Toplam yol</option>
-            <option value="isimli_yol">Adlı yol</option>
-            <option value="isimli_yol_oran">Adlı yol/Yol oranı</option>
-        </select>
+  <div id="genelDurum" class="bilgi-cubugu">
+    <div class="ilerleme-kutusu">
+      <div class="yukleniyor-simge"></div>
+      <span id="durumMesaji">Sistem Hazır.</span>
     </div>
-</header>
+    <div id="istatistikMesaji">Veriler Yüklendi</div>
+  </div>
 
-<main>
-    <div id="kartlar" class="kartlar"></div>
-</main>
+  <div style="
+        max-width:1200px;
+        margin: 0 auto 15px auto;
+        font-size:14px;
+        color:#475569;
+        text-align:center;
+        padding-top: 10px;
+        ">
+        Her il için veri olmayabilir.
+  </div>
+
+  <div class="baslik-alani">
+    <h1>Türkiye İl Verileri</h1>
+    
+    <div class="denetimler">
+      <span class="sirala-etiket">Sırala:</span>
+      
+      <select id="siralamaSecimi">
+        <option value="alfabetik">Alfabetik</option>
+        <option value="bina_sayisi">Bina Sayısı</option>
+        <option value="adres_sayisi">Adres Sayısı</option>
+        <option value="adres_orani">Adres/Bina Oranı</option>
+        <option value="yol_sayisi">Yol Sayısı</option>
+        <option value="isimli_yol_sayisi">İsimli Yol Sayısı</option>
+        <option value="yol_orani">Yol/İsimli Yol Oranı</option>
+        </select>
+      
+      <input type="text" id="aramaKutusu" placeholder="İl Ara..." />
+      <button onclick="verileriGetir()">Yenile</button>
+    </div>
+  </div>
+
+  <div id="anaListe" class="liste">
+    <div style="text-align:center; padding:40px; color:#666;">Veriler okunuyor...</div>
+  </div>
+
+  <br>
+  <div style="
+        max-width:1200px;
+        margin: 0 auto 15px auto;
+        font-size:14px;
+        color:#475569;
+        text-align:center;
+        padding-top: 10px;
+        ">
+        Veri kaynağı: OpenStreetMap katkıcıları (ODbL), Overpass API aracılığıyla alındı.
+  </div>
 
 <script src="betik.js"></script>
 </body>
