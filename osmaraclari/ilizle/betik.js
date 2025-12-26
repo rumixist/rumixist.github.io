@@ -1,108 +1,160 @@
-let tumSehirler = [];
-let gosterilenSehirler = [];
+/**
+ * Veri Kaynağı Yapılandırması
+ */
+const VERI_URL = 'veri/iller.json';
 
-fetch("veri/iller.json")
-    .then(res => res.json())
-    .then(veri => {
-        tumSehirler = Object.values(veri).map(il => {
-            const adresOran = il.bina_sayisi
-                ? (il.adres_sayisi / il.bina_sayisi) * 100
-                : 0;
+// Verileri tutacağımız dizelge (array)
+let ilVerileri = [];
 
-            const isimliYolOran = il.yol_sayisi
-                ? (il.isimli_yol_sayisi / il.yol_sayisi) * 100
-                : 0;
+/* Yardımcılar */
+const el = id => document.getElementById(id);
+const sayiFmt = s => (s === null || s === undefined) ? '-' : s.toLocaleString('tr-TR');
 
-            return {
-                ...il,
-                adres_oran: adresOran,
-                isimli_yol_oran: isimliYolOran
-            };
-        });
-
-        gosterilenSehirler = [...tumSehirler];
-        kartlariCiz();
-    });
-
-const kartAlan = document.getElementById("kartlar");
-const aramaInput = document.getElementById("arama");
-const siralamaSelect = document.getElementById("siralama");
-
-aramaInput.addEventListener("input", filtreleVeSirala);
-siralamaSelect.addEventListener("change", filtreleVeSirala);
-
-function filtreleVeSirala() {
-    const aramaMetni = aramaInput.value.toLowerCase();
-    const siralama = siralamaSelect.value;
-
-    gosterilenSehirler = tumSehirler.filter(il =>
-        il.il.toLowerCase().includes(aramaMetni)
-    );
-
-    gosterilenSehirler.sort((a, b) => {
-        switch (siralama) {
-            case "alfabetik":
-                return a.il.localeCompare(b.il, "tr");
-            case "bina":
-                return b.bina_sayisi - a.bina_sayisi;
-            case "adres":
-                return b.adres_sayisi - a.adres_sayisi;
-            case "adres_oran":
-                return b.adres_oran - a.adres_oran;
-            case "yol":
-                return b.yol_sayisi - a.yol_sayisi;
-            case "isimli_yol":
-                return b.isimli_yol_sayisi - a.isimli_yol_sayisi;
-            case "isimli_yol_oran":
-                return b.isimli_yol_oran - a.isimli_yol_oran;
-            default:
-                return 0;
-        }
-    });
-
-    kartlariCiz();
+/* Yükleme Simgesi Denetimi */
+function yukleniyorGoster(durum) {
+  const kutu = el('genelDurum');
+  if (durum) kutu.classList.add('aktif');
+  else kutu.classList.remove('aktif');
 }
 
-function kartlariCiz() {
-    kartAlan.innerHTML = "";
+/* Verileri JSON dosyasından çekme işlevi */
+async function verileriGetir() {
+  yukleniyorGoster(true);
+  el('durumMesaji').innerText = "Veri dosyası okunuyor...";
 
-    gosterilenSehirler.forEach(il => {
-        const kart = document.createElement("div");
-        kart.className = "kart";
+  try {
+    const yanit = await fetch(VERI_URL);
+    if (!yanit.ok) throw new Error("Veri dosyası bulunamadı.");
 
-        kart.innerHTML = `
-            <h2>${il.il}</h2>
+    const hamVeri = await yanit.json();
 
-            <div class="istatistik">
-                <div>Bina<br><strong>${il.bina_sayisi.toLocaleString()}</strong></div>
-                <div>Adres<br><strong>${il.adres_sayisi.toLocaleString()}</strong></div>
-                <div>Yol<br><strong>${il.yol_sayisi.toLocaleString()}</strong></div>
-                <div>Adlı Yol<br><strong>${il.isimli_yol_sayisi.toLocaleString()}</strong></div>
-            </div>
+    // 🔴 ÖNCE FİLTRE: bina_sayisi 0 olan iller tamamen elenir
+    ilVerileri = Object.keys(hamVeri)
+      .filter(ilAdi => {
+        const veri = hamVeri[ilAdi];
+        return (veri.bina_sayisi || 0) > 0;
+      })
+      .map(ilAdi => {
+        const veri = hamVeri[ilAdi];
 
-            <div class="oran-blok">
-                <div class="oran-baslik">
-                    <span>Adres Oranı</span>
-                    <span>%${il.adres_oran.toFixed(2)}</span>
-                </div>
-                <div class="progress">
-                    <div class="progress-dolum" style="width:${il.adres_oran}%"></div>
-                </div>
-            </div>
+        const bina = veri.bina_sayisi || 0;
+        const adres = veri.adres_sayisi || 0;
+        const yol = veri.yol_sayisi || 0;
+        const isimli = veri.isimli_yol_sayisi || 0;
 
-            <div class="oran-blok">
-                <div class="oran-baslik">
-                    <span>Yol Ad Oranı</span>
-                    <span>%${il.isimli_yol_oran.toFixed(2)}</span>
-                </div>
-                <div class="progress">
-                    <div class="progress-dolum" style="width:${il.isimli_yol_oran}%"></div>
-                </div>
-            </div>
-        `;
+        return {
+          ad: veri.il || ilAdi,
+          bina_sayisi: bina,
+          adres_sayisi: adres,
+          adres_orani: bina > 0 ? (adres / bina) * 100 : 0,
+          yol_sayisi: yol,
+          isimli_yol_sayisi: isimli,
+          yol_orani: yol > 0 ? (isimli / yol) * 100 : 0,
+          degisim: veri.degisim,
+          son_guncelleme: veri.son_guncelleme || null
+        };
+      });
 
-        kartAlan.appendChild(kart);
-    });
+    el('durumMesaji').innerText = "Veriler hazır.";
+    el('istatistikMesaji').innerText = `${ilVerileri.length} İl Yüklendi`;
+
+    arayuzGuncelle();
+
+  } catch (hata) {
+    console.error(hata);
+    el('anaListe').innerHTML =
+      `<div style="text-align:center; padding:30px; color:red">
+        Veri okuma hatası: ${hata.message}
+      </div>`;
+    el('durumMesaji').innerText = "Hata oluştu.";
+  } finally {
+    yukleniyorGoster(false);
+  }
 }
 
+/* HTML Kart Üretimi */
+function kartHtmlUret(veri) {
+  const degisimMetni =
+    (veri.degisim !== undefined && veri.degisim !== null)
+      ? `+${sayiFmt(veri.degisim)}`
+      : '-';
 
+  const degisimSinifi = veri.degisim ? 'deger degisim-artti' : 'deger';
+  const degisimAciklama = veri.degisim ? 'Son dönem değişimi' : 'Veri henüz yok';
+
+  const guncellemeMetni = veri.son_guncelleme
+    ? veri.son_guncelleme
+    : 'Bilgi yok';
+
+  return `
+    <div class="kart">
+      <div class="kart-baslik">
+        <div class="il-adi">${veri.ad}</div>
+        <div class="durum-metni">${guncellemeMetni}</div>
+      </div>
+
+      <div class="veri-izgarasi">
+        <div class="veri-grubu">
+          <div class="etiket">Toplam Bina</div>
+          <div class="deger">${sayiFmt(veri.bina_sayisi)}</div>
+          <div class="alt-bilgi">${sayiFmt(veri.adres_sayisi)} adresli</div>
+          <div class="oran-cubugu">
+            <div class="oran-doluluk" style="width:${veri.adres_orani}%"></div>
+          </div>
+          <div class="alt-bilgi" style="text-align:right">%${veri.adres_orani.toFixed(1)}</div>
+        </div>
+
+        <div class="veri-grubu">
+          <div class="etiket">Toplam Sokak</div>
+          <div class="deger">${sayiFmt(veri.yol_sayisi)}</div>
+          <div class="alt-bilgi">${sayiFmt(veri.isimli_yol_sayisi)} isimli</div>
+          <div class="oran-cubugu">
+            <div class="oran-doluluk" style="width:${veri.yol_orani}%"></div>
+          </div>
+          <div class="alt-bilgi" style="text-align:right">%${veri.yol_orani.toFixed(1)}</div>
+        </div>
+
+        <div class="veri-grubu">
+          <div class="etiket">Değişim</div>
+          <div class="${degisimSinifi}">${degisimMetni}</div>
+          <div class="alt-bilgi">${degisimAciklama}</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* Sıralama ve Arama İşlevleri */
+function arayuzGuncelle() {
+  const aramaMetni = el('aramaKutusu').value.toLocaleLowerCase('tr');
+  const siralamaTipi = el('siralamaSecimi').value;
+  const listeKutusu = el('anaListe');
+
+  let gosterilecek = ilVerileri.filter(il =>
+    il.ad.toLocaleLowerCase('tr').includes(aramaMetni)
+  );
+
+  gosterilecek.sort((a, b) => {
+    if (siralamaTipi === 'alfabetik') {
+      return a.ad.localeCompare(b.ad, 'tr');
+    }
+    const degerA = a[siralamaTipi] || 0;
+    const degerB = b[siralamaTipi] || 0;
+    return degerB - degerA;
+  });
+
+  if (gosterilecek.length === 0) {
+    listeKutusu.innerHTML =
+      '<div style="text-align:center; padding:20px;">Kayıt bulunamadı.</div>';
+    return;
+  }
+
+  listeKutusu.innerHTML = gosterilecek.map(kartHtmlUret).join('');
+}
+
+/* Olay Dinleyicileri */
+el('aramaKutusu').addEventListener('input', arayuzGuncelle);
+el('siralamaSecimi').addEventListener('change', arayuzGuncelle);
+
+// Sayfa açıldığında başlat
+window.addEventListener('DOMContentLoaded', verileriGetir);
