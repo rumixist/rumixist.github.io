@@ -22,6 +22,7 @@
     <link rel="apple-touch-icon" href="/assets/img/favicon.png">
 
     <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/osmaraclari/osmaraclari.css">
 
     <script defer src="/assets/js/global.js"></script>
 </head>
@@ -74,13 +75,29 @@
             </ul>
         </aside>
         <main class="main-content-area">
-            <h1>OSM Araçları</h1>
-            <p>OpenStreetMap verilerini kullanarak ölçümler yapabileceğiniz çeşitli araçlar sunan bir site.</p> <br>
-            <ul>
-                <li><a class="a-button-a" href="/osmaraclari/ilkartlari/">Türkiye'nin illerine bak</a> - Her şehirdeki veri kalitesini anlamada yardımcı olan bir araç</li>
+            <header class="osm-header">
+                <h1>OSM Araçları</h1>
+                <p>OpenStreetMap verileriyle kaliteyi, hatayı ve durumu ölç</p>
+            </header>
 
-                <li><a class="a-button-a" href="/osmaraclari/l1-l3-hatalar/">Osmose hatalarının illere göre dağılımı</a> - Osmose L1 L2 ve L3 hatalarının Türkiye'nin farklı illerindeki dağılımını gösteren araç.</li>
-            </ul>
+            <section class="osm-tools">
+                <a href="/osmaraclari/ilizle/" class="osm-tool il-izle">
+                    <div class="tool-header">İl İzle</div>
+                    <div class="tool-desc">
+                        Türkiye genelinde şehir bazlı OpenStreetMap veri kalitesini takip et.
+                    </div>
+                    <div class="tool-action">Aracı aç</div>
+                </a>
+
+                <a href="/osmaraclari/l1-l3-hatalar/" class="osm-tool hata-say">
+                    <div class="tool-header">Osmose Hataları</div>
+                    <div class="tool-desc">
+                        L1, L2 ve L3 Osmose hatalarının illere göre dağılımını incele.
+                    </div>
+                    <div class="tool-action">Hataları incele</div>
+                </a>
+            </section>
+
 
 
 

@@ -129,7 +129,6 @@
 /* Hover efekti: hafif büyüme + alt çizgi */
 .friends-list p:hover,
 .requests-list p:hover {
-    transform: scale(1.04);
     text-decoration: underline;
 }
 
