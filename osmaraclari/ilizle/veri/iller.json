@@ -1,19 +1,19 @@
 {
     "İstanbul": {
         "il": "İstanbul",
-        "bina_sayisi": 723057,
-        "adres_sayisi": 36135,
-        "yol_sayisi": 216226,
-        "isimli_yol_sayisi": 87738,
-        "son_guncelleme": "2026-01-01 04:14:04"
+        "bina_sayisi": 723079,
+        "adres_sayisi": 36146,
+        "yol_sayisi": 216235,
+        "isimli_yol_sayisi": 87743,
+        "son_guncelleme": "2026-01-02 04:10:01"
     },
     "Ankara": {
         "il": "Ankara",
-        "bina_sayisi": 223462,
-        "adres_sayisi": 17995,
-        "yol_sayisi": 123625,
-        "isimli_yol_sayisi": 33553,
-        "son_guncelleme": "2026-01-01 04:08:23"
+        "bina_sayisi": 223479,
+        "adres_sayisi": 18015,
+        "yol_sayisi": 123715,
+        "isimli_yol_sayisi": 33556,
+        "son_guncelleme": "2026-01-02 04:02:58"
     },
     "İzmir": {
         "il": "İzmir",
@@ -21,7 +21,7 @@
         "adres_sayisi": 3683,
         "yol_sayisi": 118069,
         "isimli_yol_sayisi": 31443,
-        "son_guncelleme": "2026-01-01 04:14:24"
+        "son_guncelleme": "2026-01-02 04:10:25"
     },
     "Adana": {
         "il": "Adana",
@@ -29,7 +29,7 @@
         "adres_sayisi": 1144,
         "yol_sayisi": 56144,
         "isimli_yol_sayisi": 7037,
-        "son_guncelleme": "2026-01-01 04:07:33"
+        "son_guncelleme": "2026-01-02 04:01:32"
     },
     "Adıyaman": {
         "il": "Adıyaman",
@@ -37,7 +37,7 @@
         "adres_sayisi": 46,
         "yol_sayisi": 24795,
         "isimli_yol_sayisi": 2493,
-        "son_guncelleme": "2026-01-01 04:07:42"
+        "son_guncelleme": "2026-01-02 04:01:42"
     },
     "Afyonkarahisar": {
         "il": "Afyonkarahisar",
@@ -45,15 +45,15 @@
         "adres_sayisi": 719,
         "yol_sayisi": 38290,
         "isimli_yol_sayisi": 3920,
-        "son_guncelleme": "2026-01-01 04:07:53"
+        "son_guncelleme": "2026-01-02 04:01:52"
     },
     "Ağrı": {
         "il": "Ağrı",
         "bina_sayisi": 6921,
         "adres_sayisi": 19,
-        "yol_sayisi": 12172,
-        "isimli_yol_sayisi": 341,
-        "son_guncelleme": "2026-01-01 04:08:00"
+        "yol_sayisi": 12171,
+        "isimli_yol_sayisi": 340,
+        "son_guncelleme": "2026-01-02 04:02:16"
     },
     "Amasya": {
         "il": "Amasya",
@@ -61,15 +61,15 @@
         "adres_sayisi": 9624,
         "yol_sayisi": 14831,
         "isimli_yol_sayisi": 2201,
-        "son_guncelleme": "2026-01-01 04:08:08"
+        "son_guncelleme": "2026-01-02 04:02:41"
     },
     "Antalya": {
         "il": "Antalya",
-        "bina_sayisi": 208324,
+        "bina_sayisi": 208325,
         "adres_sayisi": 6499,
-        "yol_sayisi": 91693,
-        "isimli_yol_sayisi": 10935,
-        "son_guncelleme": "2026-01-01 04:08:38"
+        "yol_sayisi": 91744,
+        "isimli_yol_sayisi": 10982,
+        "son_guncelleme": "2026-01-02 04:03:23"
     },
     "Artvin": {
         "il": "Artvin",
@@ -77,7 +77,7 @@
         "adres_sayisi": 13,
         "yol_sayisi": 7795,
         "isimli_yol_sayisi": 1304,
-        "son_guncelleme": "2026-01-01 04:08:46"
+        "son_guncelleme": "2026-01-02 04:03:33"
     },
     "Aydın": {
         "il": "Aydın",
@@ -85,15 +85,15 @@
         "adres_sayisi": 302,
         "yol_sayisi": 40576,
         "isimli_yol_sayisi": 5691,
-        "son_guncelleme": "2026-01-01 04:08:55"
+        "son_guncelleme": "2026-01-02 04:03:42"
     },
     "Balıkesir": {
         "il": "Balıkesir",
-        "bina_sayisi": 241129,
-        "adres_sayisi": 28709,
+        "bina_sayisi": 241126,
+        "adres_sayisi": 29043,
         "yol_sayisi": 67142,
         "isimli_yol_sayisi": 14030,
-        "son_guncelleme": "2026-01-01 04:09:10"
+        "son_guncelleme": "2026-01-02 04:03:56"
     },
     "Bilecik": {
         "il": "Bilecik",
@@ -101,7 +101,7 @@
         "adres_sayisi": 26,
         "yol_sayisi": 11341,
         "isimli_yol_sayisi": 534,
-        "son_guncelleme": "2026-01-01 04:09:18"
+        "son_guncelleme": "2026-01-02 04:04:18"
     },
     "Bingöl": {
         "il": "Bingöl",
@@ -109,7 +109,7 @@
         "adres_sayisi": 5,
         "yol_sayisi": 6477,
         "isimli_yol_sayisi": 341,
-        "son_guncelleme": "2026-01-01 04:09:25"
+        "son_guncelleme": "2026-01-02 04:04:25"
     },
     "Bitlis": {
         "il": "Bitlis",
@@ -117,7 +117,7 @@
         "adres_sayisi": 14,
         "yol_sayisi": 6764,
         "isimli_yol_sayisi": 532,
-        "son_guncelleme": "2026-01-01 04:09:32"
+        "son_guncelleme": "2026-01-02 04:04:38"
     },
     "Bolu": {
         "il": "Bolu",
@@ -125,7 +125,7 @@
         "adres_sayisi": 123,
         "yol_sayisi": 17061,
         "isimli_yol_sayisi": 1180,
-        "son_guncelleme": "2026-01-01 04:09:40"
+        "son_guncelleme": "2026-01-02 04:04:46"
     },
     "Burdur": {
         "il": "Burdur",
@@ -133,7 +133,7 @@
         "adres_sayisi": 78,
         "yol_sayisi": 12007,
         "isimli_yol_sayisi": 836,
-        "son_guncelleme": "2026-01-01 04:09:48"
+        "son_guncelleme": "2026-01-02 04:05:15"
     },
     "Çanakkale": {
         "il": "Çanakkale",
@@ -141,23 +141,23 @@
         "adres_sayisi": 233,
         "yol_sayisi": 34177,
         "isimli_yol_sayisi": 3511,
-        "son_guncelleme": "2026-01-01 04:10:09"
+        "son_guncelleme": "2026-01-02 04:05:39"
     },
     "Çankırı": {
         "il": "Çankırı",
         "bina_sayisi": 5166,
         "adres_sayisi": 57,
-        "yol_sayisi": 9947,
+        "yol_sayisi": 9953,
         "isimli_yol_sayisi": 930,
-        "son_guncelleme": "2026-01-01 04:10:20"
+        "son_guncelleme": "2026-01-02 04:05:47"
     },
     "Çorum": {
         "il": "Çorum",
         "bina_sayisi": 17270,
         "adres_sayisi": 78,
-        "yol_sayisi": 22532,
+        "yol_sayisi": 22540,
         "isimli_yol_sayisi": 1145,
-        "son_guncelleme": "2026-01-01 04:10:33"
+        "son_guncelleme": "2026-01-02 04:05:55"
     },
     "Denizli": {
         "il": "Denizli",
@@ -165,7 +165,7 @@
         "adres_sayisi": 699,
         "yol_sayisi": 40428,
         "isimli_yol_sayisi": 8347,
-        "son_guncelleme": "2026-01-01 04:10:42"
+        "son_guncelleme": "2026-01-02 04:06:28"
     },
     "Diyarbakır": {
         "il": "Diyarbakır",
@@ -173,15 +173,15 @@
         "adres_sayisi": 1854,
         "yol_sayisi": 37467,
         "isimli_yol_sayisi": 1960,
-        "son_guncelleme": "2026-01-01 04:10:52"
+        "son_guncelleme": "2026-01-02 04:06:42"
     },
     "Edirne": {
         "il": "Edirne",
         "bina_sayisi": 68569,
         "adres_sayisi": 263,
-        "yol_sayisi": 26229,
-        "isimli_yol_sayisi": 3053,
-        "son_guncelleme": "2026-01-01 04:11:04"
+        "yol_sayisi": 26230,
+        "isimli_yol_sayisi": 3057,
+        "son_guncelleme": "2026-01-02 04:06:53"
     },
     "Elazığ": {
         "il": "Elazığ",
@@ -189,7 +189,7 @@
         "adres_sayisi": 0,
         "yol_sayisi": 0,
         "isimli_yol_sayisi": 0,
-        "son_guncelleme": "2026-01-01 04:11:10"
+        "son_guncelleme": "2026-01-02 04:07:13"
     },
     "Erzincan": {
         "il": "Erzincan",
@@ -197,7 +197,7 @@
         "adres_sayisi": 21,
         "yol_sayisi": 9453,
         "isimli_yol_sayisi": 1057,
-        "son_guncelleme": "2026-01-01 04:11:17"
+        "son_guncelleme": "2026-01-02 04:07:20"
     },
     "Erzurum": {
         "il": "Erzurum",
@@ -205,7 +205,7 @@
         "adres_sayisi": 51,
         "yol_sayisi": 16869,
         "isimli_yol_sayisi": 1585,
-        "son_guncelleme": "2026-01-01 04:11:28"
+        "son_guncelleme": "2026-01-02 04:07:32"
     },
     "Eskişehir": {
         "il": "Eskişehir",
@@ -213,15 +213,15 @@
         "adres_sayisi": 351,
         "yol_sayisi": 28462,
         "isimli_yol_sayisi": 5172,
-        "son_guncelleme": "2026-01-01 04:11:41"
+        "son_guncelleme": "2026-01-02 04:07:41"
     },
     "Gaziantep": {
         "il": "Gaziantep",
         "bina_sayisi": 320806,
-        "adres_sayisi": 262,
+        "adres_sayisi": 266,
         "yol_sayisi": 59055,
         "isimli_yol_sayisi": 2183,
-        "son_guncelleme": "2026-01-01 04:11:57"
+        "son_guncelleme": "2026-01-02 04:07:56"
     },
     "Giresun": {
         "il": "Giresun",
@@ -229,7 +229,7 @@
         "adres_sayisi": 46,
         "yol_sayisi": 23369,
         "isimli_yol_sayisi": 751,
-        "son_guncelleme": "2026-01-01 04:12:06"
+        "son_guncelleme": "2026-01-02 04:08:15"
     },
     "Gümüşhane": {
         "il": "Gümüşhane",
@@ -237,7 +237,7 @@
         "adres_sayisi": 10,
         "yol_sayisi": 10124,
         "isimli_yol_sayisi": 1074,
-        "son_guncelleme": "2026-01-01 04:12:24"
+        "son_guncelleme": "2026-01-02 04:08:23"
     },
     "Hakkari": {
         "il": "Hakkari",
@@ -245,31 +245,31 @@
         "adres_sayisi": 0,
         "yol_sayisi": 0,
         "isimli_yol_sayisi": 0,
-        "son_guncelleme": "2026-01-01 04:12:36"
+        "son_guncelleme": "2026-01-02 04:08:30"
     },
     "Hatay": {
         "il": "Hatay",
         "bina_sayisi": 359695,
         "adres_sayisi": 233,
-        "yol_sayisi": 57415,
+        "yol_sayisi": 57416,
         "isimli_yol_sayisi": 4807,
-        "son_guncelleme": "2026-01-01 04:13:15"
+        "son_guncelleme": "2026-01-02 04:09:19"
     },
     "Isparta": {
         "il": "Isparta",
-        "bina_sayisi": 15931,
+        "bina_sayisi": 15968,
         "adres_sayisi": 43,
-        "yol_sayisi": 21951,
+        "yol_sayisi": 21983,
         "isimli_yol_sayisi": 2427,
-        "son_guncelleme": "2026-01-01 04:13:24"
+        "son_guncelleme": "2026-01-02 04:09:29"
     },
     "Mersin": {
         "il": "Mersin",
         "bina_sayisi": 27009,
         "adres_sayisi": 411,
-        "yol_sayisi": 56428,
-        "isimli_yol_sayisi": 9747,
-        "son_guncelleme": "2026-01-01 04:13:32"
+        "yol_sayisi": 56466,
+        "isimli_yol_sayisi": 9772,
+        "son_guncelleme": "2026-01-02 04:09:38"
     },
     "Kars": {
         "il": "Kars",
@@ -277,15 +277,15 @@
         "adres_sayisi": 17,
         "yol_sayisi": 6312,
         "isimli_yol_sayisi": 465,
-        "son_guncelleme": "2026-01-01 04:14:32"
+        "son_guncelleme": "2026-01-02 04:10:33"
     },
     "Kastamonu": {
         "il": "Kastamonu",
         "bina_sayisi": 10495,
         "adres_sayisi": 44,
-        "yol_sayisi": 25387,
+        "yol_sayisi": 25398,
         "isimli_yol_sayisi": 1220,
-        "son_guncelleme": "2026-01-01 04:14:40"
+        "son_guncelleme": "2026-01-02 04:10:42"
     },
     "Kayseri": {
         "il": "Kayseri",
@@ -293,15 +293,15 @@
         "adres_sayisi": 554,
         "yol_sayisi": 78518,
         "isimli_yol_sayisi": 5118,
-        "son_guncelleme": "2026-01-01 04:15:00"
+        "son_guncelleme": "2026-01-02 04:10:57"
     },
     "Kırklareli": {
         "il": "Kırklareli",
-        "bina_sayisi": 65783,
+        "bina_sayisi": 65784,
         "adres_sayisi": 1564,
-        "yol_sayisi": 34998,
+        "yol_sayisi": 35005,
         "isimli_yol_sayisi": 6685,
-        "son_guncelleme": "2026-01-01 04:15:13"
+        "son_guncelleme": "2026-01-02 04:11:11"
     },
     "Kırşehir": {
         "il": "Kırşehir",
@@ -309,7 +309,7 @@
         "adres_sayisi": 191,
         "yol_sayisi": 9763,
         "isimli_yol_sayisi": 1321,
-        "son_guncelleme": "2026-01-01 04:15:20"
+        "son_guncelleme": "2026-01-02 04:11:23"
     },
     "Kocaeli": {
         "il": "Kocaeli",
@@ -317,15 +317,15 @@
         "adres_sayisi": 1840,
         "yol_sayisi": 62376,
         "isimli_yol_sayisi": 9126,
-        "son_guncelleme": "2026-01-01 04:15:33"
+        "son_guncelleme": "2026-01-02 04:11:37"
     },
     "Konya": {
         "il": "Konya",
         "bina_sayisi": 96567,
         "adres_sayisi": 965,
-        "yol_sayisi": 79305,
+        "yol_sayisi": 79306,
         "isimli_yol_sayisi": 9227,
-        "son_guncelleme": "2026-01-01 04:15:46"
+        "son_guncelleme": "2026-01-02 04:11:47"
     },
     "Kütahya": {
         "il": "Kütahya",
@@ -333,7 +333,7 @@
         "adres_sayisi": 135,
         "yol_sayisi": 21969,
         "isimli_yol_sayisi": 2638,
-        "son_guncelleme": "2026-01-01 04:15:54"
+        "son_guncelleme": "2026-01-02 04:11:55"
     },
     "Malatya": {
         "il": "Malatya",
@@ -341,7 +341,7 @@
         "adres_sayisi": 92,
         "yol_sayisi": 32179,
         "isimli_yol_sayisi": 1106,
-        "son_guncelleme": "2026-01-01 04:16:05"
+        "son_guncelleme": "2026-01-02 04:12:08"
     },
     "Manisa": {
         "il": "Manisa",
@@ -349,7 +349,7 @@
         "adres_sayisi": 754,
         "yol_sayisi": 39619,
         "isimli_yol_sayisi": 3216,
-        "son_guncelleme": "2026-01-01 04:16:27"
+        "son_guncelleme": "2026-01-02 04:12:18"
     },
     "Kahramanmaraş": {
         "il": "Kahramanmaraş",
@@ -357,15 +357,15 @@
         "adres_sayisi": 830,
         "yol_sayisi": 57736,
         "isimli_yol_sayisi": 2740,
-        "son_guncelleme": "2026-01-01 04:16:43"
+        "son_guncelleme": "2026-01-02 04:12:32"
     },
     "Mardin": {
         "il": "Mardin",
-        "bina_sayisi": 40401,
+        "bina_sayisi": 40432,
         "adres_sayisi": 5672,
-        "yol_sayisi": 12870,
+        "yol_sayisi": 12873,
         "isimli_yol_sayisi": 1962,
-        "son_guncelleme": "2026-01-01 04:16:56"
+        "son_guncelleme": "2026-01-02 04:12:44"
     },
     "Nevşehir": {
         "il": "Nevşehir",
@@ -373,7 +373,7 @@
         "adres_sayisi": 247,
         "yol_sayisi": 17694,
         "isimli_yol_sayisi": 2066,
-        "son_guncelleme": "2026-01-01 04:17:22"
+        "son_guncelleme": "2026-01-02 04:13:35"
     },
     "Niğde": {
         "il": "Niğde",
@@ -381,7 +381,7 @@
         "adres_sayisi": 191,
         "yol_sayisi": 14056,
         "isimli_yol_sayisi": 1067,
-        "son_guncelleme": "2026-01-01 04:17:30"
+        "son_guncelleme": "2026-01-02 04:13:43"
     },
     "Ordu": {
         "il": "Ordu",
@@ -389,7 +389,7 @@
         "adres_sayisi": 1154,
         "yol_sayisi": 31406,
         "isimli_yol_sayisi": 4056,
-        "son_guncelleme": "2026-01-01 04:17:45"
+        "son_guncelleme": "2026-01-02 04:13:54"
     },
     "Rize": {
         "il": "Rize",
@@ -397,15 +397,15 @@
         "adres_sayisi": 10138,
         "yol_sayisi": 13254,
         "isimli_yol_sayisi": 972,
-        "son_guncelleme": "2026-01-01 04:17:53"
+        "son_guncelleme": "2026-01-02 04:14:18"
     },
     "Sakarya": {
         "il": "Sakarya",
-        "bina_sayisi": 33998,
+        "bina_sayisi": 34097,
         "adres_sayisi": 691,
-        "yol_sayisi": 37361,
+        "yol_sayisi": 37368,
         "isimli_yol_sayisi": 2397,
-        "son_guncelleme": "2026-01-01 04:18:02"
+        "son_guncelleme": "2026-01-02 04:14:27"
     },
     "Samsun": {
         "il": "Samsun",
@@ -413,7 +413,7 @@
         "adres_sayisi": 407,
         "yol_sayisi": 53280,
         "isimli_yol_sayisi": 4204,
-        "son_guncelleme": "2026-01-01 04:18:11"
+        "son_guncelleme": "2026-01-02 04:14:38"
     },
     "Siirt": {
         "il": "Siirt",
@@ -421,7 +421,7 @@
         "adres_sayisi": 13,
         "yol_sayisi": 5229,
         "isimli_yol_sayisi": 277,
-        "son_guncelleme": "2026-01-01 04:18:37"
+        "son_guncelleme": "2026-01-02 04:14:46"
     },
     "Sinop": {
         "il": "Sinop",
@@ -429,7 +429,7 @@
         "adres_sayisi": 20,
         "yol_sayisi": 19609,
         "isimli_yol_sayisi": 1014,
-        "son_guncelleme": "2026-01-01 04:18:49"
+        "son_guncelleme": "2026-01-02 04:15:21"
     },
     "Tekirdağ": {
         "il": "Tekirdağ",
@@ -437,7 +437,7 @@
         "adres_sayisi": 8349,
         "yol_sayisi": 50485,
         "isimli_yol_sayisi": 12547,
-        "son_guncelleme": "2026-01-01 04:19:13"
+        "son_guncelleme": "2026-01-02 04:15:45"
     },
     "Tokat": {
         "il": "Tokat",
@@ -445,7 +445,7 @@
         "adres_sayisi": 193,
         "yol_sayisi": 22175,
         "isimli_yol_sayisi": 3048,
-        "son_guncelleme": "2026-01-01 04:19:23"
+        "son_guncelleme": "2026-01-02 04:15:56"
     },
     "Trabzon": {
         "il": "Trabzon",
@@ -453,7 +453,7 @@
         "adres_sayisi": 240,
         "yol_sayisi": 40530,
         "isimli_yol_sayisi": 5492,
-        "son_guncelleme": "2026-01-01 04:19:34"
+        "son_guncelleme": "2026-01-02 04:16:07"
     },
     "Tunceli": {
         "il": "Tunceli",
@@ -461,23 +461,23 @@
         "adres_sayisi": 5,
         "yol_sayisi": 6984,
         "isimli_yol_sayisi": 527,
-        "son_guncelleme": "2026-01-01 04:19:47"
+        "son_guncelleme": "2026-01-02 04:16:28"
     },
     "Şanlıurfa": {
         "il": "Şanlıurfa",
-        "bina_sayisi": 199082,
+        "bina_sayisi": 199079,
         "adres_sayisi": 323,
-        "yol_sayisi": 48399,
+        "yol_sayisi": 48400,
         "isimli_yol_sayisi": 2048,
-        "son_guncelleme": "2026-01-01 04:19:59"
+        "son_guncelleme": "2026-01-02 04:16:40"
     },
     "Uşak": {
         "il": "Uşak",
         "bina_sayisi": 15153,
         "adres_sayisi": 163,
-        "yol_sayisi": 14156,
+        "yol_sayisi": 14186,
         "isimli_yol_sayisi": 3493,
-        "son_guncelleme": "2026-01-01 04:20:07"
+        "son_guncelleme": "2026-01-02 04:16:49"
     },
     "Van": {
         "il": "Van",
@@ -485,7 +485,7 @@
         "adres_sayisi": 21,
         "yol_sayisi": 18617,
         "isimli_yol_sayisi": 596,
-        "son_guncelleme": "2026-01-01 04:20:20"
+        "son_guncelleme": "2026-01-02 04:16:57"
     },
     "Yozgat": {
         "il": "Yozgat",
@@ -493,7 +493,7 @@
         "adres_sayisi": 36,
         "yol_sayisi": 17723,
         "isimli_yol_sayisi": 766,
-        "son_guncelleme": "2026-01-01 04:20:31"
+        "son_guncelleme": "2026-01-02 04:17:19"
     },
     "Zonguldak": {
         "il": "Zonguldak",
@@ -501,7 +501,7 @@
         "adres_sayisi": 250,
         "yol_sayisi": 12344,
         "isimli_yol_sayisi": 1498,
-        "son_guncelleme": "2026-01-01 04:21:06"
+        "son_guncelleme": "2026-01-02 04:17:26"
     },
     "Aksaray": {
         "il": "Aksaray",
@@ -509,7 +509,7 @@
         "adres_sayisi": 72,
         "yol_sayisi": 20338,
         "isimli_yol_sayisi": 647,
-        "son_guncelleme": "2026-01-01 04:21:13"
+        "son_guncelleme": "2026-01-02 04:17:33"
     },
     "Karaman": {
         "il": "Karaman",
@@ -517,7 +517,7 @@
         "adres_sayisi": 15,
         "yol_sayisi": 8468,
         "isimli_yol_sayisi": 259,
-        "son_guncelleme": "2026-01-01 04:21:27"
+        "son_guncelleme": "2026-01-02 04:17:48"
     },
     "Kırıkkale": {
         "il": "Kırıkkale",
@@ -525,7 +525,7 @@
         "adres_sayisi": 50,
         "yol_sayisi": 10233,
         "isimli_yol_sayisi": 1143,
-        "son_guncelleme": "2026-01-01 04:21:34"
+        "son_guncelleme": "2026-01-02 04:17:55"
     },
     "Batman": {
         "il": "Batman",
@@ -533,7 +533,7 @@
         "adres_sayisi": 33155,
         "yol_sayisi": 12703,
         "isimli_yol_sayisi": 3444,
-        "son_guncelleme": "2026-01-01 04:21:57"
+        "son_guncelleme": "2026-01-02 04:18:03"
     },
     "Şırnak": {
         "il": "Şırnak",
@@ -541,7 +541,7 @@
         "adres_sayisi": 1992,
         "yol_sayisi": 7154,
         "isimli_yol_sayisi": 961,
-        "son_guncelleme": "2026-01-01 04:22:05"
+        "son_guncelleme": "2026-01-02 04:18:35"
     },
     "Bartın": {
         "il": "Bartın",
@@ -549,7 +549,7 @@
         "adres_sayisi": 18,
         "yol_sayisi": 7676,
         "isimli_yol_sayisi": 386,
-        "son_guncelleme": "2026-01-01 04:22:12"
+        "son_guncelleme": "2026-01-02 04:18:42"
     },
     "Ardahan": {
         "il": "Ardahan",
@@ -557,7 +557,7 @@
         "adres_sayisi": 271,
         "yol_sayisi": 4293,
         "isimli_yol_sayisi": 445,
-        "son_guncelleme": "2026-01-01 04:22:21"
+        "son_guncelleme": "2026-01-02 04:18:49"
     },
     "Iğdır": {
         "il": "Iğdır",
@@ -565,7 +565,7 @@
         "adres_sayisi": 9,
         "yol_sayisi": 3847,
         "isimli_yol_sayisi": 225,
-        "son_guncelleme": "2026-01-01 04:22:32"
+        "son_guncelleme": "2026-01-02 04:19:02"
     },
     "Yalova": {
         "il": "Yalova",
@@ -573,7 +573,7 @@
         "adres_sayisi": 1404,
         "yol_sayisi": 7642,
         "isimli_yol_sayisi": 1228,
-        "son_guncelleme": "2026-01-01 04:22:39"
+        "son_guncelleme": "2026-01-02 04:19:10"
     },
     "Karabük": {
         "il": "Karabük",
@@ -581,7 +581,7 @@
         "adres_sayisi": 21,
         "yol_sayisi": 7500,
         "isimli_yol_sayisi": 386,
-        "son_guncelleme": "2026-01-01 04:22:46"
+        "son_guncelleme": "2026-01-02 04:19:28"
     },
     "Kilis": {
         "il": "Kilis",
@@ -589,7 +589,7 @@
         "adres_sayisi": 7,
         "yol_sayisi": 9292,
         "isimli_yol_sayisi": 43,
-        "son_guncelleme": "2026-01-01 04:22:58"
+        "son_guncelleme": "2026-01-02 04:19:41"
     },
     "Osmaniye": {
         "il": "Osmaniye",
@@ -597,7 +597,7 @@
         "adres_sayisi": 150,
         "yol_sayisi": 17244,
         "isimli_yol_sayisi": 3235,
-        "son_guncelleme": "2026-01-01 04:23:08"
+        "son_guncelleme": "2026-01-02 04:19:51"
     },
     "Düzce": {
         "il": "Düzce",
@@ -605,15 +605,15 @@
         "adres_sayisi": 168,
         "yol_sayisi": 11264,
         "isimli_yol_sayisi": 3215,
-        "son_guncelleme": "2026-01-01 04:23:15"
+        "son_guncelleme": "2026-01-02 04:19:59"
     },
     "Bursa": {
         "il": "Bursa",
         "bina_sayisi": 87242,
         "adres_sayisi": 1833,
-        "yol_sayisi": 74751,
-        "isimli_yol_sayisi": 27275,
-        "son_guncelleme": "2026-01-01 04:09:59"
+        "yol_sayisi": 74763,
+        "isimli_yol_sayisi": 27286,
+        "son_guncelleme": "2026-01-02 04:05:29"
     },
     "Muğla": {
         "il": "Muğla",
@@ -621,7 +621,7 @@
         "adres_sayisi": 2703,
         "yol_sayisi": 48788,
         "isimli_yol_sayisi": 11235,
-        "son_guncelleme": "2026-01-01 04:17:07"
+        "son_guncelleme": "2026-01-02 04:13:12"
     },
     "Muş": {
         "il": "Muş",
@@ -629,15 +629,15 @@
         "adres_sayisi": 10,
         "yol_sayisi": 6417,
         "isimli_yol_sayisi": 580,
-        "son_guncelleme": "2026-01-01 04:17:14"
+        "son_guncelleme": "2026-01-02 04:13:22"
     },
     "Sivas": {
         "il": "Sivas",
-        "bina_sayisi": 51801,
-        "adres_sayisi": 5053,
-        "yol_sayisi": 28005,
-        "isimli_yol_sayisi": 5667,
-        "son_guncelleme": "2026-01-01 04:18:59"
+        "bina_sayisi": 51807,
+        "adres_sayisi": 5064,
+        "yol_sayisi": 28022,
+        "isimli_yol_sayisi": 5669,
+        "son_guncelleme": "2026-01-02 04:15:32"
     },
     "Bayburt": {
         "il": "Bayburt",
@@ -645,6 +645,6 @@
         "adres_sayisi": 8,
         "yol_sayisi": 4283,
         "isimli_yol_sayisi": 303,
-        "son_guncelleme": "2026-01-01 04:21:20"
+        "son_guncelleme": "2026-01-02 04:17:40"
     }
 }
