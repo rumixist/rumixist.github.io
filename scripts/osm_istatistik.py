@@ -23,16 +23,26 @@ def verileri_cek(il_adi, deneme_sayisi=3):
     """
     Overpass API'den veriyi çeker. Hata alırsa belirtilen sayıda tekrar dener.
     """
-    # DÜZELTME: Dış tırnakları tek tırnak (''') yaptık ki içerdeki çift tırnaklarla karışmasın.
     sorgu = f'''
     [out:json][timeout:180];
     area["name"="{il_adi}"]["admin_level"="4"]->.alan;
-    (way["building"](area.alan); relation["building"](area.alan););
+
+    (
+      way["building"]["building"!="greenhouse"]["shelter_type"!="gazebo"](area.alan);
+      relation["building"]["building"!="greenhouse"]["shelter_type"!="gazebo"](area.alan);
+    );
     out count;
-    (node["addr:housenumber"](area.alan); way["addr:housenumber"](area.alan); relation["addr:housenumber"](area.alan););
+
+    (
+      node["addr:housenumber"](area.alan);
+      way["addr:housenumber"](area.alan);
+      relation["addr:housenumber"](area.alan);
+    );
     out count;
+
     way["highway"](area.alan);
     out count;
+
     way["highway"]["name"](area.alan);
     out count;
     '''
@@ -125,3 +135,4 @@ def ana_islev():
 
 if __name__ == "__main__":
     ana_islev()
+
