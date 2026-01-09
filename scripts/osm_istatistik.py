@@ -45,14 +45,6 @@ def verileri_cek(il_adi, deneme_sayisi=3):
 
     way["highway"]["name"](area.alan);
     out count;
-
-    (
-      node(area.alan)(newer:"{{date:90 days ago}}");
-      way(area.alan)(newer:"{{date:90 days ago}}");
-      relation(area.alan)(newer:"{{date:90 days ago}}");
-    );
-    out count;
-
     '''
     
     url = "https://overpass-api.de/api/interpreter"
@@ -73,7 +65,7 @@ def verileri_cek(il_adi, deneme_sayisi=3):
             
             ogeler = veri.get("elements", [])
             
-            if len(ogeler) < 5:
+            if len(ogeler) < 4:
                 print(f"{il_adi}: Eksik veri döndü.")
                 return None
             
@@ -86,7 +78,6 @@ def verileri_cek(il_adi, deneme_sayisi=3):
                 "adres_sayisi": int(ogeler[1]["tags"]["total"]),
                 "yol_sayisi": int(ogeler[2]["tags"]["total"]),
                 "isimli_yol_sayisi": int(ogeler[3]["tags"]["total"]),
-                "degisiklik_90gun": int(ogeler[4]["tags"]["total"]),
                 "son_guncelleme": guncel_tarih
             }
             
@@ -144,6 +135,7 @@ def ana_islev():
 
 if __name__ == "__main__":
     ana_islev()
+
 
 
 
