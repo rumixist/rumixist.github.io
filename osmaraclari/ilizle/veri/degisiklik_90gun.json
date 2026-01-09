@@ -1,1 +1,310 @@
-{}
+{
+    "Adıyaman": {
+        "degisiklik_90gun": 15273,
+        "son_guncelleme": "2026-01-09 10:48:47"
+    },
+    "Afyonkarahisar": {
+        "degisiklik_90gun": 87458,
+        "son_guncelleme": "2026-01-09 10:49:17"
+    },
+    "Ağrı": {
+        "degisiklik_90gun": 530,
+        "son_guncelleme": "2026-01-09 10:49:28"
+    },
+    "Amasya": {
+        "degisiklik_90gun": 2235,
+        "son_guncelleme": "2026-01-09 10:50:13"
+    },
+    "Ankara": {
+        "degisiklik_90gun": 155700,
+        "son_guncelleme": "2026-01-09 10:50:37"
+    },
+    "Antalya": {
+        "degisiklik_90gun": 103336,
+        "son_guncelleme": "2026-01-09 10:51:13"
+    },
+    "Artvin": {
+        "degisiklik_90gun": 29156,
+        "son_guncelleme": "2026-01-09 10:51:42"
+    },
+    "Aydın": {
+        "degisiklik_90gun": 70302,
+        "son_guncelleme": "2026-01-09 10:52:00"
+    },
+    "Balıkesir": {
+        "degisiklik_90gun": 206254,
+        "son_guncelleme": "2026-01-09 10:52:48"
+    },
+    "Bilecik": {
+        "degisiklik_90gun": 15728,
+        "son_guncelleme": "2026-01-09 10:53:05"
+    },
+    "Bingöl": {
+        "degisiklik_90gun": 14292,
+        "son_guncelleme": "2026-01-09 10:53:44"
+    },
+    "Bitlis": {
+        "degisiklik_90gun": 24004,
+        "son_guncelleme": "2026-01-09 10:53:55"
+    },
+    "Bolu": {
+        "degisiklik_90gun": 31542,
+        "son_guncelleme": "2026-01-09 10:54:09"
+    },
+    "Burdur": {
+        "degisiklik_90gun": 65512,
+        "son_guncelleme": "2026-01-09 10:54:24"
+    },
+    "Bursa": {
+        "degisiklik_90gun": 109345,
+        "son_guncelleme": "2026-01-09 10:55:15"
+    },
+    "Çanakkale": {
+        "degisiklik_90gun": 36245,
+        "son_guncelleme": "2026-01-09 10:56:02"
+    },
+    "Çankırı": {
+        "degisiklik_90gun": 45055,
+        "son_guncelleme": "2026-01-09 10:56:15"
+    },
+    "Çorum": {
+        "degisiklik_90gun": 73847,
+        "son_guncelleme": "2026-01-09 10:56:27"
+    },
+    "Denizli": {
+        "degisiklik_90gun": 58318,
+        "son_guncelleme": "2026-01-09 10:56:42"
+    },
+    "Diyarbakır": {
+        "degisiklik_90gun": 34355,
+        "son_guncelleme": "2026-01-09 10:57:24"
+    },
+    "Edirne": {
+        "degisiklik_90gun": 40740,
+        "son_guncelleme": "2026-01-09 10:57:42"
+    },
+    "Elâzığ": {
+        "degisiklik_90gun": 2570,
+        "son_guncelleme": "2026-01-09 10:57:55"
+    },
+    "Erzincan": {
+        "degisiklik_90gun": 2546,
+        "son_guncelleme": "2026-01-09 10:58:20"
+    },
+    "Erzurum": {
+        "degisiklik_90gun": 50353,
+        "son_guncelleme": "2026-01-09 10:58:33"
+    },
+    "Eskişehir": {
+        "degisiklik_90gun": 21053,
+        "son_guncelleme": "2026-01-09 10:59:17"
+    },
+    "Giresun": {
+        "degisiklik_90gun": 1598,
+        "son_guncelleme": "2026-01-09 11:00:51"
+    },
+    "Gümüşhane": {
+        "degisiklik_90gun": 2318,
+        "son_guncelleme": "2026-01-09 11:01:03"
+    },
+    "Hakkâri": {
+        "degisiklik_90gun": 2102,
+        "son_guncelleme": "2026-01-09 11:01:15"
+    },
+    "Hatay": {
+        "degisiklik_90gun": 25320,
+        "son_guncelleme": "2026-01-09 11:02:47"
+    },
+    "Isparta": {
+        "degisiklik_90gun": 27259,
+        "son_guncelleme": "2026-01-09 11:03:01"
+    },
+    "Mersin": {
+        "degisiklik_90gun": 85901,
+        "son_guncelleme": "2026-01-09 11:03:16"
+    },
+    "İstanbul": {
+        "degisiklik_90gun": 183852,
+        "son_guncelleme": "2026-01-09 11:03:49"
+    },
+    "İzmir": {
+        "degisiklik_90gun": 41142,
+        "son_guncelleme": "2026-01-09 11:04:17"
+    },
+    "Kars": {
+        "degisiklik_90gun": 34201,
+        "son_guncelleme": "2026-01-09 11:04:29"
+    },
+    "Kastamonu": {
+        "degisiklik_90gun": 5549,
+        "son_guncelleme": "2026-01-09 11:04:57"
+    },
+    "Kayseri": {
+        "degisiklik_90gun": 47899,
+        "son_guncelleme": "2026-01-09 11:05:31"
+    },
+    "Kırklareli": {
+        "degisiklik_90gun": 8971,
+        "son_guncelleme": "2026-01-09 11:06:02"
+    },
+    "Kırşehir": {
+        "degisiklik_90gun": 3480,
+        "son_guncelleme": "2026-01-09 11:06:45"
+    },
+    "Kocaeli": {
+        "degisiklik_90gun": 12557,
+        "son_guncelleme": "2026-01-09 11:07:20"
+    },
+    "Konya": {
+        "degisiklik_90gun": 41662,
+        "son_guncelleme": "2026-01-09 11:07:52"
+    },
+    "Kütahya": {
+        "degisiklik_90gun": 2786,
+        "son_guncelleme": "2026-01-09 11:08:06"
+    },
+    "Malatya": {
+        "degisiklik_90gun": 4103,
+        "son_guncelleme": "2026-01-09 11:08:35"
+    },
+    "Manisa": {
+        "degisiklik_90gun": 14868,
+        "son_guncelleme": "2026-01-09 11:09:12"
+    },
+    "Mardin": {
+        "degisiklik_90gun": 19887,
+        "son_guncelleme": "2026-01-09 11:10:30"
+    },
+    "Muğla": {
+        "degisiklik_90gun": 27261,
+        "son_guncelleme": "2026-01-09 11:10:45"
+    },
+    "Muş": {
+        "degisiklik_90gun": 1026,
+        "son_guncelleme": "2026-01-09 11:10:58"
+    },
+    "Nevşehir": {
+        "degisiklik_90gun": 2537,
+        "son_guncelleme": "2026-01-09 11:11:14"
+    },
+    "Niğde": {
+        "degisiklik_90gun": 6122,
+        "son_guncelleme": "2026-01-09 11:11:40"
+    },
+    "Ordu": {
+        "degisiklik_90gun": 29762,
+        "son_guncelleme": "2026-01-09 11:12:03"
+    },
+    "Rize": {
+        "degisiklik_90gun": 1998,
+        "son_guncelleme": "2026-01-09 11:12:33"
+    },
+    "Sakarya": {
+        "degisiklik_90gun": 23259,
+        "son_guncelleme": "2026-01-09 11:12:46"
+    },
+    "Samsun": {
+        "degisiklik_90gun": 9754,
+        "son_guncelleme": "2026-01-09 11:13:05"
+    },
+    "Siirt": {
+        "degisiklik_90gun": 9387,
+        "son_guncelleme": "2026-01-09 11:13:16"
+    },
+    "Sinop": {
+        "degisiklik_90gun": 1774,
+        "son_guncelleme": "2026-01-09 11:13:43"
+    },
+    "Sivas": {
+        "degisiklik_90gun": 31025,
+        "son_guncelleme": "2026-01-09 11:14:15"
+    },
+    "Tekirdağ": {
+        "degisiklik_90gun": 21729,
+        "son_guncelleme": "2026-01-09 11:14:35"
+    },
+    "Tokat": {
+        "degisiklik_90gun": 3287,
+        "son_guncelleme": "2026-01-09 11:15:11"
+    },
+    "Trabzon": {
+        "degisiklik_90gun": 3951,
+        "son_guncelleme": "2026-01-09 11:15:42"
+    },
+    "Tunceli": {
+        "degisiklik_90gun": 465,
+        "son_guncelleme": "2026-01-09 11:15:55"
+    },
+    "Şanlıurfa": {
+        "degisiklik_90gun": 107029,
+        "son_guncelleme": "2026-01-09 11:16:28"
+    },
+    "Uşak": {
+        "degisiklik_90gun": 46681,
+        "son_guncelleme": "2026-01-09 11:16:42"
+    },
+    "Van": {
+        "degisiklik_90gun": 11011,
+        "son_guncelleme": "2026-01-09 11:16:54"
+    },
+    "Yozgat": {
+        "degisiklik_90gun": 16741,
+        "son_guncelleme": "2026-01-09 11:17:12"
+    },
+    "Zonguldak": {
+        "degisiklik_90gun": 6769,
+        "son_guncelleme": "2026-01-09 11:17:24"
+    },
+    "Aksaray": {
+        "degisiklik_90gun": 28136,
+        "son_guncelleme": "2026-01-09 11:17:34"
+    },
+    "Karaman": {
+        "degisiklik_90gun": 5021,
+        "son_guncelleme": "2026-01-09 11:18:38"
+    },
+    "Kırıkkale": {
+        "degisiklik_90gun": 3304,
+        "son_guncelleme": "2026-01-09 11:19:21"
+    },
+    "Batman": {
+        "degisiklik_90gun": 32983,
+        "son_guncelleme": "2026-01-09 11:19:34"
+    },
+    "Şırnak": {
+        "degisiklik_90gun": 7604,
+        "son_guncelleme": "2026-01-09 11:20:08"
+    },
+    "Bartın": {
+        "degisiklik_90gun": 23636,
+        "son_guncelleme": "2026-01-09 11:20:32"
+    },
+    "Ardahan": {
+        "degisiklik_90gun": 9601,
+        "son_guncelleme": "2026-01-09 11:20:43"
+    },
+    "Iğdır": {
+        "degisiklik_90gun": 304,
+        "son_guncelleme": "2026-01-09 11:21:29"
+    },
+    "Yalova": {
+        "degisiklik_90gun": 630,
+        "son_guncelleme": "2026-01-09 11:21:57"
+    },
+    "Karabük": {
+        "degisiklik_90gun": 3986,
+        "son_guncelleme": "2026-01-09 11:22:07"
+    },
+    "Kilis": {
+        "degisiklik_90gun": 498,
+        "son_guncelleme": "2026-01-09 11:22:26"
+    },
+    "Osmaniye": {
+        "degisiklik_90gun": 93002,
+        "son_guncelleme": "2026-01-09 11:22:59"
+    },
+    "Düzce": {
+        "degisiklik_90gun": 23256,
+        "son_guncelleme": "2026-01-09 11:23:25"
+    }
+}
