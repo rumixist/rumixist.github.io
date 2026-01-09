@@ -138,7 +138,7 @@ function kartHtmlUret(veri) {
         </div>
 
         <div class="veri-grubu">
-          <div class="etiket">Değişim</div>
+          <div class="etiket">Son 90'lük Haritalandırılma</div>
           <div class="${degisimSinifi}">${degisimMetni}</div>
           <div class="alt-bilgi">
             ${veri.degisim_tarihi ? tarihAraligi(veri.degisim_tarihi) : 'Veri henüz yok'}
@@ -183,4 +183,5 @@ el('siralamaSecimi').addEventListener('change', arayuzGuncelle);
 
 // Sayfa açıldığında başlat
 window.addEventListener('DOMContentLoaded', verileriGetir);
+
 
