@@ -6,7 +6,7 @@ permissions:
 on:
   schedule:
     - cron: "0 3 * * *"   # Her gün 03:00 UTC
-  workflow_dispatch:      # Elle çalıştırmak için
+  workflow_dispatch:
 
 jobs:
   guncelle:
@@ -20,14 +20,20 @@ jobs:
       - name: Python Kur
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10' 
+          python-version: '3.10'
 
       - name: Gerekli kitaplıkları kur
         run: pip install requests
 
-      - name: OSM istatistiklerini üret
+      # 1) Ana OSM istatistikleri
+      - name: OSM il istatistiklerini üret
         run: python scripts/osm_istatistik.py
 
+      # 2) Son 90 gün değişiklik istatistikleri
+      - name: OSM son 90 gün değişikliklerini üret
+        run: python scripts/osmi_degisiklik90.py
+
+      # Değişiklik kontrolü
       - name: Değişiklik var mı bak
         run: |
           if git status --porcelain | grep .; then
@@ -36,11 +42,13 @@ jobs:
             echo "degisiklik_var=false" >> $GITHUB_ENV
           fi
 
+      # Commit + push
       - name: Değişiklikleri işle ve gönder
         if: env.degisiklik_var == 'true'
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add osmaraclari/ilizle/veri/iller.json
-          git commit -m "OSM il istatistiklerini güncelle"
+          git add osmaraclari/ilizle/veri/degisiklik_90gun.json
+          git commit -m "OSM il istatistikleri ve 90 günlük değişiklik verisi güncellendi"
           git push
