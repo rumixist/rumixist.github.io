@@ -19,15 +19,19 @@ ILLER = [
 
 OVERPASS_URL = "https://overpass-api.de/api/interpreter"
 
+from datetime import datetime, timedelta
+
 def degisiklik_sayisi_cek(il_adi, deneme_sayisi=3):
+    tarih_90gun_once = (datetime.utcnow() - timedelta(days=90)).strftime("%Y-%m-%dT%H:%M:%SZ")
+
     sorgu = f'''
     [out:json][timeout:180];
     area["boundary"="administrative"]["admin_level"="4"]["name"="{il_adi}"]->.alan;
 
     (
-      way(area.alan)(newer:"{{date:90 days ago}}");
-      relation(area.alan)(newer:"{{date:90 days ago}}");
-      node(area.alan)(newer:"{{date:90 days ago}}");
+      node(area.alan)(newer:"{tarih_90gun_once}");
+      way(area.alan)(newer:"{tarih_90gun_once}");
+      relation(area.alan)(newer:"{tarih_90gun_once}");
     );
     out count;
     '''
@@ -37,7 +41,7 @@ def degisiklik_sayisi_cek(il_adi, deneme_sayisi=3):
             r = requests.post(OVERPASS_URL, data={"data": sorgu}, timeout=200)
 
             if r.status_code == 429:
-                time.sleep((i + 1) * 15)
+                time.sleep((i + 1) * 20)
                 continue
 
             r.raise_for_status()
@@ -45,11 +49,11 @@ def degisiklik_sayisi_cek(il_adi, deneme_sayisi=3):
             elemanlar = veri.get("elements", [])
 
             if not elemanlar:
-                return None
+                return 0   # veri yok ama hata da yok
 
             return int(elemanlar[0]["tags"]["total"])
 
-        except Exception:
+        except Exception as e:
             time.sleep(10)
 
     return None
