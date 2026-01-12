@@ -56,15 +56,17 @@
 /* Kart alanı */
 .cards {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
   gap: 2rem;
-  align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: center; /* satırları yatayda ortala */
+  align-items: stretch; /* tüm kartlar aynı yükseklikte */
 }
 
 /* Kart tasarımı */
 .marda-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 420px;
   padding: 1.5rem;
   background: #f9f9f9;
@@ -163,6 +165,9 @@
 
   /* Kart boyutları mobil için daraltıldı */
   .marda-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 90%;
     padding: 1rem;
     font-size: 0.95rem;
