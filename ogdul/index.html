@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ögdül</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    background: #fff; /* beyaz arka plan */
+    color: #000;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #app {
+    width: 100%;
+    max-width: 800px;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+  }
+  .new-header {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(90deg, #cc0000, #ff4d4d);
+    color: #fff;
+    border-bottom: 2px solid #990000;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .new-header h1 {
+    font-family: 'Fredericka the Great', cursive;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0;
+  }
+
+  .logo {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .by-rumi {
+    font-size: 12px;
+    color: #fff;
+    opacity: 0.8;
+    font-style: italic;
+    margin-top: auto; /* üstte kalan boşluğu otomatik doldur */
+    align-self: flex-end; /* dikeyde alta yasla */
+  }
+
+  /* Opsiyonel hareketli arka plan parçaları */
+  .new-header::after {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 10%, transparent 40%);
+    animation: rotate-bg 25s linear infinite;
+  }
+
+  @keyframes rotate-bg {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  #model-status { font-size: 12px; color: #ffcccc; margin-left: auto; }
+
+  #status-bar {
+    background: #ffe5e5; /* açık kırmızı */
+    border-bottom: 1px solid #cc0000;
+    padding: 8px 20px;
+    font-size: 12px; color: #cc0000;
+    display: flex; align-items: center; gap: 10px;
+  }
+  #progress-wrap {
+    flex: 1; height: 4px;
+    background: #ff9999;
+    border-radius: 2px;
+    overflow: hidden; display: none;
+  }
+  #progress-bar {
+    height: 100%; background: #cc0000;
+    border-radius: 2px; width: 0%; transition: width 0.2s;
+  }
+
+  #chat {
+    flex: 1; overflow-y: auto;
+    padding: 20px;
+    display: flex; flex-direction: column; gap: 16px;
+    position: relative;
+    background: #fff;
+  }
+  .empty-chat {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    color: #cc0000; font-size: 22px; text-align: center;
+    pointer-events: none;
+  }
+  .msg {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 16px; line-height: 1.6;
+    white-space: pre-wrap; word-break: break-word;
+  }
+  .msg.user {
+    align-self: flex-end;
+    background: #cc0000; color: #fff;
+    border-bottom-right-radius: 3px;
+  }
+  .msg.bot {
+    align-self: flex-start;
+    background: #ffe5e5; color: #cc0000;
+    border: 0.5px solid #cc0000;
+    border-bottom-left-radius: 3px;
+  }
+  .msg.bot.typing::after {
+    content: "▌";
+    animation: blink 0.7s infinite;
+    color: #cc0000;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  .settings {
+    padding: 8px 20px;
+    border-top: 1px solid #cc0000;
+    display: flex; flex-wrap: wrap; gap: 14px;
+    font-size: 12px; color: #cc0000; align-items: center;
+  }
+  .settings input[type=range] { width: 90px; accent-color: #cc0000; height: 5px; }
+
+  #input-area {
+    padding: 14px 20px;
+    border-top: 1px solid #cc0000;
+    display: flex; flex-direction: column; gap: 4px;
+    background: #fff;
+  }
+  #user-input {
+    flex: 1;
+    background: #ffe5e5;
+    border: 1px solid #cc0000;
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: #cc0000; font-size: 14px; font-family: inherit;
+    resize: none; outline: none; max-height: 140px; line-height: 1.5;
+  }
+  #user-input:focus { border-color: #cc0000; }
+  #user-input::placeholder { color: #cc6666; }
+  #send-btn {
+    background: #cc0000; border: none; border-radius: 10px;
+    width: 44px; height: 44px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; align-self: flex-end; transition: background 0.15s;
+  }
+  #send-btn:hover { background: #990000; }
+  #send-btn:disabled { background: #ff9999; cursor: not-allowed; }
+  #send-btn svg { width: 18px; height: 18px; fill: white; }
+
+  .prompt-warning {
+    font-size: 14px; color: #cc0000; margin-top: 2px;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="new-header">
+    <svg viewBox="0 0 64 64" width="48" height="48">
+      <!-- Ana O formu, elle çizilmiş hissi -->
+      <path d="M18,32 
+              C18,20 28,12 40,16
+              C50,20 50,44 38,48
+              C28,52 18,44 18,32 Z" 
+            fill="none" stroke="#fff" stroke-width="1.5"/>
+      
+      <!-- İç karmaşık çizgiler -->
+      <path d="M22,32 
+              C24,24 34,18 40,22
+              C46,26 46,38 38,42
+              C32,46 24,38 22,32 Z"
+            fill="none" stroke="#fff" stroke-width="1"/>
+      
+      <!-- Ekstra veri / ışık akışı çizgileri -->
+      <line x1="26" y1="26" x2="32" y2="20" stroke="#fff" stroke-width="0.8"/>
+      <line x1="34" y1="24" x2="36" y2="18" stroke="#fff" stroke-width="0.8"/>
+      <line x1="30" y1="40" x2="34" y2="44" stroke="#fff" stroke-width="0.8"/>
+      <line x1="24" y1="38" x2="28" y2="42" stroke="#fff" stroke-width="0.8"/>
+      
+      <!-- Küçük çapraz bağlantılar, detay yoğunluğu -->
+      <line x1="28" y1="30" x2="32" y2="34" stroke="#fff" stroke-width="0.5"/>
+      <line x1="36" y1="28" x2="34" y2="32" stroke="#fff" stroke-width="0.5"/>
+      
+      <!-- Üstte Ö noktaları, içi dolu, büyük ve hafif sağa kaydırılmış -->
+      <circle cx="25" cy="8" r="2.5" fill="#fff"/>
+      <circle cx="39" cy="8" r="2.5" fill="#fff"/>
+      
+      <!-- Karadelik etkisi, O etrafına spiraller ve radyal çizgiler -->
+      <g stroke="#fff" stroke-width="0.5" fill="none">
+        <path d="M32,32 
+                C28,28 20,24 18,32
+                C16,40 28,44 32,32
+                C36,28 44,24 46,32
+                C48,40 36,44 32,32 Z"/>
+        <path d="M32,32 
+                C26,26 14,22 12,32
+                C10,42 26,46 32,32
+                C38,26 50,22 52,32
+                C54,42 38,46 32,32 Z"/>
+        <path d="M32,32 
+                C24,24 8,20 6,32
+                C4,44 24,48 32,32
+                C40,24 56,20 58,32
+                C60,44 40,48 32,32 Z"/>
+        <!-- Radyal çizgiler -->
+        <line x1="32" y1="0" x2="32" y2="12"/>
+        <line x1="32" y1="52" x2="32" y2="64"/>
+        <line x1="0" y1="32" x2="12" y2="32"/>
+        <line x1="52" y1="32" x2="64" y2="32"/>
+        <line x1="10" y1="10" x2="20" y2="20"/>
+        <line x1="44" y1="44" x2="54" y2="54"/>
+      </g>
+    </svg>
+    <h1>Ögdül</h1>
+    <span id="model-status" style="display: none;"></span>
+    <span class="by-rumi">rumi tarafından</span>
+    
+  </header>
+
+  <div id="status-bar">
+    <span id="status-text">Başlatılıyor...</span>
+    <div id="progress-wrap"><div id="progress-bar"></div></div>
+    <span id="progress-pct"></span>
+  </div>
+
+  <div id="chat">
+    <div class="empty-chat">Konuşmaya başlamak için bir şeyler gönder...</div>
+  </div>
+
+  <div class="settings">
+    <label>Sıcaklık:
+      <input type="range" id="temp" min="1" max="20" value="13" step="1">
+      <span id="temp-val">1.3</span>
+    </label>
+    <label>Top-k:
+      <input type="range" id="topk" min="1" max="100" value="90" step="1">
+      <span id="topk-val">90</span>
+    </label>
+    <label>Top-p:
+      <input type="range" id="topp" min="50" max="100" value="92" step="1">
+      <span id="topp-val">0.92</span>
+    </label>
+    <label>Maks token:
+      <input type="range" id="maxtok" min="10" max="150" value="80" step="5">
+      <span id="maxtok-val">80</span>
+    </label>
+  </div>
+
+  <div id="input-area">
+    <textarea id="user-input" placeholder="Bir şeyler yaz..." rows="1" disabled></textarea>
+    <div class="prompt-warning">Model: Ögdül-eg1-s1-20M (4 Nisan 2026), hatalar yapabilir.</div>
+    <button id="send-btn" disabled>
+      <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+// JS kodu önceki sürümle aynı
+const statusBar    = document.getElementById("status-bar");
+const statusText   = document.getElementById("status-text");
+const progressWrap = document.getElementById("progress-wrap");
+const progressBar  = document.getElementById("progress-bar");
+const progressPct  = document.getElementById("progress-pct");
+const modelStatus  = document.getElementById("model-status");
+const chatDiv      = document.getElementById("chat");
+const emptyChat    = document.querySelector(".empty-chat");
+const inputEl      = document.getElementById("user-input");
+const sendBtn      = document.getElementById("send-btn");
+const tempEl       = document.getElementById("temp");
+const topkEl       = document.getElementById("topk");
+const toppEl       = document.getElementById("topp");
+const maxtokEl     = document.getElementById("maxtok");
+
+tempEl.addEventListener("input",   () => { document.getElementById("temp-val").textContent   = (tempEl.value / 10).toFixed(1); });
+topkEl.addEventListener("input",   () => { document.getElementById("topk-val").textContent   = topkEl.value; });
+toppEl.addEventListener("input",   () => { document.getElementById("topp-val").textContent   = (toppEl.value / 100).toFixed(2); });
+maxtokEl.addEventListener("input", () => { document.getElementById("maxtok-val").textContent = maxtokEl.value; });
+
+function addMsg(text, role) {
+  if (emptyChat) emptyChat.style.display = 'none';
+  const div = document.createElement("div");
+  div.className = "msg " + role;
+  div.textContent = text;
+  chatDiv.appendChild(div);
+  chatDiv.scrollTop = chatDiv.scrollHeight;
+  return div;
+}
+
+const worker = new Worker("worker.js");
+let botMsgEl = null;
+
+worker.onmessage = (e) => {
+  const { type, text, pct } = e.data;
+  if (type === "status") { statusText.textContent = text; progressWrap.style.display = "none"; }
+  else if (type === "progress") { progressWrap.style.display = "block"; progressBar.style.width = pct + "%"; progressPct.textContent = pct + "%"; }
+  else if (type === "ready") { statusBar.style.display = "none"; modelStatus.textContent = "Hazır ✓"; inputEl.disabled = false; sendBtn.disabled = false; inputEl.focus(); }
+  else if (type === "token") { if (botMsgEl) { botMsgEl.textContent += text; chatDiv.scrollTop = chatDiv.scrollHeight; } }
+  else if (type === "done") { if (botMsgEl) botMsgEl.classList.remove("typing"); botMsgEl = null; sendBtn.disabled = false; inputEl.disabled = false; inputEl.focus(); }
+  else if (type === "error") { if (botMsgEl) { botMsgEl.textContent = "Hata: " + text; botMsgEl.classList.remove("typing"); botMsgEl = null; } else { statusText.textContent = "Hata: " + text; } sendBtn.disabled = false; inputEl.disabled = false; }
+};
+worker.postMessage({ cmd: "init" });
+
+async function handleSend() {
+  const text = inputEl.value.trim();
+  if (!text) return;
+  inputEl.value = "";
+  inputEl.style.height = "auto";
+  sendBtn.disabled = true;
+  inputEl.disabled = true;
+
+  addMsg(text, "user");
+
+  botMsgEl = addMsg("", "bot");
+  botMsgEl.classList.add("typing");
+
+  worker.postMessage({
+    cmd: "generate",
+    userText:   text,
+    temperature: parseFloat(tempEl.value) / 10,
+    topK:        parseInt(topkEl.value),
+    topP:        parseInt(toppEl.value) / 100,
+    maxNew:      parseInt(maxtokEl.value),
+  });
+}
+
+sendBtn.addEventListener("click", handleSend);
+inputEl.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); } });
+inputEl.addEventListener("input", () => { inputEl.style.height = "auto"; inputEl.style.height = Math.min(inputEl.scrollHeight, 140) + "px"; });
+</script>
+</body>
+</html>
