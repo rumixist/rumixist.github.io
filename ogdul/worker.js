@@ -57,7 +57,7 @@ async function loadModel() {
       postMessage({ type: "status", text: "Model önbellekten yükleniyor..." });
       buffer = await hit.arrayBuffer();
     } else {
-      buffer = await fetchWithProgress(HF_BASE + "/ogdul.onnx", "Model indiriliyor (ilk açılış ~195MB)...");
+      buffer = await fetchWithProgress(HF_BASE + "/ogdul.onnx", "Model indiriliyor (ilk açılış ~250MB)...");
       cache.put("ogdul.onnx", new Response(buffer.slice(0)));
     }
   } catch {
