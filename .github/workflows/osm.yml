@@ -5,13 +5,13 @@ permissions:
 
 on:
   schedule:
-    - cron: "0 3 * * *"   # Her gün 03:00 UTC
+    - cron: "0 3 * * *"
   workflow_dispatch:
 
 jobs:
   guncelle:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 180
 
     steps:
       - name: Depoyu çek
@@ -23,17 +23,23 @@ jobs:
           python-version: '3.10'
 
       - name: Gerekli kitaplıkları kur
-        run: pip install requests
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
 
-      # 1) Ana OSM istatistikleri
       - name: OSM il istatistiklerini üret
         run: python scripts/osm_istatistik.py
 
-      # 2) Son 90 gün değişiklik istatistikleri
       - name: OSM son 90 gün değişikliklerini üret
         run: python scripts/osmi_degisiklik90.py
 
-      # Değişiklik kontrolü
+      # DEBUG
+      - name: Git durumu
+        run: |
+          echo "---- GIT STATUS ----"
+          git status
+          echo "--------------------"
+
       - name: Değişiklik var mı bak
         run: |
           if git status --porcelain | grep .; then
@@ -42,13 +48,20 @@ jobs:
             echo "degisiklik_var=false" >> $GITHUB_ENV
           fi
 
-      # Commit + push
-      - name: Değişiklikleri işle ve gönder
+      - name: Commit + Push
         if: env.degisiklik_var == 'true'
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
+
           git add osmaraclari/ilizle/veri/iller.json
           git add osmaraclari/ilizle/veri/degisiklik_90gun.json
-          git commit -m "OSM il istatistikleri ve 90 günlük değişiklik verisi güncellendi"
+
+          git commit -m "OSM verileri güncellendi"
+
           git push
+
+      # DEBUG
+      - name: Değişiklik yok bildirimi
+        if: env.degisiklik_var == 'false'
+        run: echo "Dosyalarda değişiklik yok."
